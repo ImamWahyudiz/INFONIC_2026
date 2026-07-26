@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFONIC 2026 — Halo Maba Informatika</title>
+
+  <!-- Favicon / Ikon Tab Browser -->
+  <link rel="icon" type="image/jpeg" href="logoINFONIC.jpg">
+  <link rel="shortcut icon" type="image/jpeg" href="logoINFONIC.jpg">
+  <link rel="apple-touch-icon" href="logoINFONIC.jpg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-navy: #090e1a;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent-blue: #38BDF8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-navy);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    /* Subtle background lighting without artificial neon/sci-fi effects */
+    .bg-light {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 900px;
+      height: 450px;
+      background: radial-gradient(circle at top, rgba(30, 58, 138, 0.28) 0%, rgba(9, 14, 26, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Content Area */
+    .hero {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    /* Primary Centerpiece Logo — Circular Profile Avatar */
+    .logo-container {
+      margin-bottom: 2.5rem;
+    }
+
+    .main-logo-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+      background-color: #0F172A;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .main-logo-avatar:hover {
+      transform: scale(1.03);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Clean Subtitle Tagline above Headline */
+    .subheading-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Typography */
+    .hero-title {
+      font-size: clamp(2.4rem, 5.5vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      color: #FFFFFF;
+    }
+
+    .hero-title .highlight {
+      color: var(--accent-blue);
+    }
+
+    .hero-desc {
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    /* Social Action Buttons */
+    .action-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-social {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-social svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .btn-social:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Simple, Clean Footer */
+    .footer {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: rgba(148, 163, 184, 0.6);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 4.5rem 1.5rem 4rem 1.5rem;
+      }
+
+      .main-logo-avatar {
+        width: 135px;
+        height: 135px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Subtle Top Depth Light -->
+  <div class="bg-light"></div>
+
+  <!-- Main Hero Section (No Header, Centered, Clean Aesthetic) -->
+  <main class="hero">
+    
+    <!-- Large Circular Logo Centerpiece -->
+    <div class="logo-container">
+      <img src="logoINFONIC.jpg" alt="Logo INFONIC 2026" class="main-logo-avatar">
+    </div>
+
+    <!-- Small Professional Subheading -->
+    <div class="subheading-tag">
+      Orientasi &amp; Pembekalan • Informatika 2026
+    </div>
+
+    <!-- Clean Main Headline -->
+    <h1 class="hero-title">
+      Halo Maba Informatika 2026!<br>
+      <span class="highlight">Selamat Mengikuti Rangkaian INFONIC.</span>
+    </h1>
+
+    <!-- Natural Description Text -->
+    <p class="hero-desc">
+      Mari memulai perjalanan baru di dunia teknologi informatika. Jadikan rangkaian kegiatan ini sebagai awal dari kolaborasi, eksplorasi, serta kontribusimu untuk masa depan.
+    </p>
+
+    <!-- Social Action Links -->
+    <div class="action-group">
+      <!-- Instagram INFONIC -->
+      <a href="https://instagram.com/infonic_official_here" target="_blank" rel="noopener noreferrer" class="btn-social">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>Instagram INFONIC</span>
+      </a>
+
+      <!-- Instagram HMIT -->
+      <a href="https://instagram.com/hmit_official_here" target="_blank" rel="noopener noreferrer" class="btn-social">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>Instagram HMIT</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Simple Balanced Footer -->
+  <footer class="footer">
+    <div>&copy; 2026 INFONIC • Keluarga Besar Mahasiswa Informatika</div>
+    <div>Designed for Maba Informatika 2026</div>
+  </footer>
+
+</body>
+</html>
