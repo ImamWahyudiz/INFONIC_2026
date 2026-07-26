@@ -47,14 +47,10 @@ Agar proses pengumpulan tugasmu lancar dan tidak kendala teknis:
 
 Berikut adalah daftar referensi lengkap dan panduan teknis yang telah disediakan untuk membantumu:
 
-- 🛠️ **[Panduan Lengkap Fork & Pull Request (PR)](../tutorial_fork_pr.md)**  
-  *(Tutorial langkah demi langkah terlengkap dari cara Fork, Clone, mengisi template, hingga Open Pull Request)*.
-- 📖 **[Pusat Materi & Sumber Belajar INFONIC](../link_materi_INFONIC.md)**  
+- 📖 **[Pusat Materi & Sumber Belajar INFONIC](https://gist.github.com/ImamWahyudiz/e3d68cc174b13ec9d397a0ddc1399d27)**  
   *(Akses ke modul presentasi, materi VS Code, Git & GitHub, pemrograman dasar, hingga UI/UX)*.
-- 🖥️ **[Halaman Sambutan INFONIC](welcome_infonic.html)**  
+- 🖥️ **[Halaman Sambutan INFONIC](https://imamwahyudiz.github.io/INFONIC_2026/)**  
   *(Halaman utama sambutan Maba Informatika 2026)*.
-- 💻 **[Panduan Instalasi & Penggunaan VS Code](../materi_vscode.md)**
-- 🐙 **[Modul Dasar Git & GitHub](../materi_git_github.md)**
 
 ---
 
