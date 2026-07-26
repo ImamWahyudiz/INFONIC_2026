@@ -13,12 +13,12 @@ Setiap mahasiswa baru wajib mengumpulkan **link-link tugas** (seperti link Googl
 
 ### 📋 Cara Pengisian Tugas:
 1. **Masuk ke Folder Kelompok/Gugusmu**: Buka direktori yang sesuai dengan kelompokmu di dalam folder **`Tugas/<Nama_Kelompok>/`** (contoh: `Tugas/Python/` atau `Tugas/PHP/`).
-2. **Gunakan Template yang Ada**: Di dalam folder kelompokmu sudah tersedia file template bernama **`NIM-NAMA.md`**.
+2. **Gunakan Template yang Ada**: Di dalam folder kelompok sudah tersedia file template bernama **`NIM-NAMA.md`**.
 3. **Salin (Duplikat) & Ganti Nama**:  
    - **JANGAN** mengedit langsung file `NIM-NAMA.md`!  
-   - Salin file tersebut, lalu ganti nama file hasil salinannya menjadi format: **`NIM_NamaLengkap.md`** (Contoh: `260001_WahyuPratama.md`).
+   - Salin file tersebut kedalam folder gugusmu, lalu ganti nama file hasil salinannya menjadi format: **`NIM_NamaLengkap.md`** (Contoh: `261060500XX_ImamWahyudi.md`).
 4. **Isi Link Tugas**: Buka file barumu, lalu cantumkan seluruh link pengumpulan tugas Osjur sesuai format di dalam template.
-5. **Kumpulkan via Pull Request**: Kirimkan file tugasmu kembali ke repository resmi panitia menggunakan metode **Fork & Pull Request (PR)**.
+5. **Kumpulkan via Pull Request**: Kirimkan file tugasmu kembali ke repository resmi panitia menggunakan metode **Fork & Pull Request (PR)** yang bisa dilihat melalui link dibawah.
 
 ---
 
@@ -39,7 +39,9 @@ Agar proses pengumpulan tugasmu lancar dan tidak kendala teknis:
 ### ✅ ATURAN WAJIB (Do's):
 - **Pastikan penamaan file sesuai format**: `NIM_NamaLengkap.md` (gunakan *underscore* `_`, tanpa spasi).
 - **Pastikan izin akses link terbuka**: Seluruh link tugas (Google Drive, Figma, dsb.) harus diatur ke hak akses **Public / Anyone with the link can view**.
-- **Tulis pesan commit yang rapi**, contoh: `Submit tugas osjur - 260001 - Wahyu Pratama`.
+- **Tulis pesan commit yang rapi**, contoh: `Submit tugas osjur - 261060500XX - Imam Wahyudi`.
+
+Link tutorial fork and pull: [tutorial Fork and Pull](https://gist.github.com/ImamWahyudiz/e3d68cc174b13ec9d397a0ddc1399d27#file-03-tutorial_fork_pr-md)
 
 ---
 
@@ -55,4 +57,4 @@ Berikut adalah daftar referensi lengkap dan panduan teknis yang telah disediakan
 ---
 
 *Semangat menyelesaikan tugas dan mari tumbuh bersama di Keluarga Besar Mahasiswa Informatika!*  
-**#INFONIC2026 #InformatikaJaya**
+**#INFONIC2026 #UnggulBerkarakter**
