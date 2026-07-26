@@ -360,34 +360,43 @@
       color: var(--primary-500);
     }
 
-    /* Khusus Acara Penutup MAKRAB (Lingkaran & Bendera Merah) */
-    .tl-dot-makrab {
-      width: 28px;
-      height: 28px;
-      border-color: var(--red-500);
-      background: rgba(239, 68, 68, 0.15);
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
-      top: -4px;
-      position: relative;
+    /* Tanggal Acara di Bawah Label */
+    .tl-date {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.25s ease, transform 0.25s ease;
     }
 
-    .tl-flag {
-      font-size: 0.85rem;
-      line-height: 1;
+    .tl-step:hover .tl-date {
+      color: var(--cyan-400);
+    }
+
+    /* Khusus Acara Penutup MAKRAB (Lingkaran Hijau) */
+    .tl-dot-makrab {
+      border-color: var(--emerald-400);
+      background: var(--bg-default);
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
     }
 
     .tl-step:hover .tl-dot-makrab {
-      background: var(--red-500);
-      box-shadow: 0 0 22px rgba(239, 68, 68, 0.9);
-      transform: scale(1.25);
+      background: var(--emerald-400);
+      box-shadow: 0 0 18px rgba(52, 211, 153, 0.9);
+      transform: scale(1.35);
     }
 
     .tl-label-makrab {
-      color: #fca5a5;
+      color: #6ee7b7;
     }
 
     .tl-step:hover .tl-label-makrab {
-      color: #ef4444;
+      color: var(--emerald-400);
+    }
+
+    .tl-step:hover .tl-label-makrab .tl-date {
+      color: #a7f3d0;
     }
 
     /* Social Action Buttons */
@@ -718,45 +727,58 @@
     </h2>
 
     <p class="section-desc">
-      Mari bersiap mengikuti seluruh rangkaian acara INFONIC 2026, mulai dari Technical Meeting, Osjur Week 1, 2, 3, hingga puncaknya pada Malam Keakraban (Makrab) sebagai penutup.
+      Mari bersiap mengikuti seluruh rangkaian acara INFONIC 2026 yang berlangsung sepanjang <strong>12 September — 11 Oktober 2026</strong>, mulai dari Technical Meeting, Osjur Week 1, 2, 3, hingga puncaknya pada Malam Keakraban (Makrab) sebagai penutup.
     </p>
 
-    <!-- Timeline Lingkaran & Garis (Point Lingkaran Terus Line + Bendera Merah Makrab) -->
+    <!-- Timeline Lingkaran & Garis (Point Lingkaran Terus Line + Lingkaran Hijau Makrab) -->
     <div class="timeline-circle-line">
       <!-- 1. Technical Meeting -->
       <div class="tl-step">
         <div class="tl-dot"></div>
         <div class="tl-connector"></div>
-        <div class="tl-label">Technical Meeting</div>
+        <div class="tl-label">
+          Technical Meeting<br>
+          <span class="tl-date">12 September</span>
+        </div>
       </div>
 
       <!-- 2. Osjur Week 1 -->
       <div class="tl-step">
         <div class="tl-dot"></div>
         <div class="tl-connector"></div>
-        <div class="tl-label">Osjur Week 1</div>
+        <div class="tl-label">
+          Osjur Week 1<br>
+          <span class="tl-date">19 September</span>
+        </div>
       </div>
 
       <!-- 3. Osjur Week 2 -->
       <div class="tl-step">
         <div class="tl-dot"></div>
         <div class="tl-connector"></div>
-        <div class="tl-label">Osjur Week 2</div>
+        <div class="tl-label">
+          Osjur Week 2<br>
+          <span class="tl-date">26 September</span>
+        </div>
       </div>
 
       <!-- 4. Osjur Week 3 -->
       <div class="tl-step">
         <div class="tl-dot"></div>
         <div class="tl-connector"></div>
-        <div class="tl-label">Osjur Week 3</div>
+        <div class="tl-label">
+          Osjur Week 3<br>
+          <span class="tl-date">3 Oktober</span>
+        </div>
       </div>
 
-      <!-- 5. Makrab (Penutup) — Lingkaran & Bendera Merah -->
+      <!-- 5. Makrab (Penutup) — Lingkaran Hijau -->
       <div class="tl-step">
-        <div class="tl-dot tl-dot-makrab">
-          <span class="tl-flag">🚩</span>
+        <div class="tl-dot tl-dot-makrab"></div>
+        <div class="tl-label tl-label-makrab">
+          Makrab (Penutup)<br>
+          <span class="tl-date">10-11 Oktober</span>
         </div>
-        <div class="tl-label tl-label-makrab">Makrab (Penutup)</div>
       </div>
     </div>
 
