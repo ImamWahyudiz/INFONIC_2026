@@ -54,14 +54,13 @@
       width: 100%;
     }
 
-    /* Custom Themed Dark Scrollbar */
+    /* Themed Scrollbar */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: #080d1a; }
     ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.35); border-radius: 9999px; border: 2px solid #080d1a; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.65); }
     ::-webkit-scrollbar-corner { background: #080d1a; }
 
-    /* Scroll progress bar */
     .scroll-progress {
       position: fixed; top: 0; left: 0; height: 2.5px; width: 0%;
       background: linear-gradient(90deg, var(--primary), var(--cyan));
@@ -99,7 +98,7 @@
     }
 
     .nav-links-wrap {
-      display: flex; align-items: center; gap: 0.35rem;
+      display: flex; align-items: center; gap: 0.3rem;
     }
 
     .navbar a.nav-link {
@@ -107,10 +106,18 @@
       font-size: 0.78rem; font-weight: 600;
       padding: 0.3rem 0.75rem; border-radius: 9999px;
       transition: all 0.2s ease; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 0.25rem;
     }
 
     .navbar a.nav-link:hover { color: #fff; background: var(--primary-dim); }
     .navbar a.nav-link.active { color: var(--primary); background: var(--primary-dim); font-weight: 700; }
+
+    .navbar a.nav-ext {
+      color: #94a3b8;
+    }
+    .navbar a.nav-ext:hover {
+      color: var(--cyan);
+    }
 
     /* Hamburger Toggle Button */
     .nav-toggle-btn {
@@ -137,7 +144,7 @@
     .nav-toggle-btn.open span:nth-child(2) { opacity: 0; transform: scale(0); }
     .nav-toggle-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-    /* Hero Header */
+    /* Page Hero */
     .page-hero {
       margin-top: var(--navbar-h);
       padding: 3.5rem 2rem 2.25rem;
@@ -170,7 +177,7 @@
       align-items: start;
     }
 
-    /* Desktop Sticky Sidebar */
+    /* Desktop Sidebar */
     .sidebar {
       position: sticky;
       top: calc(var(--navbar-h) + 1.5rem);
@@ -197,19 +204,13 @@
     .sidebar-nav a:hover { color: #fff; border-left-color: var(--border-hover); }
     .sidebar-nav a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-dim); font-weight: 600; }
 
-    /* Content Area & Scroll Margin Offsets */
+    /* Content Area & Clean Scroll Offsets */
     .content { min-width: 0; max-width: 100%; }
+    
     .content section {
       margin-bottom: 4rem;
       padding-top: 1.5rem;
-      scroll-margin-top: calc(var(--navbar-h) + 1.5rem);
-    }
-
-    .section-anchor {
-      display: block;
-      height: 0;
-      margin-top: 0;
-      visibility: hidden;
+      scroll-margin-top: 80px;
     }
 
     .content h2 {
@@ -218,12 +219,13 @@
       padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-default);
       line-height: 1.35;
-      scroll-margin-top: calc(var(--navbar-h) + 1.5rem);
+      scroll-margin-top: 80px;
     }
 
     .content h3 {
       font-size: 1.08rem; font-weight: 700;
       color: #e2e8f0; margin: 1.75rem 0 0.75rem;
+      scroll-margin-top: 80px;
     }
 
     .content h4 {
@@ -238,7 +240,6 @@
     .content strong { color: var(--text-main); font-weight: 600; }
     .content a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
 
-    /* Code Inline & Prism Pre Overrides */
     .content code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.82em;
@@ -260,7 +261,6 @@
 
     pre[class*="language-"] code { background: none; color: inherit; padding: 0; font-size: inherit; }
 
-    /* Tab switcher */
     .tab-group { margin: 1rem 0 1.5rem; }
     .tab-buttons {
       display: flex; gap: 0.25rem;
@@ -283,7 +283,6 @@
     .tab-panel { display: none; padding: 1.25rem 0 0; }
     .tab-panel.active { display: block; }
 
-    /* Tables & Responsive Wrapper */
     .table-responsive {
       width: 100%;
       overflow-x: auto;
@@ -324,7 +323,6 @@
       padding: 1px 7px; border-radius: 5px;
     }
 
-    /* Component Boxes: Info, Warning, Danger, Error-Card, Extensions, Diagrams */
     .info-box {
       display: flex; gap: 0.85rem;
       background: rgba(56,189,248,0.07);
@@ -448,7 +446,6 @@
     .step-content h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 0.4rem; }
     .step-content p { font-size: 0.9rem; color: var(--text-muted); margin: 0 0 0.6rem; }
 
-    /* Universal Clean Footer across all materi pages */
     .page-footer {
       border-top: 1px solid var(--border-default);
       padding: 2.25rem 1.5rem;
@@ -521,7 +518,8 @@
         font-size: 0.88rem;
         border-radius: 8px;
         text-align: left;
-        display: block;
+        display: flex;
+        justify-content: space-between;
         color: #cbd5e1;
       }
 
@@ -611,19 +609,23 @@
         color: #fff;
       }
 
-      /* Offsets for Section Scroll so it NEVER gets hidden behind Sticky Headers */
+      /* Proper scroll-margin-top so section content NEVER gets obscured under navbar + sticky TOC */
       .content section {
-        scroll-margin-top: 130px;
-        padding-top: 0.5rem;
+        scroll-margin-top: 135px;
+        padding-top: 0;
         margin-bottom: 3rem;
       }
 
       .content h2 {
         font-size: 1.35rem;
-        scroll-margin-top: 130px;
+        scroll-margin-top: 135px;
       }
 
-      .content h3 { font-size: 1.05rem; }
+      .content h3 {
+        font-size: 1.05rem;
+        scroll-margin-top: 135px;
+      }
+
       .content p, .content li { font-size: 0.9rem; line-height: 1.65; }
       
       .ext-grid, .scenario-grid, .cheat-grid { grid-template-columns: 1fr; }
@@ -638,7 +640,7 @@
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- Navbar with Uniform Hamburger Menu Drawer -->
+  <!-- Navbar with Uniform Hamburger Menu Drawer and External Canva Links -->
   <nav class="navbar">
     <a href="../../" class="navbar-brand">
       <img src="../../assets/logoINFONIC.jpg" alt="INFONIC">
@@ -651,6 +653,8 @@
       <a href="../git/" class="nav-link active"><span>Git &amp; GitHub</span></a>
       <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
       <a href="../utility/" class="nav-link"><span>Troubleshooting</span></a>
+      <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Flowchart <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
+      <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Figma <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
     </div>
     <button class="nav-toggle-btn" id="materiNavToggle" aria-label="Toggle navigation menu">
       <span></span>
@@ -659,7 +663,7 @@
     </button>
   </nav>
 
-  <!-- Hero Header (Badge removed as requested) -->
+  <!-- Hero Header -->
   <div class="page-hero">
     <h1>Git &amp; GitHub</h1>
     <p>Panduan lengkap dari instalasi hingga workflow clone, commit, push &mdash; version control untuk developer.</p>
@@ -683,7 +687,6 @@
     <main class="content">
       <!-- 1 -->
       <section id="pengenalan">
-        <span class="section-anchor"></span>
         <h2>1. Git vs GitHub</h2>
         <p>Sebelum mulai, penting banget tahu bedanya <strong>Git</strong> dan <strong>GitHub</strong>:</p>
 <div class="table-responsive"><table class="styled-table">
@@ -717,7 +720,6 @@
 
       <!-- 2 -->
       <section id="instalasi">
-        <span class="section-anchor"></span>
         <h2>2. Panduan Instalasi Git</h2>
 
         <div class="tab-group">
@@ -762,7 +764,6 @@ sudo apt install git -y</code></pre>
 
       <!-- 3 -->
       <section id="konfigurasi">
-        <span class="section-anchor"></span>
         <h2>3. Konfigurasi Identitas Git</h2>
         <p>Setiap kali kamu membuat commit, Git butuh tahu siapa penulisnya. Jadi langkah pertama setelah instalasi adalah menyetel <strong>Nama</strong> dan <strong>Email</strong>.</p>
         <p>Buka Terminal atau Git Bash:</p>
@@ -778,7 +779,6 @@ git config --global user.email "emailkamu@example.com"</code></pre>
 
       <!-- 4 -->
       <section id="github-repo">
-        <span class="section-anchor"></span>
         <h2>4. Membuat Akun & Repository di GitHub</h2>
 
         <h3>A. Membuat Akun GitHub</h3>
@@ -810,7 +810,6 @@ git config --global user.email "emailkamu@example.com"</code></pre>
 
       <!-- 5 -->
       <section id="workflow">
-        <span class="section-anchor"></span>
         <h2>5. Workflow Utama Git & GitHub</h2>
         <p>Biasanya ada 2 skenario umum saat kerja pakai Git & GitHub:</p>
 
@@ -890,7 +889,6 @@ git add .</code></pre>
 
       <!-- 6 -->
       <section id="perintah-lain">
-        <span class="section-anchor"></span>
         <h2>6. Perintah Git Lain yang Sering Digunakan</h2>
 
         <h3>git log</h3>
@@ -926,7 +924,6 @@ git switch -c feature-baru</code></pre>
 
       <!-- 7 -->
       <section id="gitignore">
-        <span class="section-anchor"></span>
         <h2>7. Mengenal File .gitignore</h2>
         <p>File <code>.gitignore</code> penting banget supaya file rahasia (kayak password di <code>.env</code>) atau file sampah cache tidak ikut ke-upload ke GitHub.</p>
 
@@ -941,7 +938,6 @@ __pycache__/</code></pre>
 
       <!-- Cheat Sheet -->
       <section id="cheatsheet">
-        <span class="section-anchor"></span>
         <h2>Rangkuman Perintah Cepat (Cheat Sheet)</h2>
 
         <div class="cheat-grid">
@@ -973,6 +969,8 @@ git push -u origin main</code></pre>
     <a href="../git/">Git &amp; GitHub</a>
     <a href="../fork-pr/">Fork &amp; PR</a>
     <a href="../utility/">Troubleshooting</a>
+    <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer">Flowchart &nearr;</a>
+    <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer">Figma &nearr;</a>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
@@ -1026,6 +1024,33 @@ git push -u origin main</code></pre>
           }
         });
       }
+
+      // Smooth Jump handler for Sidebar TOC items on mobile to avoid overlapping
+      const tocLinks = document.querySelectorAll('.sidebar-nav a');
+      tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              const navHeight = 52;
+              const tocHeight = 50;
+              const totalOffset = window.innerWidth <= 768 ? (navHeight + tocHeight + 15) : 80;
+              const elementPosition = targetEl.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+
+              // Update URL hash without instant jump
+              history.pushState(null, null, targetId);
+            }
+          }
+        });
+      });
     });
 
     // Active sidebar tracking on scroll
@@ -1036,7 +1061,13 @@ git push -u origin main</code></pre>
         if (entry.isIntersecting) {
           navLinks.forEach(l => l.classList.remove('active'));
           const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
-          if (active) active.classList.add('active');
+          if (active) {
+            active.classList.add('active');
+            // Auto scroll TOC bar to active item on mobile
+            if (window.innerWidth <= 768) {
+              active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+          }
         }
       });
     }, { rootMargin: '-20% 0px -70% 0px' });
