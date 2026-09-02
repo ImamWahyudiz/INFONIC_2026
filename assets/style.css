@@ -1105,37 +1105,165 @@ body {
   .why-grid {
     grid-template-columns: 1fr;
   }
-  .timeline-circle-line {
-    flex-wrap: wrap;
-    gap: 1.5rem 0;
+  
+  /* Sembunyikan ikon melayang berlebih di tablet (hanya tampilkan 3 ikon) */
+  .ci-4, .ci-5, .ci-6 {
+    display: none !important;
   }
-  .tl-connector {
+}
+
+@media (max-width: 768px) {
+  /* Sticky Navbar Mobile: Pill bar melayang yang rapi & smooth horizontal scroll */
+  .sticky-nav {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    border-radius: 9999px;
+    padding: 0.35rem 0.6rem;
+    gap: 0.2rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: rgba(8, 13, 26, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+  .sticky-nav::-webkit-scrollbar {
     display: none;
   }
+  .sticky-nav a {
+    font-size: 0.76rem;
+    padding: 0.35rem 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Floating background icons di mobile: Batasi hanya 2 ikon halus agar layar tidak sesak */
+  .ci-3, .ci-4, .ci-5, .ci-6 {
+    display: none !important;
+  }
+  .ci-1 {
+    top: 15%;
+    left: 4%;
+    width: 38px;
+    height: 38px;
+    opacity: 0.45;
+  }
+  .ci-2 {
+    top: 32%;
+    right: 4%;
+    width: 38px;
+    height: 38px;
+    opacity: 0.45;
+  }
+  .crisp-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Timeline Mobile: Bentuk Alur Vertikal dengan Garis Penghubung (Line Connector) */
+  .timeline-circle-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    max-width: 400px;
+    margin: 0 auto 3rem auto;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
   .tl-step {
-    flex: 1 1 33.33%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.25rem;
+    width: 100%;
+    padding-bottom: 2rem;
+    position: relative;
+    text-align: left;
+  }
+
+  .tl-step:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Garis Vertikal Penghubung di Mobile */
+  .tl-connector {
+    display: block !important;
+    position: absolute;
+    top: 22px;
+    left: 10px;
+    width: 2px;
+    height: calc(100% - 10px);
+    background: linear-gradient(180deg, var(--primary-500) 0%, rgba(56, 189, 248, 0.2) 100%);
+    z-index: 1;
+  }
+
+  .tl-step:last-child .tl-connector {
+    display: none !important;
+  }
+
+  .tl-dot {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .tl-label {
+    margin-top: 0;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    padding: 0;
+  }
+
+  .tl-date {
+    display: inline-block;
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 600px) {
+  #hero.page-section {
+    padding-top: 7rem;
+    padding-bottom: 3.5rem;
+    min-height: auto;
+  }
+  .hero-title {
+    font-size: 2.35rem;
+  }
+  .hero-subtitle {
+    font-size: 0.92rem;
+    padding: 0 0.5rem;
+  }
+  .hero-theme-tag {
+    font-size: 1.05rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+  }
+  .section-desc {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  .page-section {
+    padding: 4rem 1rem 3rem;
+  }
   .gugus-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   .features-grid {
     grid-template-columns: 1fr;
   }
-  .tl-step {
-    flex: 1 1 50%;
+  .id-card {
+    padding: 1.4rem 1.1rem 1.1rem;
   }
-  .page-section {
-    padding: 5rem 1.25rem 4rem;
-  }
-  .sticky-nav {
-    gap: 0.1rem;
-    padding: 0.45rem 0.25rem;
-  }
-  .sticky-nav a {
-    font-size: 0.72rem;
-    padding: 0.35rem 0.55rem;
+  .btn-gist {
+    padding: 0.55rem 1.15rem;
+    font-size: 0.8rem;
   }
 }
