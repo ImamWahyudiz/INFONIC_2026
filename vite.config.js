@@ -25,7 +25,7 @@ export default defineConfig({
       name: 'materi-route-rewrite',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url && (req.url.startsWith('/materi/') || req.url === '/materi')) {
+          if (req.url && req.url.startsWith('/materi/')) {
             req.url = '/src' + req.url;
           }
           next();
@@ -33,11 +33,11 @@ export default defineConfig({
       },
     },
     {
-      name: 'post-build-assets',
+      name: 'post-build-sync',
       closeBundle() {
-        // Guarantee all assets including kabim photos are available in dist/assets
+        // Guarantee all assets are copied to dist/assets
         copyDirSync(resolve(__dirname, 'assets'), resolve(__dirname, 'dist/assets'));
-        // Make materi accessible at both /materi/ and /src/materi/
+        // Make materi accessible directly at /materi/*.html as well as /src/materi/*.html
         if (fs.existsSync(resolve(__dirname, 'dist/src/materi'))) {
           copyDirSync(resolve(__dirname, 'dist/src/materi'), resolve(__dirname, 'dist/materi'));
         }
@@ -48,10 +48,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        vscode: resolve(__dirname, 'src/materi/vscode/index.html'),
-        git: resolve(__dirname, 'src/materi/git/index.html'),
-        utility: resolve(__dirname, 'src/materi/utility/index.html'),
-        forkPr: resolve(__dirname, 'src/materi/fork-pr/index.html'),
+        vscode: resolve(__dirname, 'src/materi/vscode.html'),
+        git: resolve(__dirname, 'src/materi/git.html'),
+        utility: resolve(__dirname, 'src/materi/utility.html'),
+        forkPr: resolve(__dirname, 'src/materi/fork-pr.html'),
       },
     },
   },

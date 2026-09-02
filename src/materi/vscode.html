@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080d1a">
-  <title>Git &amp; GitHub &mdash; Materi INFONIC 2026</title>
-  <meta name="description" content="Panduan lengkap dari instalasi hingga workflow clone, commit, push &mdash; version control untuk developer.">
-  <link rel="icon" type="image/jpeg" href="../../assets/logo.jpg">
+  <title>VS Code &mdash; Materi INFONIC 2026</title>
+  <meta name="description" content="Panduan instalasi, penggunaan, shortcut, dan ekstensi Visual Studio Code untuk mahasiswa baru Informatika INFONIC 2026.">
+  <link rel="icon" type="image/jpeg" href="/assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -367,15 +367,18 @@
       font-weight: 700; font-size: 0.92rem; color: #fff;
     }
     .error-label {
+      display: inline-flex;
+      align-items: center;
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 6px;
-      white-space: nowrap;
+      letter-spacing: 0.05em; padding: 0.25rem 0.65rem; border-radius: 6px;
+      line-height: 1.4;
+      white-space: normal;
     }
     .error-label.cause { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.25); }
     .error-label.solution { background: rgba(52,211,153,0.12); color: var(--emerald); border: 1px solid rgba(52,211,153,0.25); }
     .error-label.danger { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
     .error-body { padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
-    .error-row { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; align-items: start; }
+    .error-row { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
     .error-content { font-size: 0.9rem; color: var(--text-muted); }
 
     .folder-tree {
@@ -638,13 +641,15 @@
         overflow-wrap: anywhere;
       }
       .error-body { padding: 0.85rem; }
-      .error-row {
-        grid-template-columns: 1fr !important;
-        gap: 0.35rem !important;
-      }
+      .error-row { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
       .error-label {
-        align-self: flex-start;
-      }
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 0.25rem 0.65rem; border-radius: 6px;
+      line-height: 1.4;
+      white-space: normal;
+    }
       .error-content {
         min-width: 0;
         max-width: 100%;
@@ -743,17 +748,17 @@
 
   <!-- Navbar with Uniform Hamburger Menu Drawer and External Canva Links -->
   <nav class="navbar">
-    <a href="../../" class="navbar-brand">
-      <img src="../../assets/logo.jpg" alt="INFONIC">
+    <a href="/" class="navbar-brand">
+      <img src="/assets/logo.jpg" alt="INFONIC">
       <span>INFONIC</span>
     </a>
     <div class="nav-sep"></div>
     <div class="nav-links-wrap" id="navLinksWrap">
-      <a href="../../" class="nav-link"><span>Home</span></a>
-      <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
-      <a href="../git/" class="nav-link active"><span>Git &amp; GitHub</span></a>
-      <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
-      <a href="../utility/" class="nav-link"><span>Troubleshooting</span></a>
+      <a href="/" class="nav-link"><span>Home</span></a>
+      <a href="/materi/vscode.html" class="nav-link active"><span>VS Code</span></a>
+      <a href="/materi/git.html" class="nav-link"><span>Git &amp; GitHub</span></a>
+      <a href="/materi/fork-pr.html" class="nav-link"><span>Fork &amp; PR</span></a>
+      <a href="/materi/utility.html" class="nav-link"><span>Troubleshooting</span></a>
       <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Flowchart <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
       <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Figma <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
     </div>
@@ -766,62 +771,35 @@
 
   <!-- Hero Header -->
   <div class="page-hero">
-    <h1>Git &amp; GitHub</h1>
-    <p>Panduan lengkap dari instalasi hingga workflow clone, commit, push &mdash; version control untuk developer.</p>
+    <h1>Visual Studio Code</h1>
+    <p>Instalasi, antarmuka, shortcut penting, dan ekstensi terbaik untuk Python, C/C++, dan PHP.</p>
   </div>
 
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar-label">Daftar Isi</div>
       <ul class="sidebar-nav" id="sidebarNav">
-        <li><a href="#pengenalan">1. Git vs GitHub</a></li>
-        <li><a href="#instalasi">2. Instalasi Git</a></li>
-        <li><a href="#konfigurasi">3. Konfigurasi Identitas</a></li>
-        <li><a href="#github-repo">4. Akun & Repository GitHub</a></li>
-        <li><a href="#workflow">5. Workflow Utama</a></li>
-        <li><a href="#perintah-lain">6. Perintah Lain</a></li>
-        <li><a href="#gitignore">7. File .gitignore</a></li>
-        <li><a href="#cheatsheet">Cheat Sheet</a></li>
+        <li><a href="#apa-itu-vscode">1. Apa itu VS Code?</a></li>
+        <li><a href="#instalasi">2. Instalasi</a></li>
+        <li><a href="#antarmuka">3. Antarmuka</a></li>
+        <li><a href="#penggunaan">4. Penggunaan Dasar</a></li>
+        <li><a href="#shortcut">5. Shortcut Penting</a></li>
+        <li><a href="#ekstensi">6. Rekomendasi Ekstensi</a></li>
+        <li><a href="#install-ekstensi">7. Cara Install Ekstensi</a></li>
       </ul>
     </aside>
 
     <main class="content">
       <!-- 1 -->
-      <section id="pengenalan">
-        <h2>1. Git vs GitHub</h2>
-        <p>Sebelum mulai, penting banget tahu bedanya <strong>Git</strong> dan <strong>GitHub</strong>:</p>
-<div class="table-responsive"><table class="styled-table">
-          <thead>
-            <tr><th>Fitur</th><th>Git</th><th>GitHub</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Definisi</strong></td>
-              <td>Perangkat lunak Version Control System (VCS) yang jalan di komputer lokal.</td>
-              <td>Platform online (cloud) untuk menyimpan dan mengelola repository Git.</td>
-            </tr>
-            <tr>
-              <td><strong>Fungsi Utama</strong></td>
-              <td>Mencatat riwayat perubahan kode di laptop kamu sendiri.</td>
-              <td>Tempat berbagi kode, kolaborasi tim, dan publikasi project.</td>
-            </tr>
-            <tr>
-              <td><strong>Koneksi Internet</strong></td>
-              <td>Tidak butuh internet.</td>
-              <td>Butuh koneksi internet.</td>
-            </tr>
-            <tr>
-              <td><strong>Interface</strong></td>
-              <td>Lewat perintah teks / CLI (Git Bash atau Terminal).</td>
-              <td>Berbasis web (tampilan antarmuka / GUI).</td>
-            </tr>
-          </tbody>
-        </table></div>
+      <section id="apa-itu-vscode">
+        <h2>1. Apa itu Visual Studio Code?</h2>
+        <p><strong>Visual Studio Code (VS Code)</strong> adalah code editor buatan Microsoft yang ringan, gratis, dan open-source. VS Code mendukung hampir semua bahasa pemrograman dan punya ekosistem ekstensi yang sangat besar.</p>
+        <p>Di INFONIC, VS Code adalah editor utama yang kamu gunakan untuk mengerjakan semua tugas &mdash; dari menulis kode Python hingga menjalankan perintah Git dari terminal terintegrasi.</p>
       </section>
 
       <!-- 2 -->
       <section id="instalasi">
-        <h2>2. Panduan Instalasi Git</h2>
+        <h2>2. Panduan Instalasi</h2>
 
         <div class="tab-group">
           <div class="tab-buttons">
@@ -832,232 +810,206 @@
 
           <div class="tab-panel active" id="tab-win">
             <ol>
-              <li>Unduh installer resmi Git dari <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a>.</li>
-              <li>Jalankan file <code>.exe</code> yang sudah diunduh.</li>
-              <li>Klik <strong>Next</strong> pada opsi default (pilih <em>Git Bash</em> dan <em>Use Visual Studio Code as Git's default editor</em>).</li>
-              <li>Klik <strong>Install</strong> dan tunggu sampai selesai.</li>
+              <li>Kunjungi <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a> dan klik <strong>Download for Windows</strong>.</li>
+              <li>Buka file <code>.exe</code> yang sudah diunduh.</li>
+              <li>Pada halaman <em>Select Additional Tasks</em>, centang ketiga opsi berikut:
+                <ul>
+                  <li><strong>Add "Open with Code" action to Windows Explorer file context menu</strong></li>
+                  <li><strong>Add "Open with Code" action to Windows Explorer directory context menu</strong></li>
+                  <li><strong>Add to PATH</strong></li>
+                </ul>
+              </li>
+              <li>Klik <strong>Next &rarr; Install &rarr; Finish</strong>.</li>
             </ol>
           </div>
 
           <div class="tab-panel" id="tab-mac">
-            <p>Buka Terminal macOS, lalu ketik:</p>
-            <pre><code class="language-bash">xcode-select --install</code></pre>
-            <p>Atau via Homebrew:</p>
-            <pre><code class="language-bash">brew install git</code></pre>
+            <ol>
+              <li>Unduh installer untuk macOS dari <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a>.</li>
+              <li>Ekstrak file <code>.zip</code> yang sudah diunduh.</li>
+              <li>Seret file <strong>Visual Studio Code.app</strong> ke folder <strong>Applications</strong>.</li>
+              <li>Buka VS Code dari Launchpad atau Applications.</li>
+            </ol>
           </div>
 
           <div class="tab-panel" id="tab-linux">
-            <p>Untuk Ubuntu/Debian:</p>
-            <pre><code class="language-bash">sudo apt update
-sudo apt install git -y</code></pre>
+            <p>Untuk Ubuntu/Debian, unduh file <code>.deb</code> dari situs resmi, lalu jalankan:</p>
+            <pre><code class="language-bash">sudo dpkg -i &lt;nama-file&gt;.deb
+sudo apt-get install -f</code></pre>
+            <p>Atau via Snap:</p>
+            <pre><code class="language-bash">sudo snap install --classic code</code></pre>
           </div>
-        </div>
-
-        <h3>Verifikasi Instalasi</h3>
-        <p>Buka Terminal atau Git Bash, lalu ketik:</p>
-        <pre><code class="language-bash">git --version</code></pre>
-        <p>Jika muncul <code>git version 2.x.x</code>, berarti Git sudah berhasil terinstal.</p>
-        <div class="warning-box">
-          <div class="warning-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--orange);"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
-          <div class="warning-box-body"><strong>Error "git is not recognized"?</strong> Kalau kamu pakai Windows dan muncul error saat mengetik <code>git --version</code>, lihat panduan <a href="../utility/#git-not-recognized">Mengatasi Error Git di Troubleshooting</a>.</div>
         </div>
       </section>
 
       <!-- 3 -->
-      <section id="konfigurasi">
-        <h2>3. Konfigurasi Identitas Git</h2>
-        <p>Setiap kali kamu membuat commit, Git butuh tahu siapa penulisnya. Jadi langkah pertama setelah instalasi adalah menyetel <strong>Nama</strong> dan <strong>Email</strong>.</p>
-        <p>Buka Terminal atau Git Bash:</p>
-        <pre><code class="language-bash"># 1. Masukkan Nama Lengkapmu
-git config --global user.name "Nama Lengkap Kamu"
-
-# 2. Masukkan Email (Pastikan sama dengan akun GitHub-mu!)
-git config --global user.email "emailkamu@example.com"</code></pre>
-
-        <h3>Mengecek Hasil Konfigurasi</h3>
-        <pre><code class="language-bash">git config --list</code></pre>
-      </section>
-
-      <!-- 4 -->
-      <section id="github-repo">
-        <h2>4. Membuat Akun & Repository di GitHub</h2>
-
-        <h3>A. Membuat Akun GitHub</h3>
-        <ol>
-          <li>Buka <a href="https://github.com/" target="_blank" rel="noopener">github.com</a>.</li>
-          <li>Klik <strong>Sign up</strong> dan ikuti proses pendaftarannya.</li>
-          <li>Verifikasi email kamu.</li>
-        </ol>
-
-        <h3>B. Membuat Repository Baru di GitHub</h3>
-        <ol>
-          <li>Login ke akun GitHub.</li>
-          <li>Klik tombol <strong>+</strong> di pojok kanan atas &rarr; pilih <strong>New repository</strong>.</li>
-          <li>Isi informasi project:
-            <ul>
-              <li><strong>Repository name</strong>: Nama project (contoh: <code>latihan-infonic</code>).</li>
-              <li><strong>Description</strong>: Deskripsi singkat (opsional).</li>
-              <li><strong>Public / Private</strong>: Pilih <strong>Public</strong> kalau mau dilihat semua orang.</li>
-              <li><strong>Initialize this repository with</strong>: Biarkan kosong (jangan centang <em>Add a README file</em> dulu).</li>
-            </ul>
-          </li>
-          <li>Klik <strong>Create repository</strong>.</li>
-        </ol>
+      <section id="antarmuka">
+        <h2>3. Pengenalan Antarmuka</h2>
+        <p>VS Code punya 5 area utama yang perlu kamu kenali:</p>
+<div class="table-responsive"><table class="styled-table">
+          <thead>
+            <tr><th>Area</th><th>Letak</th><th>Fungsi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Activity Bar</strong></td><td>Panel kiri paling luar</td><td>Navigasi ke Explorer, Search, Source Control, Debug, Extensions</td></tr>
+            <tr><td><strong>Side Bar</strong></td><td>Kiri, sebelah Activity Bar</td><td>Menampilkan detail dari item yang dipilih di Activity Bar</td></tr>
+            <tr><td><strong>Editor Group</strong></td><td>Tengah</td><td>Area utama tempat menulis kode</td></tr>
+            <tr><td><strong>Panel</strong></td><td>Bawah</td><td>Terminal, Output, Debug Console, Problems</td></tr>
+            <tr><td><strong>Status Bar</strong></td><td>Paling bawah</td><td>Informasi baris/kolom, bahasa file, status Git</td></tr>
+          </tbody>
+        </table></div>
         <p align="center">
-          <img src="github-new-repo.png" style="width:100%;max-width:560px;border-radius:8px;border:1px solid var(--border-default);margin:0.5rem 0;" alt="New Repository">
-          <br><small style="color:var(--text-subtle);">Membuat repository baru di GitHub</small>
+          <img src="/assets/vscode-interface.png" style="width:100%;max-width:640px;border-radius:8px;border:1px solid var(--border-default);" alt="Antarmuka VS Code">
+          <br><small style="color:var(--text-subtle);">Tampilan antarmuka utama Visual Studio Code</small>
         </p>
       </section>
 
+      <!-- 4 -->
+      <section id="penggunaan">
+        <h2>4. Penggunaan Dasar</h2>
+
+        <h3>Membuka Folder / Project</h3>
+        <p>Klik menu <strong>File &rarr; Open Folder...</strong> atau tekan <span class="kbd">Ctrl+K</span> lalu <span class="kbd">Ctrl+O</span>. Pilih folder project yang ingin kamu kerjakan.</p>
+
+        <h3>Membuat & Menyimpan File</h3>
+        <p>Di panel Explorer, klik ikon <strong>New File</strong>. Beri nama file beserta ekstensinya, contoh: <code>main.py</code>, <code>index.php</code>, <code>app.cpp</code>. Simpan dengan <span class="kbd">Ctrl+S</span>.</p>
+
+        <h3>Terminal Terintegrasi</h3>
+        <p>Buka terminal internal dengan <span class="kbd">Ctrl+`</span>. Dari sini kamu bisa langsung menjalankan perintah seperti <code>python main.py</code>, <code>gcc main.c</code>, atau perintah Git.</p>
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body"><strong>Tips:</strong> Jika muncul error "git is not recognized" di terminal, klik panah kecil di sebelah tombol <code>+</code> di panel terminal dan pilih <strong>Git Bash</strong> sebagai shell. Lihat <a href="../utility/#git-not-recognized">panduan lengkapnya di Troubleshooting</a>.</div>
+        </div>
+
+        <h3>Command Palette</h3>
+        <p>Fitur serbaguna untuk mengakses semua perintah VS Code. Buka dengan <span class="kbd">Ctrl+Shift+P</span>. Contoh: ketik <code>Format Document</code>, <code>Change Language Mode</code>, atau <code>Reload Window</code>.</p>
+      </section>
+
       <!-- 5 -->
-      <section id="workflow">
-        <h2>5. Workflow Utama Git & GitHub</h2>
-        <p>Biasanya ada 2 skenario umum saat kerja pakai Git & GitHub:</p>
-
-        <div class="scenario-grid">
-          <div class="scenario-card scenario-a">
-            <span class="scenario-badge">Skenario A</span>
-            <h3>Mengambil Repo yang Sudah Ada</h3>
-            <p>Panitia atau mentor sudah menyiapkan repository di GitHub dan kamu tinggal mengunduh lalu mengerjakannya. Menggunakan <code>git clone</code> dan <code>git pull</code>.</p>
-          </div>
-          <div class="scenario-card scenario-b">
-            <span class="scenario-badge">Skenario B</span>
-            <h3>Membuat Repo Baru dari Lokal</h3>
-            <p>Kamu membuat project dari nol di laptopmu dan mau kamu unggah ke GitHub. Menggunakan <code>git init</code> sampai <code>git push</code>.</p>
-          </div>
-        </div>
-
-        <h3>…° Skenario A: Mengambil Repo yang Sudah Ada</h3>
-
-        <h4>Langkah A.1: Menyalin Repository ke Lokal (git clone)</h4>
-        <p>Buka terminal di folder yang kamu inginkan, lalu jalankan:</p>
-        <pre><code class="language-bash">git clone https://github.com/username-panitia/nama-repo-infonic.git</code></pre>
-        <p>Perintah ini akan menyalin seluruh folder beserta histori Git dari GitHub ke laptopmu. Kemudian masuk ke folder hasil clone:</p>
-        <pre><code class="language-bash">cd nama-repo-infonic</code></pre>
-
-        <h4>Langkah A.2: Mengambil & Memperbarui Kode Terbaru (git pull)</h4>
-        <p>Misalnya teman setim kamu bikin perubahan dan mengunggahnya ke GitHub, kamu bisa ambil update terbarunya dengan:</p>
-        <pre><code class="language-bash">git pull origin main</code></pre>
-        <div class="info-box">
-          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
-          <div class="info-box-body"><strong>Tips:</strong> Biasakan melakukan <code>git pull</code> setiap kali mau mulai ngoding, supaya kodemu selalu up to date dengan versi terbaru di GitHub.</div>
-        </div>
-
-        <h3>…± Skenario B: Membuat Repository Baru dari Lokal</h3>
-
-        <h4>Langkah B.1: Inisialisasi Repository Lokal (git init)</h4>
-        <p>Buka terminal VS Code di dalam folder projectmu, lalu ketik:</p>
-        <pre><code class="language-bash">git init</code></pre>
-        <p>Ini akan membuat folder rahasia <code>.git</code> yang kerjanya memantau segala perubahan kodemu.</p>
-
-        <h4>Langkah B.2: Menambahkan File ke Staging Area (git add)</h4>
-        <p>Cek dulu status perubahanmu:</p>
-        <pre><code class="language-bash">git status</code></pre>
-        <p>Masukkan file yang kamu kerjakan ke Staging Area (keranjang persiapan):</p>
-        <pre><code class="language-bash"># Tambah 1 file aja:
-git add nama_file.ext
-
-# Tambah SEMUA file sekaligus:
-git add .</code></pre>
-
-        <h4>Langkah B.3: Menyimpan Snapshot (git commit)</h4>
-        <p>Sekarang saatnya kamu simpan perubahan tersebut ke riwayat Git dengan pesan yang jelas:</p>
-        <pre><code class="language-bash">git commit -m "feat: inisialisasi project dan menambah file awal"</code></pre>
-        <div class="warning-box">
-          <div class="warning-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--orange);"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
-          <div class="warning-box-body"><strong>Terjebak di Vim?</strong> Kalau kamu lupa kasih <code>-m "pesan"</code> dan masuk ke editor aneh (Vim/Nano), baca cara keluarnya di <a href="../utility/#vim">Troubleshooting</a>.</div>
-        </div>
-
-        <h4>Langkah B.4: Mengatur Branch Utama (git branch -M main)</h4>
-        <p>Biar nama branch utamamu cocok sama bawaan GitHub (<code>main</code>), jalankan:</p>
-        <pre><code class="language-bash">git branch -M main</code></pre>
-
-        <h4>Langkah B.5: Menghubungkan ke GitHub (git remote)</h4>
-        <p>Sambungkan folder lokal kamu sama repository yang udah dibuat di GitHub tadi:</p>
-        <pre><code class="language-bash">git remote add origin https://github.com/username-kamu/latihan-infonic.git</code></pre>
-        <p>Cek lagi apakah sudah sukses tersambung:</p>
-        <pre><code class="language-bash">git remote -v</code></pre>
-
-        <h4>Langkah B.6: Mengirim Kode ke GitHub (git push)</h4>
-        <p>Tinggal satu langkah lagi! Kirim semua hasil kerjamu ke GitHub:</p>
-        <pre><code class="language-bash">git push -u origin main</code></pre>
-        <p>Tanda <code>-u</code> biar nanti-nanti kamu cuma perlu ngetik <code>git push</code> aja.</p>
-        <div class="info-box">
-          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
-          <div class="info-box-body"><strong>Catatan Login:</strong> Kalau ini baru pertama kali, mungkin bakal ada pop-up untuk login GitHub atau minta Personal Access Token. Ikuti aja proses sign-in di browsernya.</div>
-        </div>
+      <section id="shortcut">
+        <h2>5. Shortcut Penting</h2>
+<div class="table-responsive"><table class="styled-table">
+          <thead>
+            <tr><th>Aksi</th><th>Windows / Linux</th><th>macOS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Command Palette</td><td><span class="kbd">Ctrl+Shift+P</span></td><td><span class="kbd">Cmd+Shift+P</span></td></tr>
+            <tr><td>Quick Open File</td><td><span class="kbd">Ctrl+P</span></td><td><span class="kbd">Cmd+P</span></td></tr>
+            <tr><td>Buka/Tutup Terminal</td><td><span class="kbd">Ctrl+`</span></td><td><span class="kbd">Cmd+`</span></td></tr>
+            <tr><td>Simpan File</td><td><span class="kbd">Ctrl+S</span></td><td><span class="kbd">Cmd+S</span></td></tr>
+            <tr><td>Format Code</td><td><span class="kbd">Shift+Alt+F</span></td><td><span class="kbd">Shift+Option+F</span></td></tr>
+            <tr><td>Toggle Sidebar</td><td><span class="kbd">Ctrl+B</span></td><td><span class="kbd">Cmd+B</span></td></tr>
+            <tr><td>Duplicate Line</td><td><span class="kbd">Shift+Alt+&larr;“/&larr;‘</span></td><td><span class="kbd">Shift+Option+&larr;“/&larr;‘</span></td></tr>
+            <tr><td>Comment/Uncomment</td><td><span class="kbd">Ctrl+/</span></td><td><span class="kbd">Cmd+/</span></td></tr>
+            <tr><td>Find & Replace</td><td><span class="kbd">Ctrl+H</span></td><td><span class="kbd">Cmd+H</span></td></tr>
+          </tbody>
+        </table></div>
       </section>
 
       <!-- 6 -->
-      <section id="perintah-lain">
-        <h2>6. Perintah Git Lain yang Sering Digunakan</h2>
+      <section id="ekstensi">
+        <h2>6. Rekomendasi Ekstensi</h2>
 
-        <h3>git log</h3>
-        <p>Buat ngecek riwayat commit apa aja yang udah kamu buat:</p>
-        <pre><code class="language-bash">git log --oneline</code></pre>
-
-        <h3>git status</h3>
-        <p>Ngecek status folder kamu (apa ada file baru, diedit, atau belum di-commit):</p>
-        <pre><code class="language-bash">git status</code></pre>
-
-        <h3>git restore & git reset (Membatalkan Kesalahan)</h3>
-        <p>Kalau kamu tidak sengaja mengedit file yang salah atau salah membuat commit, jangan panik:</p>
-        <pre><code class="language-bash"># Batalkan perubahan pada 1 file yang belum di-commit:
-git restore nama_file.ext
-
-# Batalkan commit terakhir (tanpa menghapus file):
-git reset --soft HEAD~1</code></pre>
-        <div class="info-box">
-          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
-          <div class="info-box-body"><strong>Panduan Lengkap Membatalkan Kesalahan:</strong> Sudah terlanjur push ke GitHub atau menghadapi merge conflict? Lihat <a href="../utility/#salah-edit-file" style="color:var(--primary);font-weight:600;text-decoration:underline;">Panduan Solusi Rollback & Troubleshooting di sini &rarr;</a></div>
+        <h3>Umum & Produktivitas</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">Material Icon Theme</div>
+            <div class="ext-card-id">pkief.material-icon-theme</div>
+            <div class="ext-card-desc">Ikon folder & file yang lebih jelas dan mudah dibedakan berdasarkan tipe.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Prettier</div>
+            <div class="ext-card-id">esbenp.prettier-vscode</div>
+            <div class="ext-card-desc">Merapikan format kode secara otomatis saat disimpan. Mendukung hampir semua bahasa.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Code Runner</div>
+            <div class="ext-card-id">formulahendry.code-runner</div>
+            <div class="ext-card-desc">Jalankan kode Python, C, C++, PHP, JS langsung dari editor dengan satu tombol.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">GitLens</div>
+            <div class="ext-card-id">eamodio.gitlens</div>
+            <div class="ext-card-desc">Lihat histori commit, siapa yang menulis baris tertentu, dan perbandingan branch.</div>
+          </div>
         </div>
 
-        <h3>git branch & git checkout</h3>
-        <p>Kalau kamu butuh bikin cabang baru untuk fitur khusus:</p>
-        <pre><code class="language-bash"># Lihat semua branch:
-git branch
+        <h3>Python</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">Python</div>
+            <div class="ext-card-id">ms-python.python</div>
+            <div class="ext-card-desc">Ekstensi resmi Microsoft. IntelliSense, debugging, linting, dan virtual environment.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Pylance</div>
+            <div class="ext-card-id">ms-python.vscode-pylance</div>
+            <div class="ext-card-desc">Language server Python yang cepat dan akurat untuk autocomplete.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Black Formatter</div>
+            <div class="ext-card-id">ms-python.black-formatter</div>
+            <div class="ext-card-desc">Formatter standar industri Python &mdash; konsisten dengan PEP 8.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Jupyter</div>
+            <div class="ext-card-id">ms-toolsai.jupyter</div>
+            <div class="ext-card-desc">Buka dan jalankan file <code>.ipynb</code> langsung di dalam VS Code.</div>
+          </div>
+        </div>
 
-# Bikin branch baru dan pindah ke sana:
-git checkout -b feature-baru
-# atau:
-git switch -c feature-baru</code></pre>
+        <h3>C & C++</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++</div>
+            <div class="ext-card-id">ms-vscode.cpptools</div>
+            <div class="ext-card-desc">IntelliSense, auto-completion, syntax highlighting, dan debugging untuk C dan C++.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++ Compile Run</div>
+            <div class="ext-card-id">danielpinto85c.c-cpp-compile-run</div>
+            <div class="ext-card-desc">Jalankan file <code>.c</code> atau <code>.cpp</code> instan dengan <span class="kbd">F6</span> &mdash; tanpa ketik <code>gcc</code> manual.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++ Extension Pack</div>
+            <div class="ext-card-id">ms-vscode.cpptools-extension-pack</div>
+            <div class="ext-card-desc">Paket lengkap buatan Microsoft &mdash; sudah mencakup C/C++ dan CMake.</div>
+          </div>
+        </div>
+
+        <h3>PHP</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Intelephense</div>
+            <div class="ext-card-id">bmewburn.vscode-intelephense-client</div>
+            <div class="ext-card-desc">Autocomplete, navigasi fungsi, dan type checking untuk PHP.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Server</div>
+            <div class="ext-card-id">bware.phpserver</div>
+            <div class="ext-card-desc">Jalankan project PHP di local server langsung dari VS Code.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Debug</div>
+            <div class="ext-card-id">xdebug.php-debug</div>
+            <div class="ext-card-desc">Integrasi Xdebug untuk melacak error dan debugging variabel.</div>
+          </div>
+        </div>
       </section>
 
       <!-- 7 -->
-      <section id="gitignore">
-        <h2>7. Mengenal File .gitignore</h2>
-        <p>File <code>.gitignore</code> penting banget supaya file rahasia (kayak password di <code>.env</code>) atau file sampah cache tidak ikut ke-upload ke GitHub.</p>
-
-        <h3>Contoh isi .gitignore:</h3>
-        <pre><code class="language-bash">node_modules/
-.env
-*.log
-.DS_Store
-Thumbs.db
-__pycache__/</code></pre>
-      </section>
-
-      <!-- Cheat Sheet -->
-      <section id="cheatsheet">
-        <h2>Rangkuman Perintah Cepat (Cheat Sheet)</h2>
-
-        <div class="cheat-grid">
-          <div class="cheat-box">
-            <h4>“¥ Mengambil Repo dari GitHub</h4>
-            <pre><code class="language-bash">git clone &lt;URL_REPO_GITHUB&gt;
-cd &lt;NAMA_FOLDER&gt;
-git pull origin main</code></pre>
-          </div>
-
-          <div class="cheat-box">
-            <h4>“¤ Membuat Repo Baru dari Awal</h4>
-            <pre><code class="language-bash">git init
-git add .
-git commit -m "pesan singkat"
-git branch -M main
-git remote add origin &lt;URL_REPO_GITHUB&gt;
-git push -u origin main</code></pre>
-          </div>
+      <section id="install-ekstensi">
+        <h2>7. Cara Install Ekstensi</h2>
+        <ol>
+          <li>Buka VS Code.</li>
+          <li>Tekan <span class="kbd">Ctrl+Shift+X</span> untuk membuka panel Extensions.</li>
+          <li>Ketik nama atau ID ekstensi di kolom pencarian.</li>
+          <li>Klik <strong>Install</strong> pada ekstensi yang kamu inginkan.</li>
+          <li>Ekstensi langsung aktif &mdash; umumnya tidak perlu restart VS Code.</li>
+        </ol>
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body">Gunakan ID ekstensi (contoh: <code>ms-python.python</code>) untuk memastikan kamu menginstal yang tepat, bukan ekstensi dengan nama serupa dari publisher berbeda.</div>
         </div>
       </section>
     </main>
@@ -1065,11 +1017,11 @@ git push -u origin main</code></pre>
 
   <!-- Universal Clean Footer -->
   <footer class="page-footer">
-    <a href="../../">Home</a>
-    <a href="../vscode/">VS Code</a>
-    <a href="../git/">Git &amp; GitHub</a>
-    <a href="../fork-pr/">Fork &amp; PR</a>
-    <a href="../utility/">Troubleshooting</a>
+    <a href="/">Home</a>
+    <a href="/materi/vscode.html">VS Code</a>
+    <a href="/materi/git.html">Git &amp; GitHub</a>
+    <a href="/materi/fork-pr.html">Fork &amp; PR</a>
+    <a href="/materi/utility.html">Troubleshooting</a>
     <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer">Flowchart &nearr;</a>
     <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer">Figma &nearr;</a>
   </footer>

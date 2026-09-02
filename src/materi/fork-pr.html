@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080d1a">
   <title>Fork &amp; Pull Request &mdash; Materi INFONIC 2026</title>
   <meta name="description" content="Alur bertingkat pengumpulan tugas mahasiswa baru INFONIC 2026 melalui repository Kakak Pembimbing (Kabim) gugus.">
-  <link rel="icon" type="image/jpeg" href="../../assets/logo.jpg">
+  <link rel="icon" type="image/jpeg" href="/assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -367,15 +367,18 @@
       font-weight: 700; font-size: 0.92rem; color: #fff;
     }
     .error-label {
+      display: inline-flex;
+      align-items: center;
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 6px;
-      white-space: nowrap;
+      letter-spacing: 0.05em; padding: 0.25rem 0.65rem; border-radius: 6px;
+      line-height: 1.4;
+      white-space: normal;
     }
     .error-label.cause { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.25); }
     .error-label.solution { background: rgba(52,211,153,0.12); color: var(--emerald); border: 1px solid rgba(52,211,153,0.25); }
     .error-label.danger { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
     .error-body { padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
-    .error-row { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; align-items: start; }
+    .error-row { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
     .error-content { font-size: 0.9rem; color: var(--text-muted); }
 
     .folder-tree {
@@ -638,13 +641,15 @@
         overflow-wrap: anywhere;
       }
       .error-body { padding: 0.85rem; }
-      .error-row {
-        grid-template-columns: 1fr !important;
-        gap: 0.35rem !important;
-      }
+      .error-row { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
       .error-label {
-        align-self: flex-start;
-      }
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 0.25rem 0.65rem; border-radius: 6px;
+      line-height: 1.4;
+      white-space: normal;
+    }
       .error-content {
         min-width: 0;
         max-width: 100%;
@@ -743,17 +748,17 @@
 
   <!-- Navbar with Uniform Hamburger Menu Drawer and External Canva Links -->
   <nav class="navbar">
-    <a href="../../" class="navbar-brand">
-      <img src="../../assets/logo.jpg" alt="INFONIC">
+    <a href="/" class="navbar-brand">
+      <img src="/assets/logo.jpg" alt="INFONIC">
       <span>INFONIC</span>
     </a>
     <div class="nav-sep"></div>
     <div class="nav-links-wrap" id="navLinksWrap">
-      <a href="../../" class="nav-link"><span>Home</span></a>
-      <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
-      <a href="../git/" class="nav-link"><span>Git &amp; GitHub</span></a>
-      <a href="../fork-pr/" class="nav-link active"><span>Fork &amp; PR</span></a>
-      <a href="../utility/" class="nav-link"><span>Troubleshooting</span></a>
+      <a href="/" class="nav-link"><span>Home</span></a>
+      <a href="/materi/vscode.html" class="nav-link"><span>VS Code</span></a>
+      <a href="/materi/git.html" class="nav-link"><span>Git &amp; GitHub</span></a>
+      <a href="/materi/fork-pr.html" class="nav-link active"><span>Fork &amp; PR</span></a>
+      <a href="/materi/utility.html" class="nav-link"><span>Troubleshooting</span></a>
       <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Flowchart <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
       <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Figma <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
     </div>
@@ -1026,11 +1031,11 @@ Tugas/26106050012_SitiFatimah.md      (Di luar folder gugus)</code></pre>
 
   <!-- Universal Clean Footer -->
   <footer class="page-footer">
-    <a href="../../">Home</a>
-    <a href="../vscode/">VS Code</a>
-    <a href="../git/">Git &amp; GitHub</a>
-    <a href="../fork-pr/">Fork &amp; PR</a>
-    <a href="../utility/">Troubleshooting</a>
+    <a href="/">Home</a>
+    <a href="/materi/vscode.html">VS Code</a>
+    <a href="/materi/git.html">Git &amp; GitHub</a>
+    <a href="/materi/fork-pr.html">Fork &amp; PR</a>
+    <a href="/materi/utility.html">Troubleshooting</a>
     <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer">Flowchart &nearr;</a>
     <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer">Figma &nearr;</a>
   </footer>
