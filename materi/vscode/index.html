@@ -210,7 +210,7 @@
     .content section {
       margin-bottom: 4rem;
       padding-top: 1.5rem;
-      scroll-margin-top: 80px;
+      scroll-margin-top: 175px;
     }
 
     .content h2 {
@@ -219,13 +219,13 @@
       padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-default);
       line-height: 1.35;
-      scroll-margin-top: 80px;
+      scroll-margin-top: 175px;
     }
 
     .content h3 {
       font-size: 1.08rem; font-weight: 700;
       color: #e2e8f0; margin: 1.75rem 0 0.75rem;
-      scroll-margin-top: 80px;
+      scroll-margin-top: 175px;
     }
 
     .content h4 {
@@ -611,19 +611,19 @@
 
       /* Proper scroll-margin-top so section content NEVER gets obscured under navbar + sticky TOC */
       .content section {
-        scroll-margin-top: 135px;
+        scroll-margin-top: 175px;
         padding-top: 0;
         margin-bottom: 3rem;
       }
 
       .content h2 {
         font-size: 1.35rem;
-        scroll-margin-top: 135px;
+        scroll-margin-top: 175px;
       }
 
       .content h3 {
         font-size: 1.05rem;
-        scroll-margin-top: 135px;
+        scroll-margin-top: 175px;
       }
 
       .content p, .content li { font-size: 0.9rem; line-height: 1.65; }
@@ -983,7 +983,7 @@ sudo apt-get install -f</code></pre>
               e.preventDefault();
               const navHeight = 52;
               const tocHeight = 50;
-              const totalOffset = window.innerWidth <= 768 ? (navHeight + tocHeight + 15) : 80;
+              const totalOffset = window.innerWidth <= 768 ? 175 : 90;
               const elementPosition = targetEl.getBoundingClientRect().top;
               const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
 

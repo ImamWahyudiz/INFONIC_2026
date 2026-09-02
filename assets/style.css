@@ -289,7 +289,7 @@ body {
   font-weight: 800;
   line-height: 1.22;
   letter-spacing: -0.02em;
-  margin-bottom: 1.1rem;
+  margin-bottom: 3rem;
   color: #f8fafc;
   max-width: 850px;
 }
@@ -928,7 +928,7 @@ body {
   font-weight: 800;
   line-height: 1.2;
   color: #ffffff;
-  margin-bottom: 0.75rem;
+  margin-bottom: 3rem;
 }
 
 .sec3-desc {
@@ -1370,8 +1370,10 @@ body {
   .hero-theme-tag {
     font-size: 1.05rem;
   }
-  .section-title {
+  .section-title,
+  .sec3-title {
     font-size: 1.75rem;
+    margin-bottom: 2.25rem;
   }
   .section-desc {
     font-size: 0.9rem;
