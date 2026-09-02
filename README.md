@@ -1,52 +1,60 @@
-# 🚀 INFONIC Project Workspace
+# 🌟 Selamat Datang di Repository Pengumpulan Tugas INFONIC 2026!
 
-Workspace terintegrasi untuk kegiatan dan materi pelatihan **INFONIC (Informatics Orientation & Basic Training)**.
+Halo, **Mahasiswa Baru Informatika 2026**!  
+Selamat datang di *repository* resmi pengumpulan seluruh tugas Orientasi Jurusan (Osjur) dalam rangkaian **INFONIC 2026**.
 
----
-
-## 📁 Struktur Direktori
-
-```text
-INFONIC/
-├── index.html              # Entry point / redirector ke src/ (untuk hosting/server)
-├── 🌐 src/                 # Source code website landing page interaktif & modul HTML
-│   ├── index.html          # Halaman utama landing page
-│   ├── logoINFONIC.jpg     # Logo aset INFONIC
-│   ├── materi-vscode/      # Modul web VS Code
-│   ├── materi-git/         # Modul web Git & GitHub
-│   ├── tutorial-fork-pr/   # Panduan web Fork & PR
-│   ├── materi-utility/     # Panduan web troubleshooting
-│   ├── Tugas/              # Template & folder pengumpulan tugas
-│   └── README.md           # Panduan pengumpulan tugas peserta
-├── 📚 materi/              # Dokumen modul & materi sumber (Markdown)
-├── 📝 docs/                # Dokumen riset, analisis, dan ringkasan implementasi
-├── .github/                # GitHub configurations & workflows
-├── .gitignore              # Konfigurasi Git ignore workspace
-└── README.md               # Navigasi & dokumentasi utama direktori
-```
+Repository ini adalah pusat pengumpulan hasil karya dan penugasanmu selama mengikuti seluruh rangkaian kegiatan INFONIC. Di sini, kita akan mempraktikkan alur kerja standar dan profesional menggunakan **Git & GitHub** melalui mekanisme **Fork** dan **Pull Request (PR)**.
 
 ---
 
-## 📌 Deskripsi Direktori
+## 🎯 Keterangan & Aturan Pengumpulan Tugas
 
-### 1. [`src/`](./src/)
-Source code website landing page interaktif untuk peserta:
-- **[`src/index.html`](./src/index.html)**: Halaman utama landing page INFONIC.
-- **[`src/materi-vscode/`](./src/materi-vscode/)**: Modul interaktif Visual Studio Code.
-- **[`src/materi-git/`](./src/materi-git/)**: Modul interaktif Git & GitHub.
-- **[`src/tutorial-fork-pr/`](./src/tutorial-fork-pr/)**: Panduan interaktif alur Fork & Pull Request.
-- **[`src/materi-utility/`](./src/materi-utility/)**: Panduan troubleshooting & utility terminal.
-- **[`src/Tugas/`](./src/Tugas/)**: Panduan & template format pengumpulan tugas.
+Setiap mahasiswa baru wajib mengumpulkan **link-link tugas** (seperti link Google Drive, repository proyek pribadi, dokumen, atau portofolio desain) ke dalam folder kelompok/gugus masing-masing.
 
-### 2. [`materi/`](./materi/)
-Kumpulan dokumen sumber materi pelatihan dalam format Markdown:
-- **[`link_materi_INFONIC.md`](./materi/link_materi_INFONIC.md)**: Pusat indeks tautan seluruh materi.
-- **[`materi_vscode.md`](./materi/materi_vscode.md)**: Panduan instalasi, konfigurasi, shortcut, dan ekstensi VS Code.
-- **[`materi_git_github.md`](./materi/materi_git_github.md)**: Konsep VCS, instalasi, dan workflow Git/GitHub.
-- **[`tutorial_fork_pr.md`](./materi/tutorial_fork_pr.md)**: Tutorial praktis Fork repository dan pembuatan PR.
-- **[`materi_utility.md`](./materi/materi_utility.md)**: Panduan terminal, path navigasi, dan solusi kendala teknis umum.
+### 📋 Cara Pengisian Tugas:
+1. **Masuk ke Folder Kelompok/Gugusmu**: Buka direktori yang sesuai dengan kelompokmu di dalam folder **`Tugas/<Nama_Kelompok>/`** (contoh: `Tugas/Python/` atau `Tugas/PHP/`).
+2. **Gunakan Template yang Ada**: Di dalam folder kelompok sudah tersedia file template bernama **`NIM-NAMA.md`**.
+3. **Salin (Duplikat) & Ganti Nama**:  
+   - **JANGAN** mengedit langsung file `NIM-NAMA.md`!  
+   - Salin file tersebut kedalam folder gugusmu, lalu ganti nama file hasil salinannya menjadi format: **`NIM_NamaLengkap.md`** (Contoh: `261060500XX_ImamWahyudi.md`).
+4. **Isi Link Tugas**: Buka file barumu, lalu cantumkan seluruh link pengumpulan tugas Osjur sesuai format di dalam template.
+5. **Kumpulkan via Pull Request**: Kirimkan file tugasmu kembali ke repository resmi panitia menggunakan metode **Fork & Pull Request (PR)** yang bisa dilihat melalui link dibawah.
 
-### 3. [`docs/`](./docs/)
-Dokumentasi teknis pengembangan dan riset:
-- **[`RESEARCH_PLAN.md`](./docs/RESEARCH_PLAN.md)**: Rencana riset UX, analisis audiens Gen Z, dan strategi konten.
-- **[`IMPLEMENTATION_SUMMARY.md`](./docs/IMPLEMENTATION_SUMMARY.md)**: Rangkuman implementasi landing page dan fitur-fitur baru.
+---
+
+## ⚠️ Peringatan Penting (*Do's & Don'ts*)
+
+> [!CAUTION]
+> **JANGAN PERNAH MENGUBAH ATAU MENGHAPUS FILE MILIK TEMAN LAIN!**  
+> Mengubah file mahasiswa lain atau mengubah file template asli (`NIM-NAMA.md`) akan menyebabkan *merge conflict* dan Pull Request kamu akan otomatis **ditolak (rejected)** oleh panitia.
+
+Agar proses pengumpulan tugasmu lancar dan tidak kendala teknis:
+
+### ❌ LARANGAN (Don'ts):
+- **JANGAN** mengedit file `NIM-NAMA.md` asli milik panitia atau file `NIM_Nama.md` milik mahasiswa lain.
+- **JANGAN** menaruh file tugas di luar folder kelompok/gugusmu sendiri.
+- **JANGAN** mengubah `README.md` ini atau struktur folder repository.
+- **JANGAN** membuat Pull Request baru sebelum melakukan *Sync Fork* jika ada perubahan terbaru dari panitia di repository utama.
+
+### ✅ ATURAN WAJIB (Do's):
+- **Pastikan penamaan file sesuai format**: `NIM_NamaLengkap.md` (gunakan *underscore* `_`, tanpa spasi).
+- **Pastikan izin akses link terbuka**: Seluruh link tugas (Google Drive, Figma, dsb.) harus diatur ke hak akses **Public / Anyone with the link can view**.
+- **Tulis pesan commit yang rapi**, contoh: `Submit tugas osjur - 261060500XX - Imam Wahyudi`.
+
+Link tutorial fork and pull: [tutorial Fork and Pull](https://gist.github.com/ImamWahyudiz/e3d68cc174b13ec9d397a0ddc1399d27#file-03-tutorial_fork_pr-md)
+
+---
+
+## 📚 Panduan & Link Materi INFONIC 2026
+
+Berikut adalah daftar referensi lengkap dan panduan teknis yang telah disediakan untuk membantumu:
+
+- 📖 **[Pusat Materi & Sumber Belajar INFONIC](https://gist.github.com/ImamWahyudiz/e3d68cc174b13ec9d397a0ddc1399d27)**  
+  *(Akses ke modul presentasi, materi VS Code, Git & GitHub, pemrograman dasar, hingga UI/UX)*.
+- 🖥️ **[Halaman Sambutan INFONIC](https://imamwahyudiz.github.io/INFONIC_2026/)**  
+  *(Halaman utama sambutan Maba Informatika 2026)*.
+
+---
+
+*Semangat menyelesaikan tugas dan mari tumbuh bersama di Keluarga Besar Mahasiswa Informatika!*  
+**#INFONIC2026 #UnggulBerkarakter**

@@ -22,8 +22,7 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Internal / Documentation / Scratch folders
+# Internal documentation & draft folders
 dev/
 docs/
 materi/
-kabim/
