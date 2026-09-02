@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -677,6 +677,18 @@ git add .</code></pre>
         <h3>git status</h3>
         <p>Ngecek status folder kamu (apa ada file baru, diedit, atau belum di-commit):</p>
         <pre><code class="language-bash">git status</code></pre>
+
+        <h3>git restore & git reset (Membatalkan Kesalahan)</h3>
+        <p>Kalau kamu tidak sengaja mengedit file yang salah atau salah membuat commit, jangan panik:</p>
+        <pre><code class="language-bash"># Batalkan perubahan pada 1 file yang belum di-commit:
+git restore nama_file.ext
+
+# Batalkan commit terakhir (tanpa menghapus file):
+git reset --soft HEAD~1</code></pre>
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body"><strong>Panduan Lengkap Membatalkan Kesalahan:</strong> Sudah terlanjur push ke GitHub atau menghadapi merge conflict? Lihat <a href="../utility/#salah-edit-file" style="color:var(--primary);font-weight:600;text-decoration:underline;">Panduan Solusi Rollback & Troubleshooting di sini &rarr;</a></div>
+        </div>
 
         <h3>git branch & git checkout</h3>
         <p>Kalau kamu butuh bikin cabang baru untuk fitur khusus:</p>

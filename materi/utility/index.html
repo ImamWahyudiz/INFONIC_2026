@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080d1a">
   <title>Troubleshooting &mdash; Materi INFONIC 2026</title>
-  <meta name="description" content="Solusi error umum Git, terminal, dan path untuk mahasiswa INFONIC 2026.">
+  <meta name="description" content="Solusi lengkap error Git, revert perubahan file yang salah ubah (belum commit, sudah commit, sudah push), terminal, dan penanganan merge conflict INFONIC 2026.">
   <link rel="icon" type="image/jpeg" href="../../assets/logoINFONIC.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
   <style>
     :root {
@@ -28,6 +28,7 @@
       --orange: #fb923c;
       --yellow: #fbbf24;
       --red: #f87171;
+      --purple: #c084fc;
       --navbar-h: 48px;
     }
 
@@ -102,15 +103,15 @@
       color: #fff; margin-bottom: 0.75rem;
     }
 
-    .page-hero p { font-size: 1rem; color: var(--text-muted); max-width: 580px; margin: 0 auto; }
+    .page-hero p { font-size: 1rem; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
 
     .layout {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 210px 1fr;
       max-width: 1200px;
       margin: 0 auto;
       padding: 2.5rem 1.5rem;
-      gap: 1.75rem;
+      gap: 2rem;
       align-items: start;
     }
 
@@ -123,10 +124,10 @@
       padding-left: 0.75rem;
     }
 
-    .sidebar-nav { list-style: none; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
 
     .sidebar-nav a {
-      display: block; padding: 0.4rem 0.75rem;
+      display: block; padding: 0.38rem 0.75rem;
       color: var(--text-muted); text-decoration: none;
       font-size: 0.82rem; font-weight: 500;
       border-left: 2px solid transparent;
@@ -134,33 +135,34 @@
       transition: all 0.2s ease;
     }
 
-    .sidebar-nav a:hover { color: #fff; border-left-color: var(--border-hover); }
-    .sidebar-nav a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-dim); }
+    .sidebar-nav a:hover { color: #fff; border-left-color: var(--border-hover); background: rgba(255,255,255,0.02); }
+    .sidebar-nav a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-dim); font-weight: 600; }
 
     .content { min-width: 0; }
     .content section { margin-bottom: 4rem; padding-top: 1rem; }
     .section-anchor { display: block; height: calc(var(--navbar-h) + 1.5rem); margin-top: calc(-1 * (var(--navbar-h) + 1.5rem)); visibility: hidden; }
 
     .content h2 {
-      font-size: 1.5rem; font-weight: 800;
+      font-size: 1.55rem; font-weight: 800;
       color: #fff; margin-bottom: 1rem;
       padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-default);
     }
 
-    .content h3 { font-size: 1.05rem; font-weight: 700; color: #e2e8f0; margin: 1.75rem 0 0.75rem; }
-    .content p { color: var(--text-muted); margin-bottom: 0.85rem; font-size: 0.95rem; }
+    .content h3 { font-size: 1.15rem; font-weight: 700; color: #e2e8f0; margin: 1.75rem 0 0.75rem; }
+    .content p { color: var(--text-muted); margin-bottom: 0.85rem; font-size: 0.95rem; line-height: 1.7; }
     .content ul, .content ol { padding-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.85rem; }
     .content li { margin-bottom: 0.4rem; }
     .content strong { color: var(--text-main); font-weight: 600; }
-    .content a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+    .content a { color: var(--primary); text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
 
     .content code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82em;
+      font-size: 0.85em;
       background: rgba(56,189,248,0.1);
       color: var(--cyan);
-      padding: 1px 6px; border-radius: 4px;
+      padding: 2px 6px; border-radius: 4px;
     }
 
     pre[class*="language-"] {
@@ -182,7 +184,7 @@
       padding: 1px 7px; border-radius: 5px;
     }
 
-    /* Error card */
+    /* Scenario & Error card */
     .error-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-default);
@@ -199,15 +201,18 @@
       font-weight: 700;
       color: #fff;
       border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .error-body { padding: 1.25rem; }
 
     .error-row {
       display: grid;
-      grid-template-columns: 90px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     .error-row:last-child { margin-bottom: 0; }
@@ -223,9 +228,25 @@
 
     .error-label.cause { background: rgba(251, 146, 60, 0.15); color: var(--orange); border: 1px solid rgba(251, 146, 60, 0.3); }
     .error-label.solution { background: rgba(52, 211, 153, 0.15); color: var(--emerald); border: 1px solid rgba(52, 211, 153, 0.3); }
+    .error-label.danger { background: rgba(248, 113, 113, 0.15); color: var(--red); border: 1px solid rgba(248, 113, 113, 0.3); }
 
-    .error-content { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .error-content { font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; }
     .error-content strong { color: var(--text-main); }
+
+    /* Callouts */
+    .info-box, .warning-box, .danger-box {
+      display: flex; gap: 0.85rem;
+      border-radius: 10px; padding: 1rem 1.2rem;
+      margin: 1.25rem 0; font-size: 0.88rem; line-height: 1.65;
+    }
+
+    .info-box { background: rgba(56,189,248,0.07); border: 1px solid rgba(56,189,248,0.25); border-left: 3px solid var(--primary); }
+    .warning-box { background: rgba(251,146,60,0.07); border: 1px solid rgba(251,146,60,0.25); border-left: 3px solid var(--orange); color: #fed7aa; }
+    .danger-box { background: rgba(248,113,113,0.08); border: 1.5px solid rgba(248,113,113,0.35); border-left: 3px solid var(--red); color: #fecaca; }
+
+    .info-box-icon { font-size: 1rem; flex-shrink: 0; padding-top: 0.1rem; }
+    .info-box-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .info-box-body strong { color: var(--text-main); }
 
     .styled-table {
       width: 100%; border-collapse: collapse;
@@ -249,19 +270,6 @@
     .styled-table tr:last-child td { border-bottom: none; }
     .styled-table tr:hover td { background: var(--bg-elevated); }
 
-    .info-box {
-      display: flex; gap: 0.85rem;
-      background: rgba(56,189,248,0.07);
-      border: 1px solid rgba(56,189,248,0.25);
-      border-left: 3px solid var(--primary);
-      border-radius: 8px; padding: 1rem 1.15rem;
-      margin: 1rem 0;
-    }
-
-    .info-box-icon { font-size: 1rem; flex-shrink: 0; padding-top: 0.1rem; }
-    .info-box-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
-    .info-box-body strong { color: var(--text-main); }
-
     .page-footer {
       border-top: 1px solid var(--border-default);
       padding: 2rem 1.5rem;
@@ -280,21 +288,14 @@
 
     .page-footer a:hover { color: #fff; border-color: rgba(56,189,248,0.4); background: var(--primary-dim); }
 
-    /* ── RESPONSIVE ── */
     @media(max-width:768px) {
       .layout { grid-template-columns: 1fr; gap: 0; padding: 1.5rem 1rem; }
       .sidebar { position: static; margin-bottom: 2rem; }
       .sidebar-nav { display: flex; flex-wrap: wrap; gap: 0.35rem; }
       .sidebar-nav a { border-left: none; border-radius: 9999px; border: 1px solid var(--border-default); padding: 0.3rem 0.75rem; }
       .sidebar-nav a.active { border-color: var(--primary); }
-      .navbar {
-        padding: 0 0.75rem;
-        gap: 0;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
+      .navbar { padding: 0 0.75rem; gap: 0; overflow-x: auto; scrollbar-width: none; }
       .navbar::-webkit-scrollbar { display: none; }
-      .navbar a.nav-link span { display: inline; }
       .error-row { grid-template-columns: 1fr; gap: 0.5rem; }
     }
   </style>
@@ -309,77 +310,162 @@
     </a>
     <div class="nav-sep"></div>
     <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
-    <a href="../git/" class="nav-link"><span>Git & GitHub</span></a>
-    <a href="../fork-pr/" class="nav-link"><span>Fork & PR</span></a>
+    <a href="../git/" class="nav-link"><span>Git &amp; GitHub</span></a>
+    <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
     <a href="../utility/" class="nav-link active"><span>Troubleshooting</span></a>
   </nav>
 
   <div class="page-hero">
-    <div class="hero-badge">Bantuan & Utility</div>
-    <h1>Troubleshooting & Tips</h1>
-    <p>Solusi error umum Git, terminal, path, dan masalah teknis lainnya yang sering dialami mahasiswa baru.</p>
+    <div class="hero-badge">Bantuan &amp; Solusi Error</div>
+    <h1>Troubleshooting &amp; Solusi Masalah Git</h1>
+    <p>Panduan lengkap mengatasi salah edit file, rollback commit, membatalkan push, navigasi terminal, hingga resolusi konflik tugas.</p>
   </div>
 
-  <div class="layout"><aside class="sidebar">
+  <div class="layout">
+    <aside class="sidebar">
       <div class="sidebar-label">Daftar Isi</div>
       <ul class="sidebar-nav">
-        <li><a href="#navigasi-terminal">1. Navigasi Terminal</a></li>
+        <li><a href="#salah-edit-file">1. Membatalkan File Salah Edit</a></li>
         <li><a href="#git-not-recognized">2. Error Git Not Recognized</a></li>
-        <li><a href="#nama-folder-spasi">3. Nama Folder & Spasi</a></li>
-        <li><a href="#error-lain">4. Error Umum Lainnya</a></li>
+        <li><a href="#merge-conflict">3. Mengatasi Merge Conflict</a></li>
+        <li><a href="#sync-upstream">4. Fork Ketinggalan / Out of Date</a></li>
+        <li><a href="#navigasi-terminal">5. Navigasi Terminal (Path)</a></li>
+        <li><a href="#error-lain">6. Error Umum Lainnya</a></li>
       </ul>
-    </aside><main class="content">
+    </aside>
 
-      <!-- 1 -->
-      <section id="navigasi-terminal">
+    <main class="content">
+
+      <!-- 1. SALAH EDIT FILE & ROLLBACK -->
+      <section id="salah-edit-file">
         <span class="section-anchor"></span>
-        <h2>1. Panduan Navigasi Terminal (Path)</h2>
-        <p>Bagi yang belum terbiasa, layar hitam terminal mungkin terlihat membingungkan. Berikut perintah dasar yang wajib kamu ketahui untuk berpindah folder:</p>
+        <h2>1. Cara Membatalkan File yang Tak Sengaja Terubah (Rollback)</h2>
+        <p>
+          Terkadang kamu tidak sengaja mengedit file template (<code>Tugas/NIM-NAMA.md</code>), file teman lain, atau file sistem seperti <code>index.html</code>. Berikut solusi mengembalikan ke versi asli berdasarkan tahapan yang sedang terjadi:
+        </p>
 
-        <h3>A. Melihat Posisi Saat Ini</h3>
-        <p>Sebelum menjalankan perintah apapun (seperti <code>git init</code> atau menjalankan program), pastikan kamu tahu sedang berada di folder mana.</p>
-        <table class="styled-table">
-          <thead>
-            <tr><th>Shell</th><th>Perintah</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Git Bash / macOS / Linux</td><td><code>pwd</code> (Print Working Directory)</td></tr>
-            <tr><td>Windows CMD</td><td><code>cd</code> tanpa tambahan apapun</td></tr>
-          </tbody>
-        </table>
+        <!-- Skenario 1 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario A: File Berubah Tapi BELUM di-commit (Working Tree / Staged)</span>
+            <span class="error-label solution">Paling Mudah</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                Kamu baru saja mengetik/mengubah file di VS Code dan belum menjalankan <code>git commit</code>.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                <p><strong>1. Mengembalikan 1 file tertentu ke versi semula:</strong></p>
+                <pre><code class="language-bash"># Mengembalikan file template yang tak sengaja terubah
+git restore Tugas/NIM-NAMA.md
 
-        <h3>B. Melihat Isi Folder</h3>
-        <table class="styled-table">
-          <thead>
-            <tr><th>Shell</th><th>Perintah</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Git Bash / macOS / Linux</td><td><code>ls</code> atau <code>ls -l</code> (lebih detail)</td></tr>
-            <tr><td>Windows CMD</td><td><code>dir</code></td></tr>
-          </tbody>
-        </table>
+# Atau jika menggunakan Git versi lama (< 2.23):
+git checkout -- Tugas/NIM-NAMA.md</code></pre>
+                
+                <p><strong>2. Membatalkan jika sudah sempat <code>git add .</code> (Unstage):</strong></p>
+                <pre><code class="language-bash">git restore --staged Tugas/NIM-NAMA.md
+git restore Tugas/NIM-NAMA.md</code></pre>
 
-        <h3>C. Berpindah Folder (<code>cd</code>)</h3>
-        <p><code>cd</code> adalah singkatan dari <em>Change Directory</em>.</p>
-        <ul>
-          <li><strong>Masuk ke sub-folder:</strong> <code>cd nama_folder</code> (contoh: <code>cd Documents</code>)</li>
-          <li><strong>Mundur / naik satu tingkat:</strong> <code>cd ..</code></li>
-          <li><strong>Pindah ke drive lain (Windows CMD):</strong> Ketik huruf drive diikuti titik dua, contoh <code>D:</code> lalu tekan Enter</li>
-        </ul>
+                <p><strong>3. Mengembalikan SELURUH perubahan yang belum di-commit:</strong></p>
+                <pre><code class="language-bash">git restore .</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div class="info-box">
-          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
-          <div class="info-box-body"><strong>Tips Cepat:</strong> Gunakan tombol <span class="kbd">Tab</span> di keyboard saat mengetik nama folder untuk auto-complete. Misalnya ketik <code>cd Docu</code> lalu tekan <span class="kbd">Tab</span>, terminal akan otomatis melengkapinya menjadi <code>cd Documents/</code>. Ini membantu banget biar tidak salah ketik!</div>
+        <!-- Skenario 2 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario B: Sudah Terlanjur di-commit Tapi BELUM di-push</span>
+            <span class="error-label cause">Sedang</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                Kamu sudah menjalankan <code>git commit -m "..."</code> sehingga perubahan tersimpan di riwayat lokal laptopmu, tetapi <strong>belum</strong> menjalankan <code>git push origin main</code>.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                <p>Batalkan commit terakhir tanpa menghapus file tugas yang sudah kamu buat:</p>
+                <pre><code class="language-bash"># Membatalkan commit terakhir (file tugas tetap aman, status kembali ke uncommitted)
+git reset --soft HEAD~1
+
+# Kemudian kembalikan file template yang salah diedit
+git restore Tugas/NIM-NAMA.md
+
+# Lalu buat commit ulang yang bersih
+git add .
+git commit -m "Submit tugas osjur - <NIM_KAMU>"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skenario 3 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario C: Sudah Terlanjur di-commit DAN di-push ke GitHub</span>
+            <span class="error-label danger">Perlu Hati-hati</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                File yang salah ubah sudah terkirim ke repository GitHub pribadimu (kamu sudah <code>git push</code>).
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi 1 (Paling Aman & Bersih)</div>
+              <div class="error-content">
+                <p>Ambil kembali isi file template asli dari repository pusat/upstream lalu commit perbaikan:</p>
+                <pre><code class="language-bash"># Ambil versi asli file template dari commit sebelumnya
+git checkout origin/main -- Tugas/NIM-NAMA.md
+
+# Commit perubahan perbaikan ini dan push ke GitHub-mu
+git add Tugas/NIM-NAMA.md
+git commit -m "fix: revert accidental template changes"
+git push origin main</code></pre>
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi 2 (Force Reset ke GitHub Pribadi)</div>
+              <div class="error-content">
+                <pre><code class="language-bash"># Batalkan commit terakhir di lokal
+git reset --soft HEAD~1
+git restore Tugas/NIM-NAMA.md
+
+# Commit ulang file yang benar
+git add .
+git commit -m "Submit tugas osjur - <NIM_KAMU>"
+
+# Timpa riwayat di GitHub fork pribadimu
+git push origin main --force</code></pre>
+                <div class="warning-box">
+                  <div><strong>Catatan:</strong> Penggunaan <code>--force</code> hanya aman dijalankan pada repository fork <strong>pribadi milikmu sendiri</strong>. Jangan pernah menjalankan force push di repo bersama/utama!</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- 2 -->
+      <!-- 2. GIT NOT RECOGNIZED -->
       <section id="git-not-recognized">
         <span class="section-anchor"></span>
         <h2>2. Mengatasi Error: "git is not recognized..."</h2>
 
         <div class="error-card">
-          <div class="error-header">Error: git is not recognized as an internal or external command</div>
+          <div class="error-header">
+            <span>Error: git is not recognized as an internal or external command</span>
+          </div>
           <div class="error-body">
             <div class="error-row">
               <div class="error-label cause">Penyebab</div>
@@ -390,15 +476,15 @@
             <div class="error-row">
               <div class="error-label solution">Solusi A</div>
               <div class="error-content">
-                <strong>Gunakan Git Bash (Paling Cepat & Direkomendasikan)</strong>
+                <strong>Gunakan Git Bash (Paling Cepat &amp; Direkomendasikan)</strong>
                 <ol style="margin-top:0.5rem;">
-                  <li>Di VS Code, buka terminal.</li>
+                  <li>Di VS Code, buka terminal (<span class="kbd">Ctrl+`</span>).</li>
                   <li>Di pojok kanan atas panel terminal, klik tanda panah bawah (di sebelah ikon tambah <code>+</code>).</li>
                   <li>Pilih <strong>Git Bash</strong> sebagai default profile.</li>
                 </ol>
                 <p align="center" style="margin-top:0.75rem;">
                   <img src="gitbash-terminal.png" style="width:100%;max-width:560px;border-radius:8px;border:1px solid var(--border-default);" alt="Pilih Git Bash">
-                  <br><small style="color:var(--text-subtle);">Memilih Git Bash sebagai default profile</small>
+                  <br><small style="color:var(--text-subtle);">Memilih Git Bash sebagai default profile terminal VS Code</small>
                 </p>
               </div>
             </div>
@@ -407,13 +493,11 @@
               <div class="error-content">
                 <strong>Daftarkan Git ke System PATH Windows (Manual)</strong>
                 <ol style="margin-top:0.5rem;">
-                  <li>Buka <strong>Start Menu</strong> Windows.</li>
-                  <li>Ketik <code>Environment Variables</code> dan pilih <strong>Edit the system environment variables</strong>.</li>
-                  <li>Klik tombol <strong>Environment Variables...</strong> di pojok kanan bawah.</li>
-                  <li>Pada bagian <em>System variables</em> (kotak yang bawah), gulir dan cari variabel bernama <strong>Path</strong>, lalu klik <strong>Edit</strong>.</li>
-                  <li>Klik <strong>New</strong>, lalu tambahkan direktori folder bin/cmd dari Git (biasanya: <code>C:\Program Files\Git\cmd</code> atau <code>C:\Program Files\Git\bin</code>).</li>
-                  <li>Klik <strong>OK</strong> pada semua jendela untuk menyimpan pengaturan.</li>
-                  <li><strong>SANGAT PENTING:</strong> Restart (tutup dan buka ulang) terminal atau VS Code agar perubahan terbaca.</li>
+                  <li>Buka <strong>Start Menu</strong> Windows &rarr; ketik <code>Environment Variables</code>.</li>
+                  <li>Klik <strong>Edit the system environment variables</strong> &rarr; pilih <strong>Environment Variables...</strong></li>
+                  <li>Di kotak <em>System variables</em>, klik variabel <strong>Path</strong> &rarr; <strong>Edit</strong>.</li>
+                  <li>Klik <strong>New</strong>, tambahkan: <code>C:\Program Files\Git\cmd</code></li>
+                  <li>Klik <strong>OK</strong> pada semua jendela dan <strong>Restart VS Code</strong>.</li>
                 </ol>
               </div>
             </div>
@@ -421,80 +505,144 @@
         </div>
       </section>
 
-      <!-- 3 -->
-      <section id="nama-folder-spasi">
+      <!-- 3. MERGE CONFLICT -->
+      <section id="merge-conflict">
         <span class="section-anchor"></span>
-        <h2>3. Tips Nama Folder & Spasi di Terminal</h2>
-        <p>Kesalahan yang paling sering terjadi adalah kesulitan saat masuk ke folder yang namanya pakai <strong>spasi</strong> (contoh: <code>Belajar Coding</code>).</p>
+        <h2>3. Mengatasi Merge Conflict (Konflik Penggabungan)</h2>
 
-        <p>Kalau kamu mengetik:</p>
-        <pre><code class="language-bash">cd Belajar Coding</code></pre>
-        <p>Terminal akan error (<em>too many arguments</em>), karena dia menganggap kamu memasukkan dua perintah yang berbeda ("Belajar" dan "Coding").</p>
-
-        <h3>Solusinya</h3>
-        <p>Gunakan tanda kutip ganda (<code>" "</code>) atau tunggal (<code>' '</code>) untuk membungkus nama folder berspasi tersebut:</p>
-        <pre><code class="language-bash">cd "Belajar Coding"</code></pre>
-
-        <div class="info-box">
-          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
-          <div class="info-box-body">Atau cukup ketik <code>cd Bel</code>, lalu tekan tombol <span class="kbd">Tab</span> di keyboard. Terminal akan otomatis menambahkan format escaping karakter atau tanda kutip yang benar.</div>
+        <div class="error-card">
+          <div class="error-header">
+            <span>CONFLICT (content): Merge conflict in ...</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Dua orang mengedit baris kode yang sama persis di file yang sama (misalnya mengedit file template yang sama alih-alih membuat file terpisah).
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Cara Resolusi</div>
+              <div class="error-content">
+                <ol style="margin-top:0.25rem;">
+                  <li>Buka file yang berkonflik di <strong>Visual Studio Code</strong>.</li>
+                  <li>VS Code akan otomatis menampilkan tombol opsi:
+                    <ul>
+                      <li><code>Accept Current Change</code> (simpan perubahanmu)</li>
+                      <li><code>Accept Incoming Change</code> (ambil perubahan dari repo luar)</li>
+                      <li><code>Accept Both Changes</code> (simpan kedua-duanya)</li>
+                    </ul>
+                  </li>
+                  <li>Pilih opsi yang sesuai, hapus baris marker <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> dan <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>.</li>
+                  <li>Simpan file (<span class="kbd">Ctrl+S</span>), lalu commit:
+                    <pre><code class="language-bash">git add .
+git commit -m "fix: resolve merge conflict"
+git push origin main</code></pre>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- 4 -->
+      <!-- 4. SYNC UPSTREAM -->
+      <section id="sync-upstream">
+        <span class="section-anchor"></span>
+        <h2>4. Repository Fork Ketinggalan (This branch is out of date)</h2>
+
+        <div class="error-card">
+          <div class="error-header">
+            <span>Fork Ketinggalan Beberapa Commit dari Repository Kabim/Utama</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Panitia atau Kabim baru saja melakukan update materi atau memvalidasi tugas teman lain di repository utama, sementara repository forkmu masih versi lama.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi Cepat</div>
+              <div class="error-content">
+                <p><strong>Cara 1 (Melalui Web GitHub - Paling Mudah):</strong></p>
+                <ol>
+                  <li>Buka repository forkmu di browser GitHub.</li>
+                  <li>Tepat di bawah tombol hijau Code, klik tombol <strong>Sync fork</strong>.</li>
+                  <li>Klik <strong>Update branch</strong>.</li>
+                  <li>Di laptopmu, jalankan <code>git pull origin main</code> di terminal VS Code untuk menarik update terbaru ke laptop.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. NAVIGASI TERMINAL -->
+      <section id="navigasi-terminal">
+        <span class="section-anchor"></span>
+        <h2>5. Panduan Navigasi Terminal (Path)</h2>
+        <p>Perintah dasar wajib di terminal untuk berpindah folder dan cek lokasi:</p>
+
+        <table class="styled-table">
+          <thead>
+            <tr><th>Kebutuhan</th><th>Perintah Git Bash / Mac / Linux</th><th>Perintah Windows CMD</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cek folder saat ini</td><td><code>pwd</code></td><td><code>cd</code></td></tr>
+            <tr><td>Lihat isi folder</td><td><code>ls</code> atau <code>ls -l</code></td><td><code>dir</code></td></tr>
+            <tr><td>Masuk ke folder</td><td><code>cd nama_folder</code></td><td><code>cd nama_folder</code></td></tr>
+            <tr><td>Mundur satu folder</td><td><code>cd ..</code></td><td><code>cd ..</code></td></tr>
+            <tr><td>Folder yang ada spasi</td><td><code>cd "Tugas Kelompok"</code></td><td><code>cd "Tugas Kelompok"</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body"><strong>Gunakan Tombol Tab:</strong> Ketik 2-3 huruf nama folder lalu tekan <span class="kbd">Tab</span> pada keyboard. Terminal akan otomatis melengkapi nama folder secara otomatis tanpa risiko typo!</div>
+        </div>
+      </section>
+
+      <!-- 6. ERROR LAIN -->
       <section id="error-lain">
         <span class="section-anchor"></span>
-        <h2>4. Error Umum Lainnya & Solusinya</h2>
+        <h2>6. Error Umum Lainnya &amp; Solusinya</h2>
 
         <div class="error-card">
-          <div class="error-header">fatal: not a git repository (or any of the parent directories)</div>
+          <div class="error-header">
+            <span>fatal: not a git repository (or any of the parent directories)</span>
+          </div>
           <div class="error-body">
             <div class="error-row">
               <div class="error-label cause">Penyebab</div>
               <div class="error-content">
-                Kamu menjalankan perintah khusus Git (seperti <code>git status</code> atau <code>git commit</code>) di dalam folder biasa yang belum diinisialisasi sebagai repository Git.
+                Kamu menjalankan perintah Git (seperti <code>git status</code>) di folder luar atau sebelum masuk ke dalam folder hasil clone.
               </div>
             </div>
             <div class="error-row">
               <div class="error-label solution">Solusi</div>
               <div class="error-content">
-                Pastikan kamu sudah menjalankan perintah <code>git init</code> di folder tersebut, <strong>ATAU</strong> pastikan kamu sudah melakukan <code>cd</code> (masuk) ke dalam folder hasil unduhan/<code>git clone</code>.
+                Jalankan <code>cd INFONIC_2026</code> untuk masuk ke folder repository terlebih dahulu, atau buka langsung folder tersebut di VS Code (<strong>File &rarr; Open Folder</strong>).
               </div>
             </div>
           </div>
         </div>
 
         <div class="error-card">
-          <div class="error-header">File tidak bisa dihapus / Error "Permission Denied"</div>
-          <div class="error-body">
-            <div class="error-row">
-              <div class="error-label cause">Penyebab</div>
-              <div class="error-content">
-                File yang ingin diedit, ditimpa, atau dihapus sedang aktif digunakan/dibuka oleh aplikasi lain atau local server sedang berjalan.
-              </div>
-            </div>
-            <div class="error-row">
-              <div class="error-label solution">Solusi</div>
-              <div class="error-content">
-                Matikan sementara local server kamu (tekan <span class="kbd">Ctrl+C</span> di terminal) atau pastikan kamu sudah menutup file tersebut di program lain.
-              </div>
-            </div>
+          <div class="error-header" id="vim">
+            <span>Terjebak di Editor Terminal (Vim / Nano)</span>
           </div>
-        </div>
-
-        <div class="error-card">
-          <div class="error-header" id="vim">Terjebak di Editor Terminal (Vim / Nano)</div>
           <div class="error-body">
             <div class="error-row">
               <div class="error-label cause">Penyebab</div>
               <div class="error-content">
-                Saat melakukan <code>git commit</code> tanpa menambahkan pesan (<code>-m "pesan"</code>), terkadang terminal akan memunculkan teks editor bawaan (Vim) yang membingungkan.
+                Saat melakukan <code>git commit</code> tanpa menyertakan pesan (<code>-m "pesan"</code>), terminal otomatis membuka editor Vim.
               </div>
             </div>
             <div class="error-row">
               <div class="error-label solution">Solusi</div>
               <div class="error-content">
-                <strong>Keluar dari Vim:</strong> Tekan tombol <span class="kbd">Esc</span>, kemudian ketik <code>:q!</code> (titik dua, huruf q, dan tanda seru), lalu tekan <span class="kbd">Enter</span>. Hal ini akan membatalkan commit dan keluar dari Vim.
+                Tekan tombol <span class="kbd">Esc</span> di keyboard &rarr; ketik <code>:q!</code> &rarr; tekan <span class="kbd">Enter</span>. Kemudian ulangi commit dengan menyertakan pesan: <code>git commit -m "Submit tugas osjur - NIM"</code>.
               </div>
             </div>
           </div>
@@ -506,10 +654,10 @@
   </div>
 
   <footer class="page-footer">
-    <a href="../../">&larr; Beranda</a>
-    <a href="../vscode/">&larr; VS Code</a>
-    <a href="../git/">&larr; Git & GitHub</a>
-    <a href="../fork-pr/">&larr; Fork & PR</a>
+    <a href="../../">&larr; Beranda</a>
+    <a href="../vscode/">&larr; VS Code</a>
+    <a href="../git/">&larr; Git &amp; GitHub</a>
+    <a href="../fork-pr/">&larr; Fork &amp; PR</a>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
@@ -536,7 +684,3 @@
   </script>
 </body>
 </html>
-
-
-
-

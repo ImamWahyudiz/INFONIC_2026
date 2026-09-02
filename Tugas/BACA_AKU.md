@@ -101,5 +101,23 @@ Tugas/<NamaGugus>/<NIM>_<NamaLengkap>.md
 
 ---
 
+## 🛠️ PANDUAN DARURAT: CARA MEMBATALKAN FILE YANG SALAH EDIT
+
+Jika kamu tidak sengaja mengedit file template `NIM-NAMA.md` atau file teman:
+
+1. **Jika belum di-commit**:
+   ```bash
+   git restore Tugas/NIM-NAMA.md
+   ```
+2. **Jika sudah di-commit (tapi belum di-push)**:
+   ```bash
+   git reset --soft HEAD~1
+   git restore Tugas/NIM-NAMA.md
+   ```
+3. **Jika sudah di-push atau mengalami Merge Conflict**:
+   - Baca panduan lengkap solusinya di web: [Panduan Troubleshooting & Rollback INFONIC 2026](https://infonic-2026.vercel.app/materi/utility/#salah-edit-file)
+
+---
+
 ### 💬 Butuh Bantuan?
 Hubungi Kakak Pembimbing (Kabim) gugusmu jika mengalami kendala saat melakukan Fork atau Git Push. Semangat berproses di **INFONIC 2026**! 🚀
