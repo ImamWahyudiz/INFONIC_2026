@@ -1,5 +1,6 @@
 # AI Agent & Customization files
 .agents/
+.claude/
 skills.json
 skills-lock.json
 .gemini/
@@ -20,3 +21,9 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Internal / Documentation / Scratch folders
+dev/
+docs/
+materi/
+kabim/

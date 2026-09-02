@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1a">
+  <title>VS Code &mdash; Materi INFONIC 2026</title>
+  <meta name="description" content="Panduan instalasi, penggunaan, shortcut, dan ekstensi Visual Studio Code untuk mahasiswa baru Informatika INFONIC 2026.">
+  <link rel="icon" type="image/jpeg" href="../logoINFONIC.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-default: #080d1a;
+      --bg-surface: #0e1628;
+      --bg-elevated: #131f35;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-default: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(56, 189, 248, 0.5);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --primary: #38bdf8;
+      --primary-dim: rgba(56, 189, 248, 0.12);
+      --cyan: #22d3ee;
+      --emerald: #34d399;
+      --orange: #fb923c;
+      --red: #f87171;
+      --indigo: #818cf8;
+      --navbar-h: 48px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg-default);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
+      z-index: 300; transition: width 0.1s linear;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--navbar-h);
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 0.25rem;
+      background: rgba(8, 13, 26, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .navbar-brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: var(--text-main);
+      font-weight: 700; font-size: 0.85rem;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .navbar-brand img {
+      width: 24px; height: 24px; border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .nav-sep {
+      width: 1px; height: 18px;
+      background: var(--border-default);
+      margin: 0 0.5rem; flex-shrink: 0;
+    }
+
+    .navbar a.nav-link {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.3rem 0.7rem; border-radius: 9999px;
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+
+    .navbar a.nav-link:hover { color: #fff; background: var(--primary-dim); }
+    .navbar a.nav-link.active { color: var(--primary); background: var(--primary-dim); }
+
+    .nav-spacer { flex: 1; }
+
+    /* ── HERO ── */
+    .page-hero {
+      margin-top: var(--navbar-h);
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-default);
+      background: linear-gradient(180deg, rgba(56,189,248,0.05) 0%, transparent 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--primary-dim);
+      border: 1px solid rgba(56,189,248,0.3);
+      color: var(--primary);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 9999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 0.75rem;
+    }
+
+    .page-hero p {
+      font-size: 1rem; color: var(--text-muted);
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--navbar-h) + 1.5rem);
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-subtle); margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-nav { list-style: none; }
+
+    .sidebar-nav a {
+      display: block; padding: 0.4rem 0.75rem;
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500;
+      border-left: 2px solid transparent;
+      border-radius: 0 6px 6px 0;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-nav a:hover { color: #fff; border-left-color: var(--border-hover); }
+    .sidebar-nav a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-dim); }
+
+    .sidebar-nav .sub { padding-left: 1.5rem; font-size: 0.78rem; }
+
+    /* ── CONTENT ── */
+    .content { min-width: 0; }
+
+    .content section {
+      margin-bottom: 4rem;
+      padding-top: 1rem;
+    }
+
+    .section-anchor { display: block; height: calc(var(--navbar-h) + 1.5rem); margin-top: calc(-1 * (var(--navbar-h) + 1.5rem)); visibility: hidden; }
+
+    .content h2 {
+      font-size: 1.5rem; font-weight: 800;
+      color: #fff; margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .content h3 {
+      font-size: 1.05rem; font-weight: 700;
+      color: #e2e8f0; margin: 1.75rem 0 0.75rem;
+    }
+
+    .content h4 {
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text-muted); margin: 1.25rem 0 0.5rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    .content p { color: var(--text-muted); margin-bottom: 0.85rem; font-size: 0.95rem; }
+
+    .content ul, .content ol {
+      padding-left: 1.5rem; color: var(--text-muted);
+      font-size: 0.95rem; margin-bottom: 0.85rem;
+    }
+
+    .content li { margin-bottom: 0.4rem; }
+
+    .content strong { color: var(--text-main); font-weight: 600; }
+
+    .content a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* code inline */
+    .content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82em;
+      background: rgba(56,189,248,0.1);
+      color: var(--cyan);
+      padding: 1px 6px; border-radius: 4px;
+    }
+
+    /* prism override */
+    pre[class*="language-"] {
+      border-radius: 10px;
+      border: 1px solid var(--border-default);
+      margin: 1rem 0 1.5rem;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    pre[class*="language-"] code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+    /* ── TABS (Windows/macOS/Linux) ── */
+    .tab-group { margin: 1rem 0 1.5rem; }
+
+    .tab-buttons {
+      display: flex; gap: 0.25rem;
+      border-bottom: 1px solid var(--border-default);
+      margin-bottom: 0;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1.1rem;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted);
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer; transition: all 0.2s ease;
+      margin-bottom: -1px;
+    }
+
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    .tab-panel { display: none; padding: 1.25rem 0 0; }
+    .tab-panel.active { display: block; }
+
+    /* ── TABLE ── */
+    .styled-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.88rem; margin: 1rem 0 1.5rem;
+    }
+
+    .styled-table th {
+      background: var(--bg-elevated);
+      color: var(--text-main); font-weight: 700;
+      padding: 0.65rem 1rem; text-align: left;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .styled-table td {
+      padding: 0.6rem 1rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-default);
+      vertical-align: top;
+    }
+
+    .styled-table tr:last-child td { border-bottom: none; }
+    .styled-table tr:hover td { background: var(--bg-elevated); }
+
+    .kbd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      color: var(--text-main);
+      padding: 1px 7px; border-radius: 5px;
+    }
+
+    /* ── EXTENSION CARD ── */
+    .ext-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.85rem; margin: 1rem 0;
+    }
+
+    .ext-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .ext-card:hover { border-color: rgba(56,189,248,0.35); }
+
+    .ext-card-name {
+      font-size: 0.9rem; font-weight: 700; color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .ext-card-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    .ext-card-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      display: flex; gap: 0.85rem;
+      background: rgba(56,189,248,0.07);
+      border: 1px solid rgba(56,189,248,0.25);
+      border-left: 3px solid var(--primary);
+      border-radius: 8px; padding: 1rem 1.15rem;
+      margin: 1rem 0;
+    }
+
+    .info-box-icon { font-size: 1rem; flex-shrink: 0; padding-top: 0.1rem; }
+    .info-box-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .info-box-body strong { color: var(--text-main); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      border-top: 1px solid var(--border-default);
+      padding: 2rem 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap;
+    }
+
+    .page-footer a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 9999px;
+      border: 1px solid var(--border-default);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .page-footer a:hover { color: #fff; border-color: rgba(56,189,248,0.4); background: var(--primary-dim); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px) {
+      .layout { grid-template-columns: 1fr; gap: 0; padding: 1.5rem 1rem; }
+      .sidebar { position: static; margin-bottom: 2rem; }
+      .sidebar-nav { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+      .sidebar-nav a { border-left: none; border-radius: 9999px; border: 1px solid var(--border-default); padding: 0.3rem 0.75rem; }
+      .sidebar-nav a.active { border-color: var(--primary); }
+      .sidebar-nav .sub { padding-left: 0; }
+      .navbar {
+        padding: 0 0.75rem;
+        gap: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .navbar::-webkit-scrollbar { display: none; }
+      .navbar a.nav-link span { display: inline; }
+      .ext-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="../" class="navbar-brand">
+      <img src="../logoINFONIC.jpg" alt="INFONIC">
+      <span>INFONIC</span>
+    </a>
+    <div class="nav-sep"></div>
+    <a href="../materi-vscode/" class="nav-link active"><span>VS Code</span></a>
+    <a href="../materi-git/" class="nav-link"><span>Git & GitHub</span></a>
+    <a href="../tutorial-fork-pr/" class="nav-link"><span>Fork & PR</span></a>
+    <a href="../materi-utility/" class="nav-link"><span>Troubleshooting</span></a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-badge">Materi Wajib</div>
+    <h1>Visual Studio Code</h1>
+    <p>Instalasi, antarmuka, shortcut penting, dan ekstensi terbaik untuk Python, C/C++, dan PHP.</p>
+  </div>
+
+  <!-- Layout -->
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Daftar Isi</div>
+      <ul class="sidebar-nav" id="sidebarNav">
+        <li><a href="#apa-itu-vscode">1. Apa itu VS Code?</a></li>
+        <li><a href="#instalasi">2. Instalasi</a></li>
+        <li><a href="#antarmuka">3. Antarmuka</a></li>
+        <li><a href="#penggunaan">4. Penggunaan Dasar</a></li>
+        <li><a href="#shortcut">5. Shortcut Penting</a></li>
+        <li><a href="#ekstensi">6. Rekomendasi Ekstensi</a></li>
+        <li><a href="#install-ekstensi">7. Cara Install Ekstensi</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+
+      <!-- 1 -->
+      <section id="apa-itu-vscode">
+        <span class="section-anchor"></span>
+        <h2>1. Apa itu Visual Studio Code?</h2>
+        <p><strong>Visual Studio Code (VS Code)</strong> adalah code editor buatan Microsoft yang ringan, gratis, dan open-source. VS Code mendukung hampir semua bahasa pemrograman dan punya ekosistem ekstensi yang sangat besar.</p>
+        <p>Di INFONIC, VS Code adalah editor utama yang kamu gunakan untuk mengerjakan semua tugas &mdash; dari menulis kode Python hingga menjalankan perintah Git dari terminal terintegrasi.</p>
+      </section>
+
+      <!-- 2 -->
+      <section id="instalasi">
+        <span class="section-anchor"></span>
+        <h2>2. Panduan Instalasi</h2>
+
+        <div class="tab-group">
+          <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab(this, 'tab-win')">Windows</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-mac')">macOS</button>
+            <button class="tab-btn" onclick="switchTab(this, 'tab-linux')">Linux</button>
+          </div>
+
+          <div class="tab-panel active" id="tab-win">
+            <ol>
+              <li>Kunjungi <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a> dan klik <strong>Download for Windows</strong>.</li>
+              <li>Buka file <code>.exe</code> yang sudah diunduh.</li>
+              <li>Pada halaman <em>Select Additional Tasks</em>, centang ketiga opsi berikut:
+                <ul>
+                  <li><strong>Add "Open with Code" action to Windows Explorer file context menu</strong></li>
+                  <li><strong>Add "Open with Code" action to Windows Explorer directory context menu</strong></li>
+                  <li><strong>Add to PATH</strong></li>
+                </ul>
+              </li>
+              <li>Klik <strong>Next &rarr; Install &rarr; Finish</strong>.</li>
+            </ol>
+          </div>
+
+          <div class="tab-panel" id="tab-mac">
+            <ol>
+              <li>Unduh installer untuk macOS dari <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a>.</li>
+              <li>Ekstrak file <code>.zip</code> yang sudah diunduh.</li>
+              <li>Seret file <strong>Visual Studio Code.app</strong> ke folder <strong>Applications</strong>.</li>
+              <li>Buka VS Code dari Launchpad atau Applications.</li>
+            </ol>
+          </div>
+
+          <div class="tab-panel" id="tab-linux">
+            <p>Untuk Ubuntu/Debian, unduh file <code>.deb</code> dari situs resmi, lalu jalankan:</p>
+            <pre><code class="language-bash">sudo dpkg -i &lt;nama-file&gt;.deb
+sudo apt-get install -f</code></pre>
+            <p>Atau via Snap:</p>
+            <pre><code class="language-bash">sudo snap install --classic code</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section id="antarmuka">
+        <span class="section-anchor"></span>
+        <h2>3. Pengenalan Antarmuka</h2>
+        <p>VS Code punya 5 area utama yang perlu kamu kenali:</p>
+        <table class="styled-table">
+          <thead>
+            <tr><th>Area</th><th>Letak</th><th>Fungsi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Activity Bar</strong></td><td>Panel kiri paling luar</td><td>Navigasi ke Explorer, Search, Source Control, Debug, Extensions</td></tr>
+            <tr><td><strong>Side Bar</strong></td><td>Kiri, sebelah Activity Bar</td><td>Menampilkan detail dari item yang dipilih di Activity Bar</td></tr>
+            <tr><td><strong>Editor Group</strong></td><td>Tengah</td><td>Area utama tempat menulis kode</td></tr>
+            <tr><td><strong>Panel</strong></td><td>Bawah</td><td>Terminal, Output, Debug Console, Problems</td></tr>
+            <tr><td><strong>Status Bar</strong></td><td>Paling bawah</td><td>Informasi baris/kolom, bahasa file, status Git</td></tr>
+          </tbody>
+        </table>
+        <p align="center">
+          <img src="vscode-interface.png" style="width:100%;max-width:640px;border-radius:8px;border:1px solid var(--border-default);" alt="Antarmuka VS Code">
+          <br><small style="color:var(--text-subtle);">Tampilan antarmuka utama Visual Studio Code</small>
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section id="penggunaan">
+        <span class="section-anchor"></span>
+        <h2>4. Penggunaan Dasar</h2>
+
+        <h3>Membuka Folder / Project</h3>
+        <p>Klik menu <strong>File &rarr; Open Folder...</strong> atau tekan <span class="kbd">Ctrl+K</span> lalu <span class="kbd">Ctrl+O</span>. Pilih folder project yang ingin kamu kerjakan.</p>
+
+        <h3>Membuat & Menyimpan File</h3>
+        <p>Di panel Explorer, klik ikon <strong>New File</strong>. Beri nama file beserta ekstensinya, contoh: <code>main.py</code>, <code>index.php</code>, <code>app.cpp</code>. Simpan dengan <span class="kbd">Ctrl+S</span>.</p>
+
+        <h3>Terminal Terintegrasi</h3>
+        <p>Buka terminal internal dengan <span class="kbd">Ctrl+`</span>. Dari sini kamu bisa langsung menjalankan perintah seperti <code>python main.py</code>, <code>gcc main.c</code>, atau perintah Git.</p>
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body"><strong>Tips:</strong> Jika muncul error "git is not recognized" di terminal, klik panah kecil di sebelah tombol <code>+</code> di panel terminal dan pilih <strong>Git Bash</strong> sebagai shell. Lihat <a href="materi-utility.html#git-not-recognized">panduan lengkapnya di Troubleshooting</a>.</div>
+        </div>
+
+        <h3>Command Palette</h3>
+        <p>Fitur serbaguna untuk mengakses semua perintah VS Code. Buka dengan <span class="kbd">Ctrl+Shift+P</span>. Contoh: ketik <code>Format Document</code>, <code>Change Language Mode</code>, atau <code>Reload Window</code>.</p>
+      </section>
+
+      <!-- 5 -->
+      <section id="shortcut">
+        <span class="section-anchor"></span>
+        <h2>5. Shortcut Penting</h2>
+        <table class="styled-table">
+          <thead>
+            <tr><th>Aksi</th><th>Windows / Linux</th><th>macOS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Command Palette</td><td><span class="kbd">Ctrl+Shift+P</span></td><td><span class="kbd">Cmd+Shift+P</span></td></tr>
+            <tr><td>Quick Open File</td><td><span class="kbd">Ctrl+P</span></td><td><span class="kbd">Cmd+P</span></td></tr>
+            <tr><td>Buka/Tutup Terminal</td><td><span class="kbd">Ctrl+`</span></td><td><span class="kbd">Cmd+`</span></td></tr>
+            <tr><td>Simpan File</td><td><span class="kbd">Ctrl+S</span></td><td><span class="kbd">Cmd+S</span></td></tr>
+            <tr><td>Format Code</td><td><span class="kbd">Shift+Alt+F</span></td><td><span class="kbd">Shift+Option+F</span></td></tr>
+            <tr><td>Toggle Sidebar</td><td><span class="kbd">Ctrl+B</span></td><td><span class="kbd">Cmd+B</span></td></tr>
+            <tr><td>Duplicate Line</td><td><span class="kbd">Shift+Alt+&larr;“/&larr;‘</span></td><td><span class="kbd">Shift+Option+&larr;“/&larr;‘</span></td></tr>
+            <tr><td>Comment/Uncomment</td><td><span class="kbd">Ctrl+/</span></td><td><span class="kbd">Cmd+/</span></td></tr>
+            <tr><td>Find & Replace</td><td><span class="kbd">Ctrl+H</span></td><td><span class="kbd">Cmd+H</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 6 -->
+      <section id="ekstensi">
+        <span class="section-anchor"></span>
+        <h2>6. Rekomendasi Ekstensi</h2>
+
+        <h3>Umum & Produktivitas</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">Material Icon Theme</div>
+            <div class="ext-card-id">pkief.material-icon-theme</div>
+            <div class="ext-card-desc">Ikon folder & file yang lebih jelas dan mudah dibedakan berdasarkan tipe.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Prettier</div>
+            <div class="ext-card-id">esbenp.prettier-vscode</div>
+            <div class="ext-card-desc">Merapikan format kode secara otomatis saat disimpan. Mendukung hampir semua bahasa.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Code Runner</div>
+            <div class="ext-card-id">formulahendry.code-runner</div>
+            <div class="ext-card-desc">Jalankan kode Python, C, C++, PHP, JS langsung dari editor dengan satu tombol.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">GitLens</div>
+            <div class="ext-card-id">eamodio.gitlens</div>
+            <div class="ext-card-desc">Lihat histori commit, siapa yang menulis baris tertentu, dan perbandingan branch.</div>
+          </div>
+        </div>
+
+        <h3>Python</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">Python</div>
+            <div class="ext-card-id">ms-python.python</div>
+            <div class="ext-card-desc">Ekstensi resmi Microsoft. IntelliSense, debugging, linting, dan virtual environment.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Pylance</div>
+            <div class="ext-card-id">ms-python.vscode-pylance</div>
+            <div class="ext-card-desc">Language server Python yang cepat dan akurat untuk autocomplete.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Black Formatter</div>
+            <div class="ext-card-id">ms-python.black-formatter</div>
+            <div class="ext-card-desc">Formatter standar industri Python &mdash; konsisten dengan PEP 8.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">Jupyter</div>
+            <div class="ext-card-id">ms-toolsai.jupyter</div>
+            <div class="ext-card-desc">Buka dan jalankan file <code>.ipynb</code> langsung di dalam VS Code.</div>
+          </div>
+        </div>
+
+        <h3>C & C++</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++</div>
+            <div class="ext-card-id">ms-vscode.cpptools</div>
+            <div class="ext-card-desc">IntelliSense, auto-completion, syntax highlighting, dan debugging untuk C dan C++.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++ Compile Run</div>
+            <div class="ext-card-id">danielpinto85c.c-cpp-compile-run</div>
+            <div class="ext-card-desc">Jalankan file <code>.c</code> atau <code>.cpp</code> instan dengan <span class="kbd">F6</span> &mdash; tanpa ketik <code>gcc</code> manual.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">C/C++ Extension Pack</div>
+            <div class="ext-card-id">ms-vscode.cpptools-extension-pack</div>
+            <div class="ext-card-desc">Paket lengkap buatan Microsoft &mdash; sudah mencakup C/C++ dan CMake.</div>
+          </div>
+        </div>
+
+        <h3>PHP</h3>
+        <div class="ext-grid">
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Intelephense</div>
+            <div class="ext-card-id">bmewburn.vscode-intelephense-client</div>
+            <div class="ext-card-desc">Autocomplete, navigasi fungsi, dan type checking untuk PHP.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Server</div>
+            <div class="ext-card-id">bware.phpserver</div>
+            <div class="ext-card-desc">Jalankan project PHP di local server langsung dari VS Code.</div>
+          </div>
+          <div class="ext-card">
+            <div class="ext-card-name">PHP Debug</div>
+            <div class="ext-card-id">xdebug.php-debug</div>
+            <div class="ext-card-desc">Integrasi Xdebug untuk melacak error dan debugging variabel.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section id="install-ekstensi">
+        <span class="section-anchor"></span>
+        <h2>7. Cara Install Ekstensi</h2>
+        <ol>
+          <li>Buka VS Code.</li>
+          <li>Tekan <span class="kbd">Ctrl+Shift+X</span> untuk membuka panel Extensions.</li>
+          <li>Ketik nama atau ID ekstensi di kolom pencarian.</li>
+          <li>Klik <strong>Install</strong> pada ekstensi yang kamu inginkan.</li>
+          <li>Ekstensi langsung aktif &mdash; umumnya tidak perlu restart VS Code.</li>
+        </ol>
+        <div class="info-box">
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body">Gunakan ID ekstensi (contoh: <code>ms-python.python</code>) untuk memastikan kamu menginstal yang tepat, bukan ekstensi dengan nama serupa dari publisher berbeda.</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <a href="../">&larr; Beranda</a>
+    <a href="../materi-git/">Git & GitHub &rarr;</a>
+    <a href="../tutorial-fork-pr/">Fork & PR &rarr;</a>
+    <a href="../materi-utility/">Troubleshooting &rarr;</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script>
+    // Scroll progress
+    const progressBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      progressBar.style.width = pct + '%';
+    });
+
+    // Tab switcher
+    function switchTab(btn, panelId) {
+      btn.closest('.tab-group').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.closest('.tab-group').querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    // Active sidebar on scroll
+    const sections = document.querySelectorAll('.content section[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
+
+

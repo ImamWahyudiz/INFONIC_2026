@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/src/index.html" },
+    { "source": "/materi-vscode", "destination": "/src/materi-vscode/index.html" },
+    { "source": "/materi-git", "destination": "/src/materi-git/index.html" },
+    { "source": "/tutorial-fork-pr", "destination": "/src/tutorial-fork-pr/index.html" },
+    { "source": "/materi-utility", "destination": "/src/materi-utility/index.html" },
+    { "source": "/(.*)", "destination": "/src/$1" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(jpg|jpeg|png|svg|webp|ico|css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

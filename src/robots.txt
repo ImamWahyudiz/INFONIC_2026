@@ -1,0 +1,5 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://infonic-2026.vercel.app/sitemap.xml
+

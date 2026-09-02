@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1a">
+  <title>Fork &amp; Pull Request &mdash; Panduan Pengumpulan Tugas INFONIC 2026</title>
+  <meta name="description" content="Panduan resmi pengumpulan tugas INFONIC 2026 melalui sistem Fork ke Kabim & Pull Request di GitHub.">
+  <link rel="icon" type="image/jpeg" href="../logoINFONIC.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-default: #080d1a;
+      --bg-surface: #0e1628;
+      --bg-elevated: #131f35;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --border-default: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(56, 189, 248, 0.5);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --primary: #38bdf8;
+      --primary-dim: rgba(56, 189, 248, 0.12);
+      --cyan: #22d3ee;
+      --emerald: #34d399;
+      --orange: #fb923c;
+      --red: #f87171;
+      --indigo: #818cf8;
+      --purple: #c084fc;
+      --navbar-h: 48px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg-default);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
+      z-index: 300; transition: width 0.1s linear;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--navbar-h);
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 0.25rem;
+      background: rgba(8, 13, 26, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .navbar-brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: var(--text-main);
+      font-weight: 700; font-size: 0.85rem;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .navbar-brand img {
+      width: 24px; height: 24px; border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .nav-sep {
+      width: 1px; height: 18px;
+      background: var(--border-default);
+      margin: 0 0.5rem; flex-shrink: 0;
+    }
+
+    .navbar a.nav-link {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.3rem 0.7rem; border-radius: 9999px;
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+
+    .navbar a.nav-link:hover { color: #fff; background: var(--primary-dim); }
+    .navbar a.nav-link.active { color: var(--primary); background: var(--primary-dim); }
+
+    .nav-spacer { flex: 1; }
+
+    /* ── HERO ── */
+    .page-hero {
+      margin-top: var(--navbar-h);
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-default);
+      background: linear-gradient(180deg, rgba(56,189,248,0.05) 0%, transparent 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--primary-dim);
+      border: 1px solid rgba(56,189,248,0.3);
+      color: var(--primary);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 9999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      color: #fff; margin-bottom: 0.75rem;
+    }
+
+    .page-hero p {
+      font-size: 1rem; color: var(--text-muted);
+      max-width: 620px; margin: 0 auto;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--navbar-h) + 1.5rem);
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-subtle); margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+
+    .sidebar-nav a {
+      display: block; padding: 0.38rem 0.75rem;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      border-radius: 6px; border-left: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-nav a:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+    .sidebar-nav a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-dim); font-weight: 600; }
+
+    /* ── CONTENT ── */
+    .content { min-width: 0; }
+
+    .content section {
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border-default);
+      margin-bottom: 3.5rem;
+    }
+
+    .content section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .content h2 {
+      font-size: 1.55rem; font-weight: 800;
+      letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+
+    .content h3 {
+      font-size: 1.15rem; font-weight: 700;
+      color: #fff; margin: 1.75rem 0 0.6rem;
+    }
+
+    .content p {
+      color: var(--text-muted); margin-bottom: 1rem;
+      font-size: 0.94rem; line-height: 1.75;
+    }
+
+    .content ul, .content ol {
+      color: var(--text-muted); padding-left: 1.4rem;
+      margin-bottom: 1.25rem; font-size: 0.94rem;
+    }
+
+    .content li { margin-bottom: 0.45rem; }
+
+    .content a { color: var(--primary); text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.15em 0.4em; border-radius: 4px;
+      color: var(--cyan);
+    }
+
+    pre {
+      background: #060a14 !important;
+      border: 1px solid var(--border-default) !important;
+      border-radius: 10px !important;
+      padding: 1.1rem 1.25rem !important;
+      margin: 1rem 0 !important;
+      overflow-x: auto;
+    }
+
+    pre code {
+      background: none !important; border: none !important;
+      padding: 0 !important; color: #e2e8f0 !important;
+      font-size: 0.85rem !important; line-height: 1.6 !important;
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .info-box, .warning-box, .danger-box {
+      border-radius: 12px; padding: 1.1rem 1.3rem;
+      margin: 1.5rem 0; display: flex; gap: 0.9rem; align-items: flex-start;
+      font-size: 0.88rem; line-height: 1.65;
+    }
+
+    .info-box { background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25); color: #bae6fd; }
+    .warning-box { background: rgba(251,146,60,0.06); border: 1px solid rgba(251,146,60,0.25); color: #fed7aa; }
+    .danger-box { background: rgba(248,113,113,0.08); border: 1.5px solid rgba(248,113,113,0.4); color: #fecaca; }
+
+    .info-box strong { color: var(--primary); }
+    .warning-box strong { color: var(--orange); }
+    .danger-box strong { color: var(--red); }
+
+    .callout-icon { flex-shrink: 0; margin-top: 2px; }
+
+    /* ── WORKFLOW HIERARCHY DIAGRAM ── */
+    .workflow-diagram {
+      background: #060a14;
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .wf-node {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-default);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .wf-node.maba { border-color: rgba(56,189,248,0.4); background: rgba(56,189,248,0.05); }
+    .wf-node.kabim { border-color: rgba(168,85,247,0.4); background: rgba(168,85,247,0.05); }
+    .wf-node.panitia { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.05); }
+
+    .wf-node-info h4 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+    .wf-node-info p { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+
+    .wf-badge {
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+      padding: 0.25rem 0.75rem; border-radius: 9999px; letter-spacing: 0.06em;
+    }
+
+    .wf-badge.cyan { background: var(--primary-dim); color: var(--primary); border: 1px solid rgba(56,189,248,0.3); }
+    .wf-badge.purple { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+    .wf-badge.emerald { background: rgba(52,211,153,0.15); color: var(--emerald); border: 1px solid rgba(52,211,153,0.3); }
+
+    .wf-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-subtle);
+      font-size: 0.78rem;
+      font-weight: 600;
+      gap: 0.5rem;
+    }
+
+    /* ── STEP LIST ── */
+    .step-list { list-style: none; padding: 0; margin: 1.5rem 0; }
+
+    .step-item {
+      display: flex; gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .step-item:last-child { border-bottom: none; }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--primary-dim);
+      border: 2px solid rgba(56,189,248,0.4);
+      color: var(--primary);
+      font-size: 0.95rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .step-item:hover .step-num {
+      background: var(--primary);
+      color: #080d1a;
+      box-shadow: 0 0 16px rgba(56,189,248,0.5);
+    }
+
+    .step-body { flex: 1; padding-top: 0.25rem; }
+    .step-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── FOLDER TREE ── */
+    .folder-tree {
+      background: #060a14;
+      border: 1px solid var(--border-default);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .folder-tree .dir { color: var(--primary); font-weight: 600; }
+    .folder-tree .file { color: var(--text-main); }
+    .folder-tree .comment { color: var(--text-subtle); }
+    .folder-tree .highlight { color: var(--emerald); font-weight: 700; }
+
+    /* ── 12 GUGUS GRID ── */
+    .gugus-grid-mini {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.65rem;
+      margin: 1.25rem 0;
+    }
+
+    .gugus-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .gugus-chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      border-top: 1px solid var(--border-default);
+      padding: 2rem 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap;
+    }
+
+    .page-footer a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 9999px;
+      border: 1px solid var(--border-default);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .page-footer a:hover { color: #fff; border-color: rgba(56,189,248,0.4); background: var(--primary-dim); }
+
+    @media(max-width:768px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; margin-bottom: 2rem; }
+      .sidebar-nav { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+      .sidebar-nav a { border-left: none; border-radius: 9999px; border: 1px solid var(--border-default); padding: 0.3rem 0.75rem; }
+      .sidebar-nav a.active { border-color: var(--primary); }
+      .navbar { padding: 0 0.75rem; gap: 0; overflow-x: auto; scrollbar-width: none; }
+      .navbar::-webkit-scrollbar { display: none; }
+      .wf-node { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="../" class="navbar-brand">
+      <img src="../logoINFONIC.jpg" alt="INFONIC">
+      <span>INFONIC</span>
+    </a>
+    <div class="nav-sep"></div>
+    <a href="../materi-vscode/" class="nav-link"><span>VS Code</span></a>
+    <a href="../materi-git/" class="nav-link"><span>Git &amp; GitHub</span></a>
+    <a href="../tutorial-fork-pr/" class="nav-link active"><span>Fork &amp; PR</span></a>
+    <a href="../materi-utility/" class="nav-link"><span>Troubleshooting</span></a>
+    <div class="nav-spacer"></div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-badge">Panduan Resmi Pengumpulan Tugas</div>
+    <h1>Fork &amp; Pull Request</h1>
+    <p>Alur bertingkat pengumpulan tugas mahasiswa baru INFONIC 2026 melalui repository Kakak Pembimbing (Kabim) gugus.</p>
+  </div>
+
+  <!-- Layout -->
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Daftar Isi</div>
+      <ul class="sidebar-nav" id="sidebarNav">
+        <li><a href="#alur-sistem">1. Alur Sistem Pengumpulan</a></li>
+        <li><a href="#struktur">2. Struktur Folder &amp; 12 Gugus</a></li>
+        <li><a href="#langkah">3. 5 Langkah Pengumpulan</a></li>
+        <li><a href="#aturan">4. Aturan &amp; Larangan Mutlak</a></li>
+        <li><a href="#checklist">5. Checklist Sebelum PR</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+
+      <!-- 1. Alur Sistem -->
+      <section id="alur-sistem">
+        <h2>1. Alur Sistem Pengumpulan Tugas</h2>
+        <p>
+          Pengumpulan tugas di INFONIC 2026 menggunakan <strong>sistem bertingkat (hierarki)</strong>. Mahasiswa Baru (Maba) melakukan fork dan mengirimkan Pull Request ke <strong>repository Kakak Pembimbing (Kabim) masing-masing gugus</strong>, bukan langsung ke repository pusat.
+        </p>
+
+        <!-- Diagram Alur -->
+        <div class="workflow-diagram">
+          <div class="wf-node maba">
+            <div class="wf-node-info">
+              <h4>1. Mahasiswa Baru (Peserta)</h4>
+              <p>Fork repo Kabim gugus &rarr; Tambah file tugas di <code>Tugas/&lt;Gugus&gt;/NIM_Nama.md</code> &rarr; PR ke repo Kabim.</p>
+            </div>
+            <span class="wf-badge cyan">Tahap 1</span>
+          </div>
+
+          <div class="wf-arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            <span>Maba Pull Request ke Repository Kabim Gugus</span>
+          </div>
+
+          <div class="wf-node kabim">
+            <div class="wf-node-info">
+              <h4>2. Kakak Pembimbing (Kabim)</h4>
+              <p>Kabim mereview tugas maba, memastikan link publik, lalu merge PR maba ke repo gugus.</p>
+            </div>
+            <span class="wf-badge purple">Tahap 2 (Review)</span>
+          </div>
+
+          <div class="wf-arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            <span>Kabim Fork &amp; Pull Request ke Repository Utama</span>
+          </div>
+
+          <div class="wf-node panitia">
+            <div class="wf-node-info">
+              <h4>3. Repository Pusat INFONIC 2026 (Panitia / Ketua)</h4>
+              <p>Panitia pusat mereview akumulasi pengumpulan seluruh 12 gugus dan memfinalisasi nilai.</p>
+            </div>
+            <span class="wf-badge emerald">Tahap 3 (Final Merge)</span>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="callout-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+          </div>
+          <div>
+            <strong>Penting:</strong> Tanyakan link repository GitHub Kabim kepada Kakak Pembimbing gugusmu masing-masing saat sesi FGD/grup koordinasi gugus.
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Struktur Folder -->
+      <section id="struktur">
+        <h2>2. Struktur Folder &amp; 12 Gugus</h2>
+        <p>Setiap mahasiswa <strong>hanya boleh</strong> menambahkan file baru di dalam subfolder gugusnya sendiri di dalam folder <code>Tugas/</code>:</p>
+
+        <div class="folder-tree">
+          <span class="dir">INFONIC_2026/</span><br>
+          ├── <span class="dir">Tugas/</span><br>
+          │   ├── <span class="file">BACA_AKU.md</span> <span class="comment">&larr; panduan aturan tugas</span><br>
+          │   ├── <span class="file">NIM-NAMA.md</span> <span class="comment">&larr; template asli (JANGAN DIEDIT!)</span><br>
+          │   ├── <span class="dir">JavaScript/</span><br>
+          │   │   └── <span class="highlight">26106050001_MuhammadAdzka.md</span> <span class="comment">&larr; contoh file tugasmu</span><br>
+          │   ├── <span class="dir">Python/</span><br>
+          │   ├── <span class="dir">C++/</span><br>
+          │   ├── <span class="dir">Golang/</span><br>
+          │   ├── <span class="dir">Dart/</span><br>
+          │   ├── <span class="dir">Java/</span><br>
+          │   ├── <span class="dir">PHP/</span><br>
+          │   ├── <span class="dir">Swift/</span><br>
+          │   ├── <span class="dir">Ruby/</span><br>
+          │   ├── <span class="dir">Kotlin/</span><br>
+          │   ├── <span class="dir">Rust/</span><br>
+          │   └── <span class="dir">Scala/</span><br>
+          └── ...
+        </div>
+
+        <p>12 Folder Gugus Resmi:</p>
+        <div class="gugus-grid-mini">
+          <div class="gugus-chip">JavaScript</div>
+          <div class="gugus-chip">Python</div>
+          <div class="gugus-chip">C++</div>
+          <div class="gugus-chip">Golang</div>
+          <div class="gugus-chip">Dart</div>
+          <div class="gugus-chip">Java</div>
+          <div class="gugus-chip">PHP</div>
+          <div class="gugus-chip">Swift</div>
+          <div class="gugus-chip">Ruby</div>
+          <div class="gugus-chip">Kotlin</div>
+          <div class="gugus-chip">Rust</div>
+          <div class="gugus-chip">Scala</div>
+        </div>
+      </section>
+
+      <!-- 3. 5 Langkah Pengumpulan -->
+      <section id="langkah">
+        <h2>3. 5 Langkah Pengumpulan Tugas</h2>
+
+        <ol class="step-list">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Fork Repository Kabim Gugusmu</div>
+              <div class="step-desc">
+                <p>Buka tautan repository GitHub milik Kabim gugusmu di browser.</p>
+                <p>Klik tombol <strong>Fork</strong> di pojok kanan atas. Pilih akun GitHub pribadimu. Sekarang kamu memiliki salinan repository tugas di akun GitHub pribadimu.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Clone ke Laptop &amp; Buka di VS Code</div>
+              <div class="step-desc">
+                <p>Salin link HTTPS dari repository hasil fork pribadimu. Buka terminal / Git Bash di laptop:</p>
+                <pre><code class="language-bash">git clone https://github.com/USERNAME-KAMU/INFONIC_2026.git</code></pre>
+                <p>Buka folder tersebut di VS Code (<strong>File &rarr; Open Folder...</strong>).</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Buat File Tugas Baru di Folder Gugusmu</div>
+              <div class="step-desc">
+                <div class="danger-box">
+                  <div class="callout-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                  </div>
+                  <div>
+                    <strong>Dilarang Mengedit File Template:</strong> Jangan mengedit file <code>Tugas/NIM-NAMA.md</code>! Buat file baru atau copy template tersebut menjadi file tersendiri.
+                  </div>
+                </div>
+                <p>Buka folder gugusmu di dalam <code>Tugas/&lt;NamaGugus&gt;/</code> (contoh: <code>Tugas/JavaScript/</code>).</p>
+                <p>Buat file baru bernama: <code style="color:var(--emerald);">NIM_NamaLengkap.md</code> (contoh: <code>26106050001_MuhammadAdzka.md</code>).</p>
+                <p>Salin format dari template <code>Tugas/NIM-NAMA.md</code>, lalu isi data diri dan seluruh tautan tugas (Week 1 &ndash; Week 4). Simpan dengan <strong>Ctrl + S</strong>.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Commit &amp; Push ke Repository GitHub Pribadimu</div>
+              <div class="step-desc">
+                <p>Buka terminal VS Code (<span class="kbd">Ctrl+`</span>) dan jalankan perintah berikut:</p>
+                <pre><code class="language-bash">git add .
+git commit -m "Submit tugas osjur - &lt;NIM_KAMU&gt;"
+git push origin main</code></pre>
+                <p>Contoh: <code>git commit -m "Submit tugas osjur - 26106050001"</code></p>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title">Buat Pull Request ke Repository Kabim</div>
+              <div class="step-desc">
+                <p>Buka browser dan buka repository hasil fork di akun GitHub-mu.</p>
+                <ol>
+                  <li>Klik tombol <strong>Contribute</strong> &rarr; <strong>Open Pull Request</strong>.</li>
+                  <li>Pastikan <em>base repository</em> mengarah ke repository Kabim gugusmu.</li>
+                  <li>Judul PR: <code>Submit tugas osjur - &lt;NIM_KAMU&gt;</code></li>
+                  <li>Deskripsi PR: Sebutkan Gugus dan Nama Lengkapmu.</li>
+                  <li>Klik <strong>Create pull request</strong>.</li>
+                </ol>
+                <div class="info-box">
+                  <div class="callout-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+                  </div>
+                  <div>
+                    <strong>Selesai!</strong> Kabim gugusmu akan memeriksa tugasmu dan melakukan merge PR.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 4. Aturan & Larangan -->
+      <section id="aturan">
+        <h2>4. Aturan &amp; Larangan Mutlak</h2>
+
+        <div class="danger-box">
+          <div class="callout-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+          </div>
+          <div>
+            <strong>Pull Request kamu akan LANGSUNG DITOLAK jika:</strong>
+            <ul style="margin-top:0.5rem;padding-left:1.25rem;">
+              <li>Mengedit file template asli <code>Tugas/NIM-NAMA.md</code> atau file milik teman lain.</li>
+              <li>Menaruh file di luar subfolder gugus yang telah ditentukan.</li>
+              <li>Format penamaan file salah (menggunakan spasi, dash, atau tanpa ekstensi <code>.md</code>).</li>
+              <li>Link tugas (Google Drive, Figma, dsb.) bersifat private / terkunci.</li>
+              <li>Mengubah file root seperti <code>index.html</code>, <code>README.md</code>, atau konfigurasi sistem.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Standar Format Penamaan File</h3>
+        <pre><code class="language-bash">Tugas/&lt;NamaGugus&gt;/&lt;NIM&gt;_&lt;NamaLengkap&gt;.md
+
+# Contoh BENAR:
+Tugas/JavaScript/26106050001_MuhammadAdzka.md
+Tugas/Python/26106050012_SitiFatimah.md
+
+# Contoh SALAH:
+Tugas/NIM-NAMA.md                     (Mengedit template)
+Tugas/Python/26106050012 Siti.md      (Ada spasi)
+Tugas/26106050012_SitiFatimah.md      (Di luar folder gugus)</code></pre>
+
+        <h3>Pengaturan Hak Akses Link Tugas</h3>
+        <p>
+          Semua link yang kamu cantumkan di dalam file markdown wajib disetel ke <strong>"Anyone with the link can view"</strong> (Siapa saja yang memiliki link dapat melihat). Panitia &amp; Kabim tidak dapat memberi nilai jika file terkunci (*access denied*).
+        </p>
+      </section>
+
+      <!-- 5. Checklist -->
+      <section id="checklist">
+        <h2>5. Checklist Sebelum Buat PR</h2>
+        <ul>
+          <li>File dinamai dengan format <code>NIM_NamaLengkap.md</code> (menggunakan underscore <code>_</code>).</li>
+          <li>File berada di dalam folder gugusmu sendiri (contoh: <code>Tugas/JavaScript/</code>).</li>
+          <li>File template <code>Tugas/NIM-NAMA.md</code> tidak tersentuh/diedit sama sekali.</li>
+          <li>Seluruh link tugas (Drive/Figma/GitHub) bisa dibuka di mode *Incognito/Private window* tanpa perlu login.</li>
+          <li>Sudah menjalankan <code>git push origin main</code> ke repository GitHub pribadimu.</li>
+          <li>Tujuan Pull Request diarahkan ke repository Kabim gugusmu.</li>
+          <li>Judul PR diisi sesuai format: <code>Submit tugas osjur - &lt;NIM&gt;</code>.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <a href="../">&larr; Beranda</a>
+    <a href="../materi-vscode/">&larr; VS Code</a>
+    <a href="../materi-git/">&larr; Git &amp; GitHub</a>
+    <a href="../materi-utility/">Troubleshooting &rarr;</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script>
+    const progressBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      progressBar.style.width = pct + '%';
+    });
+
+    const sections = document.querySelectorAll('.content section[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
