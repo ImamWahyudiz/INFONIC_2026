@@ -22,7 +22,6 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Internal documentation & draft folders
+# Internal draft / dev notes
 dev/
 docs/
-materi/

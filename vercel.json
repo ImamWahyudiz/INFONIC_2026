@@ -2,23 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/src/index.html" },
-    { "source": "/style.css", "destination": "/src/style.css" },
-    { "source": "/main.js", "destination": "/src/main.js" },
-    { "source": "/logoINFONIC.jpg", "destination": "/src/logoINFONIC.jpg" },
-    { "source": "/sitemap.xml", "destination": "/src/sitemap.xml" },
-    { "source": "/robots.txt", "destination": "/src/robots.txt" },
-    { "source": "/kabim/(.*)", "destination": "/src/kabim/$1" },
-    { "source": "/materi-vscode", "destination": "/src/materi-vscode/index.html" },
-    { "source": "/materi-vscode/(.*)", "destination": "/src/materi-vscode/$1" },
-    { "source": "/materi-git", "destination": "/src/materi-git/index.html" },
-    { "source": "/materi-git/(.*)", "destination": "/src/materi-git/$1" },
-    { "source": "/tutorial-fork-pr", "destination": "/src/tutorial-fork-pr/index.html" },
-    { "source": "/tutorial-fork-pr/(.*)", "destination": "/src/tutorial-fork-pr/$1" },
-    { "source": "/materi-utility", "destination": "/src/materi-utility/index.html" },
-    { "source": "/materi-utility/(.*)", "destination": "/src/materi-utility/$1" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
