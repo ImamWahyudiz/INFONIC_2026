@@ -46,9 +46,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Hamburger Menu Toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navToggle.classList.toggle('open');
+      navMenu.classList.toggle('open');
+    });
+
+    // Close menu when clicking on any menu link
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navMenu.classList.remove('open');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navToggle.classList.remove('open');
+        navMenu.classList.remove('open');
+      }
+    });
+  }
+
   // Active Navbar State on Scroll
   const sections = document.querySelectorAll('.page-section');
-  const navLinks = document.querySelectorAll('.sticky-nav a');
+  const navLinks = document.querySelectorAll('.nav-menu a');
   
   if (sections.length && navLinks.length) {
     window.addEventListener('scroll', () => {
