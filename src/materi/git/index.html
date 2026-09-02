@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080d1a">
   <title>Git &amp; GitHub &mdash; Materi INFONIC 2026</title>
   <meta name="description" content="Panduan lengkap dari instalasi hingga workflow clone, commit, push &mdash; version control untuk developer.">
-  <link rel="icon" type="image/jpeg" href="../../assets/logoINFONIC.jpg">
+  <link rel="icon" type="image/jpeg" href="../../assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -210,7 +210,7 @@
     .content section {
       margin-bottom: 4rem;
       padding-top: 1.5rem;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h2 {
@@ -219,13 +219,13 @@
       padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-default);
       line-height: 1.35;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h3 {
       font-size: 1.08rem; font-weight: 700;
       color: #e2e8f0; margin: 1.75rem 0 0.75rem;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h4 {
@@ -430,10 +430,18 @@
     }
 
     .step-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin: 1rem 0; counter-reset: steps; }
+    .step-body {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+    }
     .step-item {
       display: flex; gap: 1.15rem; align-items: flex-start;
       background: var(--bg-surface); border: 1px solid var(--border-default);
       border-radius: 12px; padding: 1.25rem 1.4rem;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .step-num {
       width: 32px; height: 32px; border-radius: 50%;
@@ -553,18 +561,7 @@
       }
 
       /* Full Edge-to-Edge Sticky Table of Contents bar */
-      .sidebar {
-        position: sticky;
-        top: var(--navbar-h);
-        z-index: 90;
-        background: rgba(8, 13, 26, 0.96);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        margin: 0 -1rem 1.5rem -1rem;
-        padding: 0.55rem 0;
-        border-bottom: 1px solid var(--border-default);
-        width: calc(100% + 2rem);
-      }
+      .sidebar { display: none !important; }
 
       .sidebar-label {
         font-size: 0.62rem;
@@ -611,29 +608,133 @@
 
       /* Proper scroll-margin-top so section content NEVER gets obscured under navbar + sticky TOC */
       .content section {
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
         padding-top: 0;
         margin-bottom: 3rem;
       }
 
       .content h2 {
         font-size: 1.35rem;
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
       }
 
       .content h3 {
         font-size: 1.05rem;
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
       }
 
       .content p, .content li { font-size: 0.9rem; line-height: 1.65; }
       
-      .ext-grid, .scenario-grid, .cheat-grid { grid-template-columns: 1fr; }
-      .error-row { grid-template-columns: 1fr; gap: 0.4rem; }
-      .error-card { padding: 1rem; }
-      .workflow-diagram { padding: 1rem; }
-      .wf-node { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .step-item { padding: 1rem; gap: 0.85rem; }
+            .ext-grid, .scenario-grid, .cheat-grid { grid-template-columns: 1fr; }
+      .error-card { padding: 0.85rem; }
+      .error-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.75rem 0.9rem;
+      }
+      .error-header span:first-child {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      .error-body { padding: 0.85rem; }
+      .error-row {
+        grid-template-columns: 1fr !important;
+        gap: 0.35rem !important;
+      }
+      .error-label {
+        align-self: flex-start;
+      }
+      .error-content {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .workflow-diagram { padding: 0.75rem; }
+      .wf-node {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.85rem 0.9rem;
+      }
+      .wf-badge {
+        align-self: flex-start;
+      }
+      .step-item {
+        padding: 0.9rem;
+        gap: 0.75rem;
+      }
+      .wf-arrow {
+        text-align: center;
+        flex-wrap: wrap;
+        padding: 0.35rem 0.5rem;
+      }
+      .wf-arrow span {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        max-width: 100%;
+      }
+      .gugus-grid-mini {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .gugus-chip {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.55rem;
+      }
+      .step-title {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font-size: 0.95rem;
+      }
+      .step-desc {
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .danger-box, .info-box, .warning-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+      }
+      .callout-icon {
+        margin-bottom: 0.2rem;
+      }
+      code {
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+        white-space: normal !important;
+      }
+      pre code {
+        white-space: pre !important;
+        word-break: normal !important;
+      }
+
+      .folder-tree {
+        padding: 0.85rem;
+        font-size: 0.76rem;
+      }
+      .info-box, .warning-box, .danger-box {
+        padding: 0.85rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      pre {
+        padding: 0.75rem 0.85rem !important;
+        margin: 0.75rem 0 1rem !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+      }
+      .content p, .content li, .content h2, .content h3 {
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
     }
   </style>
 </head>
@@ -643,12 +744,12 @@
   <!-- Navbar with Uniform Hamburger Menu Drawer and External Canva Links -->
   <nav class="navbar">
     <a href="../../" class="navbar-brand">
-      <img src="../../assets/logoINFONIC.jpg" alt="INFONIC">
+      <img src="../../assets/logo.jpg" alt="INFONIC">
       <span>INFONIC</span>
     </a>
     <div class="nav-sep"></div>
     <div class="nav-links-wrap" id="navLinksWrap">
-      <a href="../../" class="nav-link"><span>&larr; Home</span></a>
+      <a href="../../" class="nav-link"><span>Home</span></a>
       <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
       <a href="../git/" class="nav-link active"><span>Git &amp; GitHub</span></a>
       <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
@@ -826,7 +927,7 @@ git config --global user.email "emailkamu@example.com"</code></pre>
           </div>
         </div>
 
-        <h3>…° Skenario A: Mengambil Repo yang Sudah Ada</h3>
+        <h3>…° Skenario A: Mengambil Repo yang Sudah Ada</h3>
 
         <h4>Langkah A.1: Menyalin Repository ke Lokal (git clone)</h4>
         <p>Buka terminal di folder yang kamu inginkan, lalu jalankan:</p>
@@ -842,7 +943,7 @@ git config --global user.email "emailkamu@example.com"</code></pre>
           <div class="info-box-body"><strong>Tips:</strong> Biasakan melakukan <code>git pull</code> setiap kali mau mulai ngoding, supaya kodemu selalu up to date dengan versi terbaru di GitHub.</div>
         </div>
 
-        <h3>…± Skenario B: Membuat Repository Baru dari Lokal</h3>
+        <h3>…± Skenario B: Membuat Repository Baru dari Lokal</h3>
 
         <h4>Langkah B.1: Inisialisasi Repository Lokal (git init)</h4>
         <p>Buka terminal VS Code di dalam folder projectmu, lalu ketik:</p>
@@ -964,7 +1065,7 @@ git push -u origin main</code></pre>
 
   <!-- Universal Clean Footer -->
   <footer class="page-footer">
-    <a href="../../">&larr; Home</a>
+    <a href="../../">Home</a>
     <a href="../vscode/">VS Code</a>
     <a href="../git/">Git &amp; GitHub</a>
     <a href="../fork-pr/">Fork &amp; PR</a>
@@ -1036,7 +1137,7 @@ git push -u origin main</code></pre>
               e.preventDefault();
               const navHeight = 52;
               const tocHeight = 50;
-              const totalOffset = window.innerWidth <= 768 ? 175 : 90;
+              const totalOffset = window.innerWidth <= 768 ? 65 : 75;
               const elementPosition = targetEl.getBoundingClientRect().top;
               const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
 

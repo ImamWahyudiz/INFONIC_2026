@@ -25,3 +25,7 @@ Thumbs.db
 # Internal draft / dev notes
 dev/
 docs/
+
+# Dependencies and build outputs
+node_modules/
+dist/

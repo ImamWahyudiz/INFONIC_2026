@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--navbar-h, 52px) + 1.5rem);
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) #080d1a;
 }
@@ -244,7 +245,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 5.5rem 2rem 4.5rem;
+  padding: 4.5rem 2rem 4rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -285,11 +286,11 @@ body {
 }
 
 .section-title {
-  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
   font-weight: 800;
-  line-height: 1.22;
+  line-height: 1.25;
   letter-spacing: -0.02em;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   color: #f8fafc;
   max-width: 850px;
 }
@@ -499,13 +500,27 @@ body {
 /* =========================================================
    SECTION 3: TIMELINE & AGENDA ACARA
    ========================================================= */
+#acara.page-section {
+  padding-top: 1.75rem;
+  padding-bottom: 2.75rem;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+#mobileTimelineAccordion {
+  display: none;
+}
+
+#acara .section-title {
+  margin-bottom: 1rem;
+}
 .timeline-circle-line {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
   max-width: 960px;
-  margin: 0 auto 3.5rem auto;
+  margin: 0 auto 1.25rem auto;
   position: relative;
 }
 
@@ -515,7 +530,35 @@ body {
   align-items: center;
   flex: 1;
   position: relative;
-  cursor: default;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.tl-step:hover {
+  transform: translateY(-2px);
+}
+
+.tl-step.active .tl-dot {
+  background: var(--primary-500);
+  border-color: #ffffff;
+  transform: scale(1.4);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 1);
+}
+
+.tl-step.active .tl-label {
+  color: var(--primary-500);
+  font-weight: 800;
+}
+
+.tl-step.active .tl-dot-makrab {
+  background: var(--purple-400);
+  border-color: #ffffff;
+  box-shadow: 0 0 25px rgba(192, 132, 252, 1);
+}
+
+.tl-step.active .tl-label-makrab {
+  color: #f3e8ff;
 }
 
 .tl-dot {
@@ -591,48 +634,103 @@ body {
   color: var(--purple-400);
 }
 
-/* AGENDA CARDS GRID */
-.agenda-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+/* =========================================================
+   AGENDA CAROUSEL WITH 3D FOCUS & FULL PEEK (NO CLIPPING)
+   ========================================================= */
+.agenda-carousel-wrapper {
+  position: relative;
   width: 100%;
-  text-align: left;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+}
+
+.agenda-carousel-track-container {
+  width: 100%;
+  overflow: visible;
+  padding: 0.8rem 0 1.2rem 0;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.agenda-carousel-track-container.is-dragging {
+  cursor: grabbing;
+}
+
+.agenda-carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Use 3d acceleration without permanent will-change raster lock */
+  transform: translate3d(0, 0, 0);
 }
 
 .agenda-card {
-  background: var(--bg-surface);
+  flex: 0 0 520px;
+  width: 520px;
+  margin: 0 1rem;
+  background: #0e1628;
   border: 1.5px solid var(--border-default);
   border-radius: 16px;
-  padding: 1.5rem 1.4rem;
+  padding: 1.15rem 1.4rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 0.55rem;
+  text-align: left;
+  /* Always maintain 100% scale to prevent font blur and raster scaling glitch */
+  transform: translateY(0);
+  opacity: 0.65;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              background 0.35s ease;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  -webkit-font-smoothing: subpixel-antialiased;
+  backface-visibility: hidden;
 }
 
 .agenda-card:hover {
+  opacity: 0.9;
   border-color: rgba(56, 189, 248, 0.45);
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.6);
-  background: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.agenda-card.active {
+  opacity: 1;
+  /* Subtle integer elevation: clear, prominent, zero blur */
+  transform: translateY(-6px);
+  border-color: var(--primary-500);
+  box-shadow: 0 18px 45px -8px rgba(56, 189, 248, 0.35), 0 0 0 1px rgba(56, 189, 248, 0.4);
+  background: linear-gradient(180deg, #111c33 0%, #0a1122 100%);
+  cursor: default;
+}
+
+.agenda-card.active[data-index="5"] {
+  border-color: rgba(192, 132, 252, 0.75);
+  box-shadow: 0 18px 45px -8px rgba(192, 132, 252, 0.35), 0 0 0 1px rgba(192, 132, 252, 0.4);
 }
 
 .agenda-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .agenda-week-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.75rem;
+  gap: 0.45rem;
+  padding: 0.35rem 0.9rem;
   border-radius: 9999px;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -642,40 +740,344 @@ body {
 }
 
 .agenda-week-badge svg {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
+}
+
+.agenda-status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
 }
 
 .agenda-title {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  font-weight: 800;
   color: #ffffff;
   line-height: 1.3;
+  margin: 0;
+}
+
+.agenda-brief {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
 }
 
 .agenda-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.35rem;
   font-size: 0.84rem;
-  color: #cbd5e1;
-  padding: 0.85rem 1rem;
-  background: rgba(15, 23, 42, 0.65);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  padding: 0.65rem 0.9rem;
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .meta-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.65rem;
 }
 
 .meta-row svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   color: var(--primary-500);
   flex-shrink: 0;
+}
+
+/* Agenda Details Grid (Dresscode & Bawaan) */
+.agenda-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.agenda-detail-box {
+  background: rgba(14, 22, 40, 0.65);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cyan-400);
+}
+
+.detail-label svg {
+  width: 15px;
+  height: 15px;
+  color: var(--cyan-400);
+  flex-shrink: 0;
+}
+
+.detail-content {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.detail-content p {
+  margin: 0;
+}
+
+.detail-content strong {
+  color: #f1f5f9;
+}
+
+
+/* Compact Inner Card Design */
+.compact-dress-box {
+  background: rgba(14, 22, 40, 0.75);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 0.6rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cd-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cyan-400);
+}
+
+.cd-title svg {
+  width: 13px;
+  height: 13px;
+}
+
+.cd-row {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.cd-row strong {
+  color: #fff;
+}
+
+.compact-note-box {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding: 0.45rem 0.75rem;
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-500);
+}
+
+.compact-note-box strong {
+  color: #f1f5f9;
+}
+
+
+/* Makrab Top Secret & Coming Soon Pill */
+.status-pill-coming-soon {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--purple-400);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-pill-top-secret {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.makrab-secret-box {
+  background: rgba(14, 22, 40, 0.6);
+  border: 1.5px dashed rgba(168, 85, 247, 0.45);
+  border-radius: 12px;
+  padding: 1.4rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.secret-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1.5px solid rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.22);
+}
+
+.secret-badge svg {
+  width: 17px;
+  height: 17px;
+  color: #f87171;
+}
+
+.secret-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* Floating Navigation Buttons */
+.carousel-nav-btn {
+  display: none; /* Sembunyikan di desktop, munculkan di mobile */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(14, 22, 40, 0.92);
+  border: 1px solid var(--border-default);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-nav-btn:hover {
+  background: var(--primary-500);
+  border-color: var(--primary-500);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+}
+
+.carousel-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav-btn.prev {
+  left: max(16px, calc(50% - 320px));
+}
+
+.carousel-nav-btn.next {
+  right: max(16px, calc(50% - 320px));
+}
+
+.carousel-nav-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Carousel Indicators (Dots) */
+.carousel-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.indicator-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0;
+}
+
+.indicator-dot:hover {
+  background: rgba(56, 189, 248, 0.5);
+  transform: scale(1.25);
+}
+
+.indicator-dot.active {
+  width: 28px;
+  background: var(--primary-500);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+}
+
+@media (max-width: 768px) {
+  .agenda-card {
+    flex: 0 0 84vw;
+    width: 84vw;
+    max-width: 84vw;
+    margin: 0 0.4rem;
+    padding: 1.15rem 1rem;
+    gap: 0.65rem;
+  }
+  .carousel-nav-btn {
+    display: flex; /* Munculkan tombol kanan kiri di mobile */
+  }
+  .carousel-nav-btn.prev {
+    left: 8px;
+  }
+  .carousel-nav-btn.next {
+    right: 8px;
+  }
+  .timeline-circle-line {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 1.75rem;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+  }
+  .timeline-circle-line::-webkit-scrollbar {
+    display: none;
+  }
+  .tl-step {
+    flex: 0 0 110px;
+  }
 }
 
 /* Social Actions */
@@ -732,30 +1134,133 @@ body {
 /* =========================================================
    SECTION 4: 12 GUGUS & KABIM (ID CARD / CO-CARD STYLE)
    ========================================================= */
-.gugus-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+#gugus.page-section {
+  max-width: 100%;
   width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem;
+  padding-bottom: 3.5rem;
+  overflow-x: clip;
+}
+
+#gugus .section-title {
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Carousel Wrapper & Viewport */
+.gugus-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: visible; /* Never clips cards abruptly */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gugus-carousel-viewport {
+  width: 100%;
+  overflow: visible; /* Cards flow naturally during scroll without getting cut off */
+  padding: 1.25rem 0 1.75rem 0;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.gugus-carousel-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.gugus-carousel-track {
+  display: flex;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .id-card {
-  background: linear-gradient(180deg, #111a2e 0%, #0a1120 100%);
+  /* Desktop default: 3 cards fit with 2.5rem side breathing room from window edge */
+  flex: 0 0 calc((100% - 2 * 2.5rem - 2 * 1.5rem) / 3);
+  width: calc((100% - 2 * 2.5rem - 2 * 1.5rem) / 3);
+  margin-right: 1.5rem;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #111a2e 0%, #0a1122 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   padding: 1.6rem 1.3rem 1.3rem;
   text-align: center;
   position: relative;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: subpixel-antialiased;
+  backface-visibility: hidden;
 }
 
-.id-card:hover {
-  transform: translateY(-8px) scale(1.02);
+/* Idle mode: outer cards fade out smoothly so no extra cards peek into the side space */
+.gugus-carousel-track:not(.is-scrolling) .id-card {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Idle active cards: 100% visible, fully expanded, crisp */
+.gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Hover on idle active cards */
+.gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card:hover {
+  transform: translateY(-6px);
   border-color: var(--primary-500);
-  box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 18px 40px -8px rgba(56, 189, 248, 0.35);
+}
+
+/* When scrolling/dragging: all cards are visible, whole and shrunk, never clipped by section */
+.gugus-carousel-track.is-scrolling .id-card {
+  opacity: 0.85;
+  pointer-events: auto;
+  transform: scale(0.92);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Gugus Minimalist Indicators */
+.gugus-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gugus-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.3s ease,
+              box-shadow 0.3s ease,
+              transform 0.25s ease;
+}
+
+.gugus-dot:hover {
+  background: rgba(56, 189, 248, 0.6);
+  transform: scale(1.25);
+}
+
+.gugus-dot.active {
+  width: 26px;
+  background: var(--primary-500);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
 }
 
 .id-card-clip {
@@ -924,11 +1429,11 @@ body {
    SECTION 5: PUSAT MATERI (BELAJAR)
    ========================================================= */
 .sec3-title {
-  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.25;
   color: #ffffff;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .sec3-desc {
@@ -1182,8 +1687,11 @@ body {
   .agenda-grid {
     grid-template-columns: 1fr;
   }
-  .gugus-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .gugus-carousel-track .id-card {
+    /* Tablet: 2 cards fit with 2rem side breathing room */
+    flex: 0 0 calc((100% - 2 * 2rem - 1.25rem) / 2);
+    width: calc((100% - 2 * 2rem - 1.25rem) / 2);
+    margin-right: 1.25rem;
   }
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1287,70 +1795,221 @@ body {
     height: 18px;
   }
 
-  /* Timeline Mobile: Bentuk Alur Vertikal dengan Garis Penghubung (Line Connector) */
-  .timeline-circle-line {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    max-width: 400px;
-    margin: 0 auto 3rem auto;
-    padding-left: 1.5rem;
-    position: relative;
+  /* Section 3: Hide desktop timeline navigation & horizontal carousel on mobile */
+  #timelineNav {
+    display: none !important;
   }
-
-  .tl-step {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1.25rem;
-    width: 100%;
-    padding-bottom: 2rem;
-    position: relative;
-    text-align: left;
-  }
-
-  .tl-step:last-child {
-    padding-bottom: 0;
-  }
-
-  /* Garis Vertikal Penghubung di Mobile */
-  .tl-connector {
-    display: block !important;
-    position: absolute;
-    top: 22px;
-    left: 10px;
-    width: 2px;
-    height: calc(100% - 10px);
-    background: linear-gradient(180deg, var(--primary-500) 0%, rgba(56, 189, 248, 0.2) 100%);
-    z-index: 1;
-  }
-
-  .tl-step:last-child .tl-connector {
+  #agendaCarouselWrapper {
     display: none !important;
   }
 
-  .tl-dot {
-    width: 22px;
-    height: 22px;
-    flex-shrink: 0;
-    margin-top: 1px;
-    z-index: 2;
+  /* Section 3: Mobile Vertical Accordion Timeline */
+  .mobile-timeline-accordion {
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
+    max-width: 520px;
+    margin: 1rem auto 0;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
   }
 
-  .tl-label {
-    margin-top: 0;
-    font-size: 0.95rem;
-    line-height: 1.35;
-    padding: 0;
+  .mtl-step {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    position: relative;
+  }
+
+  .mtl-rail {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    align-items: center;
+    width: 32px;
+    min-width: 32px;
+    margin-right: 0.85rem;
   }
 
-  .tl-date {
-    display: block;
-    margin-top: 0;
-    font-size: 0.82rem;
+  /* Garis Vertikal Nyambung Tanpa Putus dari Step 1 sampai Step Terakhir */
+  .mtl-rail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.55) 0%, rgba(56, 189, 248, 0.25) 100%);
+    z-index: 1;
+  }
+
+  /* Step pertama: garis mulai pas dari tengah titik pertama */
+  .mtl-step:first-child .mtl-rail::before {
+    top: 22px;
+  }
+
+  /* Step terakhir (Makrab): garis berhenti pas di tengah titik terakhir */
+  .mtl-step:last-child .mtl-rail::before {
+    bottom: calc(100% - 22px);
+  }
+
+  .mtl-line {
+    display: none !important;
+  }
+
+  .mtl-dot {
+    position: relative;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #0b1329;
+    border: 2.5px solid rgba(56, 189, 248, 0.6);
+    margin-top: 15px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+    box-sizing: border-box;
+  }
+
+  .mtl-dot-makrab {
+    border-color: rgba(236, 72, 153, 0.8);
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.35);
+  }
+
+  .mtl-step.active .mtl-dot {
+    width: 18px;
+    height: 18px;
+    background: var(--primary-400);
+    border: 3px solid #fff;
+    box-shadow: 0 0 18px var(--primary-400), 0 0 34px rgba(56, 189, 248, 0.8);
+    margin-top: 13px;
+  }
+
+  .mtl-step.active .mtl-dot-makrab {
+    background: #ec4899;
+    border-color: #fce7f3;
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.95), 0 0 38px rgba(236, 72, 153, 0.7);
+  }
+
+  .mtl-content {
+    flex: 1;
+    padding-bottom: 1.15rem;
+    min-width: 0;
+  }
+
+  .mtl-step:last-child .mtl-content {
+    padding-bottom: 0.5rem;
+  }
+
+  /* Inactive Compact Cyber Glass Pill */
+  .mtl-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #f8fafc;
+    font-family: inherit;
+    margin-top: 4px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+  }
+
+  .mtl-pill:hover,
+  .mtl-pill:active {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateX(3px);
+    box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  }
+
+  .mtl-pill-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mtl-pill-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: -0.01em;
+  }
+
+  .mtl-pill-date {
+    font-size: 0.75rem;
+    color: var(--primary-400);
     font-weight: 600;
+  }
+
+  .mtl-pill-makrab .mtl-pill-date {
+    color: #ec4899;
+  }
+
+  .mtl-pill-chevron {
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+    transition: transform 0.25s ease, color 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .mtl-pill:hover .mtl-pill-chevron {
+    color: var(--primary-400);
+    transform: translateX(2px);
+  }
+
+  /* When step is active: hide the compact pill and smoothly expand the card */
+  .mtl-step.active .mtl-pill {
+    display: none;
+  }
+
+  .mtl-card-wrapper {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.22s ease,
+                margin 0.22s ease;
+    margin-top: 0;
+  }
+
+  .mtl-step.active .mtl-card-wrapper {
+    max-height: 1400px;
+    opacity: 1;
+    pointer-events: auto;
+    margin-top: 2px;
+  }
+
+  .mtl-card-wrapper .agenda-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(56, 189, 248, 0.15);
+    touch-action: pan-y;
+    cursor: default;
+  }
+
+  /* Gugus Carousel Mobile: Exactly 1 card below 768px */
+  .gugus-carousel-track .id-card {
+    flex: 0 0 calc(100% - 2 * 1.25rem);
+    width: calc(100% - 2 * 1.25rem);
+    margin-right: 1rem;
+  }
+  .gugus-carousel-track.is-scrolling .id-card {
+    transform: scale(0.9);
   }
 }
 
@@ -1382,12 +2041,41 @@ body {
   .page-section {
     padding: 4rem 1rem 3rem;
   }
-  .gugus-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
   .features-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+  .feature-card {
+    padding: 1rem 0.55rem;
+    align-items: center;
+    text-align: center;
+    border-radius: 14px;
+    gap: 0.55rem;
+    justify-content: flex-start;
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    flex-shrink: 0;
+  }
+  .feature-icon img {
+    width: 24px;
+    height: 24px;
+  }
+  .feature-name {
+    font-size: 0.82rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .feature-tagline {
+    display: none !important;
+  }
+  .feature-card .card-arrow {
+    display: none !important;
   }
   .id-card {
     padding: 1.4rem 1.1rem 1.1rem;
@@ -1395,5 +2083,18 @@ body {
   .btn-gist {
     padding: 0.55rem 1.15rem;
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .feature-card {
+    padding: 0.95rem 0.65rem;
+  }
+  .feature-name {
+    font-size: 0.85rem;
   }
 }

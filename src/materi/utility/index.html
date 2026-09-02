@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080d1a">
-  <title>Fork &amp; Pull Request &mdash; Materi INFONIC 2026</title>
-  <meta name="description" content="Alur bertingkat pengumpulan tugas mahasiswa baru INFONIC 2026 melalui repository Kakak Pembimbing (Kabim) gugus.">
-  <link rel="icon" type="image/jpeg" href="../../assets/logoINFONIC.jpg">
+  <title>Troubleshooting &mdash; Materi INFONIC 2026</title>
+  <meta name="description" content="Solusi lengkap error Git, rollback commit, membatalkan push, navigasi terminal, hingga resolusi konflik tugas.">
+  <link rel="icon" type="image/jpeg" href="../../assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -210,7 +210,7 @@
     .content section {
       margin-bottom: 4rem;
       padding-top: 1.5rem;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h2 {
@@ -219,13 +219,13 @@
       padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-default);
       line-height: 1.35;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h3 {
       font-size: 1.08rem; font-weight: 700;
       color: #e2e8f0; margin: 1.75rem 0 0.75rem;
-      scroll-margin-top: 175px;
+      scroll-margin-top: 65px;
     }
 
     .content h4 {
@@ -430,10 +430,18 @@
     }
 
     .step-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin: 1rem 0; counter-reset: steps; }
+    .step-body {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+    }
     .step-item {
       display: flex; gap: 1.15rem; align-items: flex-start;
       background: var(--bg-surface); border: 1px solid var(--border-default);
       border-radius: 12px; padding: 1.25rem 1.4rem;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .step-num {
       width: 32px; height: 32px; border-radius: 50%;
@@ -553,18 +561,7 @@
       }
 
       /* Full Edge-to-Edge Sticky Table of Contents bar */
-      .sidebar {
-        position: sticky;
-        top: var(--navbar-h);
-        z-index: 90;
-        background: rgba(8, 13, 26, 0.96);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        margin: 0 -1rem 1.5rem -1rem;
-        padding: 0.55rem 0;
-        border-bottom: 1px solid var(--border-default);
-        width: calc(100% + 2rem);
-      }
+      .sidebar { display: none !important; }
 
       .sidebar-label {
         font-size: 0.62rem;
@@ -611,29 +608,133 @@
 
       /* Proper scroll-margin-top so section content NEVER gets obscured under navbar + sticky TOC */
       .content section {
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
         padding-top: 0;
         margin-bottom: 3rem;
       }
 
       .content h2 {
         font-size: 1.35rem;
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
       }
 
       .content h3 {
         font-size: 1.05rem;
-        scroll-margin-top: 175px;
+        scroll-margin-top: 65px;
       }
 
       .content p, .content li { font-size: 0.9rem; line-height: 1.65; }
       
-      .ext-grid, .scenario-grid, .cheat-grid { grid-template-columns: 1fr; }
-      .error-row { grid-template-columns: 1fr; gap: 0.4rem; }
-      .error-card { padding: 1rem; }
-      .workflow-diagram { padding: 1rem; }
-      .wf-node { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .step-item { padding: 1rem; gap: 0.85rem; }
+            .ext-grid, .scenario-grid, .cheat-grid { grid-template-columns: 1fr; }
+      .error-card { padding: 0.85rem; }
+      .error-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.75rem 0.9rem;
+      }
+      .error-header span:first-child {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      .error-body { padding: 0.85rem; }
+      .error-row {
+        grid-template-columns: 1fr !important;
+        gap: 0.35rem !important;
+      }
+      .error-label {
+        align-self: flex-start;
+      }
+      .error-content {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .workflow-diagram { padding: 0.75rem; }
+      .wf-node {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.85rem 0.9rem;
+      }
+      .wf-badge {
+        align-self: flex-start;
+      }
+      .step-item {
+        padding: 0.9rem;
+        gap: 0.75rem;
+      }
+      .wf-arrow {
+        text-align: center;
+        flex-wrap: wrap;
+        padding: 0.35rem 0.5rem;
+      }
+      .wf-arrow span {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        max-width: 100%;
+      }
+      .gugus-grid-mini {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .gugus-chip {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.55rem;
+      }
+      .step-title {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font-size: 0.95rem;
+      }
+      .step-desc {
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .danger-box, .info-box, .warning-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+      }
+      .callout-icon {
+        margin-bottom: 0.2rem;
+      }
+      code {
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+        white-space: normal !important;
+      }
+      pre code {
+        white-space: pre !important;
+        word-break: normal !important;
+      }
+
+      .folder-tree {
+        padding: 0.85rem;
+        font-size: 0.76rem;
+      }
+      .info-box, .warning-box, .danger-box {
+        padding: 0.85rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      pre {
+        padding: 0.75rem 0.85rem !important;
+        margin: 0.75rem 0 1rem !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+      }
+      .content p, .content li, .content h2, .content h3 {
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
     }
   </style>
 </head>
@@ -643,16 +744,16 @@
   <!-- Navbar with Uniform Hamburger Menu Drawer and External Canva Links -->
   <nav class="navbar">
     <a href="../../" class="navbar-brand">
-      <img src="../../assets/logoINFONIC.jpg" alt="INFONIC">
+      <img src="../../assets/logo.jpg" alt="INFONIC">
       <span>INFONIC</span>
     </a>
     <div class="nav-sep"></div>
     <div class="nav-links-wrap" id="navLinksWrap">
-      <a href="../../" class="nav-link"><span>&larr; Home</span></a>
+      <a href="../../" class="nav-link"><span>Home</span></a>
       <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
       <a href="../git/" class="nav-link"><span>Git &amp; GitHub</span></a>
-      <a href="../fork-pr/" class="nav-link active"><span>Fork &amp; PR</span></a>
-      <a href="../utility/" class="nav-link"><span>Troubleshooting</span></a>
+      <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
+      <a href="../utility/" class="nav-link active"><span>Troubleshooting</span></a>
       <a href="https://canva.link/vtexeenvf7a53s0" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Flowchart <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
       <a href="https://canva.link/fivh11d00jswuzo" target="_blank" rel="noopener noreferrer" class="nav-link nav-ext"><span>Figma <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a>
     </div>
@@ -665,267 +766,336 @@
 
   <!-- Hero Header -->
   <div class="page-hero">
-    <h1>Fork &amp; Pull Request</h1>
-    <p>Alur bertingkat pengumpulan tugas mahasiswa baru INFONIC 2026 melalui repository Kakak Pembimbing (Kabim) gugus.</p>
+    <h1>Troubleshooting &amp; Solusi Masalah Git</h1>
+    <p>Panduan lengkap mengatasi salah edit file, rollback commit, membatalkan push, navigasi terminal, hingga resolusi konflik tugas.</p>
   </div>
 
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar-label">Daftar Isi</div>
       <ul class="sidebar-nav" id="sidebarNav">
-        <li><a href="#alur-sistem">1. Alur Sistem Pengumpulan</a></li>
-        <li><a href="#struktur">2. Struktur Folder &amp; Gugus</a></li>
-        <li><a href="#langkah">3. 5 Langkah Pengumpulan</a></li>
-        <li><a href="#aturan">4. Aturan &amp; Larangan Mutlak</a></li>
-        <li><a href="#checklist">5. Checklist Sebelum PR</a></li>
+        <li><a href="#salah-edit-file">1. Membatalkan File Salah Edit</a></li>
+        <li><a href="#git-not-recognized">2. Error Git Not Recognized</a></li>
+        <li><a href="#merge-conflict">3. Mengatasi Merge Conflict</a></li>
+        <li><a href="#sync-upstream">4. Fork Ketinggalan / Out of Date</a></li>
+        <li><a href="#navigasi-terminal">5. Navigasi Terminal (Path)</a></li>
+        <li><a href="#error-lain">6. Error Umum Lainnya</a></li>
       </ul>
     </aside>
 
     <main class="content">
-      <!-- 1. Alur Sistem -->
-      <section id="alur-sistem">
-        <h2>1. Alur Sistem Pengumpulan Tugas</h2>
+      <!-- 1. SALAH EDIT FILE & ROLLBACK -->
+      <section id="salah-edit-file">
+        <h2>1. Cara Membatalkan File yang Tak Sengaja Terubah (Rollback)</h2>
         <p>
-          Pengumpulan tugas di INFONIC 2026 menggunakan <strong>sistem bertingkat (hierarki)</strong>. Mahasiswa Baru (Maba) melakukan fork dan mengirimkan Pull Request ke <strong>repository Kakak Pembimbing (Kabim) masing-masing gugus</strong>, bukan langsung ke repository pusat.
+          Terkadang kamu tidak sengaja mengedit file template (<code>Tugas/NIM-NAMA.md</code>), file teman lain, atau file sistem seperti <code>index.html</code>. Berikut solusi mengembalikan ke versi asli berdasarkan tahapan yang sedang terjadi:
         </p>
 
-        <!-- Diagram Alur -->
-        <div class="workflow-diagram">
-          <div class="wf-node maba">
-            <div class="wf-node-info">
-              <h4>1. Mahasiswa Baru (Peserta)</h4>
-              <p>Fork repo Kabim gugus &rarr; Tambah file tugas di <code>Tugas/&lt;Gugus&gt;/NIM_Nama.md</code> &rarr; PR ke repo Kabim.</p>
+        <!-- Skenario 1 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario A: File Berubah Tapi BELUM di-commit (Working Tree / Staged)</span>
+            <span class="error-label solution">Paling Mudah</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                Kamu baru saja mengetik/mengubah file di VS Code dan belum menjalankan <code>git commit</code>.
+              </div>
             </div>
-            <span class="wf-badge cyan">Tahap 1</span>
-          </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                <p><strong>1. Mengembalikan 1 file tertentu ke versi semula:</strong></p>
+                <pre><code class="language-bash"># Mengembalikan file template yang tak sengaja terubah
+git restore Tugas/NIM-NAMA.md
 
-          <div class="wf-arrow">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-            <span>Maba Pull Request ke Repository Kabim Gugus</span>
-          </div>
+# Atau jika menggunakan Git versi lama (&lt; 2.23):
+git checkout -- Tugas/NIM-NAMA.md</code></pre>
+                
+                <p><strong>2. Membatalkan jika sudah sempat <code>git add .</code> (Unstage):</strong></p>
+                <pre><code class="language-bash">git restore --staged Tugas/NIM-NAMA.md
+git restore Tugas/NIM-NAMA.md</code></pre>
 
-          <div class="wf-node kabim">
-            <div class="wf-node-info">
-              <h4>2. Kakak Pembimbing (Kabim)</h4>
-              <p>Kabim mereview tugas maba, memastikan link publik, lalu merge PR maba ke repo gugus.</p>
+                <p><strong>3. Mengembalikan SELURUH perubahan yang belum di-commit:</strong></p>
+                <pre><code class="language-bash">git restore .</code></pre>
+              </div>
             </div>
-            <span class="wf-badge purple">Tahap 2 (Review)</span>
-          </div>
-
-          <div class="wf-arrow">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-            <span>Kabim Fork &amp; Pull Request ke Repository Utama</span>
-          </div>
-
-          <div class="wf-node panitia">
-            <div class="wf-node-info">
-              <h4>3. Repository Pusat INFONIC 2026 (Panitia / Ketua)</h4>
-              <p>Panitia pusat mereview akumulasi pengumpulan seluruh seluruh gugus dan memfinalisasi nilai.</p>
-            </div>
-            <span class="wf-badge emerald">Tahap 3 (Final Merge)</span>
           </div>
         </div>
+
+        <!-- Skenario 2 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario B: Sudah Terlanjur di-commit Tapi BELUM di-push</span>
+            <span class="error-label cause">Sedang</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                Kamu sudah menjalankan <code>git commit -m "..."</code> sehingga perubahan tersimpan di riwayat lokal laptopmu, tetapi <strong>belum</strong> menjalankan <code>git push origin main</code>.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                <p>Batalkan commit terakhir tanpa menghapus file tugas yang sudah kamu buat:</p>
+                <pre><code class="language-bash"># Membatalkan commit terakhir (file tugas tetap aman, status kembali ke uncommitted)
+git reset --soft HEAD~1
+
+# Kemudian kembalikan file template yang salah diedit
+git restore Tugas/NIM-NAMA.md
+
+# Lalu buat commit ulang yang bersih
+git add .
+git commit -m "Submit tugas osjur - <NIM_KAMU>"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skenario 3 -->
+        <div class="error-card">
+          <div class="error-header">
+            <span>Skenario C: Sudah Terlanjur di-commit DAN di-push ke GitHub</span>
+            <span class="error-label danger">Perlu Hati-hati</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Kondisi</div>
+              <div class="error-content">
+                File yang salah ubah sudah terkirim ke repository GitHub pribadimu (kamu sudah <code>git push</code>).
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi 1 (Paling Aman & Bersih)</div>
+              <div class="error-content">
+                <p>Ambil kembali isi file template asli dari repository pusat/upstream lalu commit perbaikan:</p>
+                <pre><code class="language-bash"># Ambil versi asli file template dari commit sebelumnya
+git checkout origin/main -- Tugas/NIM-NAMA.md
+
+# Commit perubahan perbaikan ini dan push ke GitHub-mu
+git add Tugas/NIM-NAMA.md
+git commit -m "fix: revert accidental template changes"
+git push origin main</code></pre>
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi 2 (Force Reset ke GitHub Pribadi)</div>
+              <div class="error-content">
+                <pre><code class="language-bash"># Batalkan commit terakhir di lokal
+git reset --soft HEAD~1
+git restore Tugas/NIM-NAMA.md
+
+# Commit ulang file yang benar
+git add .
+git commit -m "Submit tugas osjur - <NIM_KAMU>"
+
+# Timpa riwayat di GitHub fork pribadimu
+git push origin main --force</code></pre>
+                <div class="warning-box">
+                  <div><strong>Catatan:</strong> Penggunaan <code>--force</code> hanya aman dijalankan pada repository fork <strong>pribadi milikmu sendiri</strong>. Jangan pernah menjalankan force push di repo bersama/utama!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. GIT NOT RECOGNIZED -->
+      <section id="git-not-recognized">
+        <h2>2. Mengatasi Error: "git is not recognized..."</h2>
+
+        <div class="error-card">
+          <div class="error-header">
+            <span>Error: git is not recognized as an internal or external command</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Sistem operasi Windows kamu belum tahu di mana letak aplikasi Git terinstal &mdash; <strong>Path</strong> belum terdaftar secara global.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi A</div>
+              <div class="error-content">
+                <strong>Gunakan Git Bash (Paling Cepat &amp; Direkomendasikan)</strong>
+                <ol style="margin-top:0.5rem;">
+                  <li>Di VS Code, buka terminal (<span class="kbd">Ctrl+`</span>).</li>
+                  <li>Di pojok kanan atas panel terminal, klik tanda panah bawah (di sebelah ikon tambah <code>+</code>).</li>
+                  <li>Pilih <strong>Git Bash</strong> sebagai default profile.</li>
+                </ol>
+                <p align="center" style="margin-top:0.75rem;">
+                  <img src="gitbash-terminal.png" style="width:100%;max-width:560px;border-radius:8px;border:1px solid var(--border-default);" alt="Pilih Git Bash">
+                  <br><small style="color:var(--text-subtle);">Memilih Git Bash sebagai default profile terminal VS Code</small>
+                </p>
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi B</div>
+              <div class="error-content">
+                <strong>Daftarkan Git ke System PATH Windows (Manual)</strong>
+                <ol style="margin-top:0.5rem;">
+                  <li>Buka <strong>Start Menu</strong> Windows &rarr; ketik <code>Environment Variables</code>.</li>
+                  <li>Klik <strong>Edit the system environment variables</strong> &rarr; pilih <strong>Environment Variables...</strong></li>
+                  <li>Di kotak <em>System variables</em>, klik variabel <strong>Path</strong> &rarr; <strong>Edit</strong>.</li>
+                  <li>Klik <strong>New</strong>, tambahkan: <code>C:\Program Files\Git\cmd</code></li>
+                  <li>Klik <strong>OK</strong> pada semua jendela dan <strong>Restart VS Code</strong>.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. MERGE CONFLICT -->
+      <section id="merge-conflict">
+        <h2>3. Mengatasi Merge Conflict (Konflik Penggabungan)</h2>
+
+        <div class="error-card">
+          <div class="error-header">
+            <span>CONFLICT (content): Merge conflict in ...</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Dua orang mengedit baris kode yang sama persis di file yang sama (misalnya mengedit file template yang sama alih-alih membuat file terpisah).
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Cara Resolusi</div>
+              <div class="error-content">
+                <ol style="margin-top:0.25rem;">
+                  <li>Buka file yang berkonflik di <strong>Visual Studio Code</strong>.</li>
+                  <li>VS Code akan otomatis menampilkan tombol opsi:
+                    <ul>
+                      <li><code>Accept Current Change</code> (simpan perubahanmu)</li>
+                      <li><code>Accept Incoming Change</code> (ambil perubahan dari repo luar)</li>
+                      <li><code>Accept Both Changes</code> (simpan kedua-duanya)</li>
+                    </ul>
+                  </li>
+                  <li>Pilih opsi yang sesuai, hapus baris marker <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> dan <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>.</li>
+                  <li>Simpan file (<span class="kbd">Ctrl+S</span>), lalu commit:
+                    <pre><code class="language-bash">git add .
+git commit -m "fix: resolve merge conflict"
+git push origin main</code></pre>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SYNC UPSTREAM -->
+      <section id="sync-upstream">
+        <h2>4. Repository Fork Ketinggalan (This branch is out of date)</h2>
+
+        <div class="error-card">
+          <div class="error-header">
+            <span>Fork Ketinggalan Beberapa Commit dari Repository Kabim/Utama</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Panitia atau Kabim baru saja melakukan update materi atau memvalidasi tugas teman lain di repository utama, sementara repository forkmu masih versi lama.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi Cepat</div>
+              <div class="error-content">
+                <p><strong>Cara 1 (Melalui Web GitHub - Paling Mudah):</strong></p>
+                <ol>
+                  <li>Buka repository forkmu di browser GitHub.</li>
+                  <li>Tepat di bawah tombol hijau Code, klik tombol <strong>Sync fork</strong>.</li>
+                  <li>Klik <strong>Update branch</strong>.</li>
+                  <li>Di laptopmu, jalankan <code>git pull origin main</code> di terminal VS Code untuk menarik update terbaru ke laptop.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. NAVIGASI TERMINAL -->
+      <section id="navigasi-terminal">
+        <h2>5. Panduan Navigasi Terminal (Path)</h2>
+        <p>Perintah dasar wajib di terminal untuk berpindah folder dan cek lokasi:</p>
+<div class="table-responsive"><table class="styled-table">
+          <thead>
+            <tr><th>Kebutuhan</th><th>Perintah Git Bash / Mac / Linux</th><th>Perintah Windows CMD</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cek folder saat ini</td><td><code>pwd</code></td><td><code>cd</code></td></tr>
+            <tr><td>Lihat isi folder</td><td><code>ls</code> atau <code>ls -l</code></td><td><code>dir</code></td></tr>
+            <tr><td>Masuk ke folder</td><td><code>cd nama_folder</code></td><td><code>cd nama_folder</code></td></tr>
+            <tr><td>Mundur satu folder</td><td><code>cd ..</code></td><td><code>cd ..</code></td></tr>
+            <tr><td>Folder yang ada spasi</td><td><code>cd "Tugas Kelompok"</code></td><td><code>cd "Tugas Kelompok"</code></td></tr>
+          </tbody>
+        </table></div>
 
         <div class="info-box">
-          <div class="callout-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
-          </div>
-          <div>
-            <strong>Penting:</strong> Tanyakan link repository GitHub Kabim kepada Kakak Pembimbing gugusmu masing-masing saat sesi FGD/grup koordinasi gugus.
-          </div>
+          <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+          <div class="info-box-body"><strong>Gunakan Tombol Tab:</strong> Ketik 2-3 huruf nama folder lalu tekan <span class="kbd">Tab</span> pada keyboard. Terminal akan otomatis melengkapi nama folder secara otomatis tanpa risiko typo!</div>
         </div>
       </section>
 
-      <!-- 2. Struktur Folder -->
-      <section id="struktur">
-        <h2>2. Struktur Folder &amp; Gugus</h2>
-        <p>Setiap mahasiswa <strong>hanya boleh</strong> menambahkan file baru di dalam subfolder gugusnya sendiri di dalam folder <code>Tugas/</code>:</p>
+      <!-- 6. ERROR LAIN -->
+      <section id="error-lain">
+        <h2>6. Error Umum Lainnya &amp; Solusinya</h2>
 
-        <div class="folder-tree">
-          <span class="dir">INFONIC_2026/</span><br>
-          ├── <span class="dir">Tugas/</span><br>
-          │   ├── <span class="file">BACA_AKU.md</span> <span class="comment">&larr; panduan aturan tugas</span><br>
-          │   ├── <span class="file">NIM-NAMA.md</span> <span class="comment">&larr; template asli (JANGAN DIEDIT!)</span><br>
-          │   ├── <span class="dir">JavaScript/</span><br>
-          │   │   └── <span class="highlight">26106050001_MuhammadAdzka.md</span> <span class="comment">&larr; contoh file tugasmu</span><br>
-          │   ├── <span class="dir">Python/</span><br>
-          │   ├── <span class="dir">C++/</span><br>
-          │   ├── <span class="dir">Golang/</span><br>
-          │   ├── <span class="dir">Dart/</span><br>
-          │   ├── <span class="dir">Java/</span><br>
-          │   ├── <span class="dir">PHP/</span><br>
-          │   ├── <span class="dir">Swift/</span><br>
-          │   ├── <span class="dir">Ruby/</span><br>
-          │   ├── <span class="dir">Kotlin/</span><br>
-          │   ├── <span class="dir">Rust/</span><br>
-          │   └── <span class="dir">Scala/</span><br>
-          └── ...
-        </div>
-
-        <p>Folder Gugus Resmi:</p>
-        <div class="gugus-grid-mini">
-          <div class="gugus-chip">JavaScript</div>
-          <div class="gugus-chip">Python</div>
-          <div class="gugus-chip">C++</div>
-          <div class="gugus-chip">Golang</div>
-          <div class="gugus-chip">Dart</div>
-          <div class="gugus-chip">Java</div>
-          <div class="gugus-chip">PHP</div>
-          <div class="gugus-chip">Swift</div>
-          <div class="gugus-chip">Ruby</div>
-          <div class="gugus-chip">Kotlin</div>
-          <div class="gugus-chip">Rust</div>
-          <div class="gugus-chip">Scala</div>
-        </div>
-      </section>
-
-      <!-- 3. 5 Langkah Pengumpulan -->
-      <section id="langkah">
-        <h2>3. 5 Langkah Pengumpulan Tugas</h2>
-
-        <ol class="step-list">
-          <li class="step-item">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <div class="step-title">Fork Repository Kabim Gugusmu</div>
-              <div class="step-desc">
-                <p>Buka tautan repository GitHub milik Kabim gugusmu di browser.</p>
-                <p>Klik tombol <strong>Fork</strong> di pojok kanan atas. Pilih akun GitHub pribadimu. Sekarang kamu memiliki salinan repository tugas di akun GitHub pribadimu.</p>
-              </div>
-            </div>
-          </li>
-
-          <li class="step-item">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <div class="step-title">Clone ke Laptop &amp; Buka di VS Code</div>
-              <div class="step-desc">
-                <p>Salin link HTTPS dari repository hasil fork pribadimu. Buka terminal / Git Bash di laptop:</p>
-                <pre><code class="language-bash">git clone https://github.com/USERNAME-KAMU/INFONIC_2026.git</code></pre>
-                <p>Buka folder tersebut di VS Code (<strong>File &rarr; Open Folder...</strong>).</p>
-              </div>
-            </div>
-          </li>
-
-          <li class="step-item">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <div class="step-title">Buat File Tugas Baru di Folder Gugusmu</div>
-              <div class="step-desc">
-                <div class="danger-box">
-                  <div class="callout-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-                  </div>
-                  <div>
-                    <strong>Dilarang Mengedit File Template:</strong> Jangan mengedit file <code>Tugas/NIM-NAMA.md</code>! Buat file baru atau copy template tersebut menjadi file tersendiri.<br>
-                    <em>Tak sengaja terubah?</em> Lihat <a href="../utility/#salah-edit-file" style="color:var(--primary);font-weight:600;text-decoration:underline;">Panduan Membatalkan File Salah Edit di Troubleshooting &rarr;</a>
-                  </div>
-                </div>
-                <p>Buka folder gugusmu di dalam <code>Tugas/&lt;NamaGugus&gt;/</code> (contoh: <code>Tugas/JavaScript/</code>).</p>
-                <p>Buat file baru bernama: <code style="color:var(--emerald);">NIM_NamaLengkap.md</code> (contoh: <code>26106050001_MuhammadAdzka.md</code>).</p>
-                <p>Salin format dari template <code>Tugas/NIM-NAMA.md</code>, lalu isi data diri dan seluruh tautan tugas (Week 1 &ndash; Week 4). Simpan dengan <strong>Ctrl + S</strong>.</p>
-              </div>
-            </div>
-          </li>
-
-          <li class="step-item">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <div class="step-title">Commit &amp; Push ke Repository GitHub Pribadimu</div>
-              <div class="step-desc">
-                <p>Buka terminal VS Code (<span class="kbd">Ctrl+`</span>) dan jalankan perintah berikut:</p>
-                <pre><code class="language-bash">git add .
-git commit -m "Submit tugas osjur - &lt;NIM_KAMU&gt;"
-git push origin main</code></pre>
-                <p>Contoh: <code>git commit -m "Submit tugas osjur - 26106050001"</code></p>
-              </div>
-            </div>
-          </li>
-
-          <li class="step-item">
-            <div class="step-num">5</div>
-            <div class="step-body">
-              <div class="step-title">Buat Pull Request ke Repository Kabim</div>
-              <div class="step-desc">
-                <p>Buka browser dan buka repository hasil fork di akun GitHub-mu.</p>
-                <ol>
-                  <li>Klik tombol <strong>Contribute</strong> &rarr; <strong>Open Pull Request</strong>.</li>
-                  <li>Pastikan <em>base repository</em> mengarah ke repository Kabim gugusmu.</li>
-                  <li>Judul PR: <code>Submit tugas osjur - &lt;NIM_KAMU&gt;</code></li>
-                  <li>Deskripsi PR: Sebutkan Gugus dan Nama Lengkapmu.</li>
-                  <li>Klik <strong>Create pull request</strong>.</li>
-                </ol>
-                <div class="info-box">
-                  <div class="callout-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
-                  </div>
-                  <div>
-                    <strong>Selesai!</strong> Kabim gugusmu akan memeriksa tugasmu dan melakukan merge PR.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      <!-- 4. Aturan & Larangan -->
-      <section id="aturan">
-        <h2>4. Aturan &amp; Larangan Mutlak</h2>
-
-        <div class="danger-box">
-          <div class="callout-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+        <div class="error-card">
+          <div class="error-header">
+            <span>fatal: not a git repository (or any of the parent directories)</span>
           </div>
-          <div>
-            <strong>Pull Request kamu akan LANGSUNG DITOLAK jika:</strong>
-            <ul style="margin-top:0.5rem;padding-left:1.25rem;">
-              <li>Mengedit file template asli <code>Tugas/NIM-NAMA.md</code> atau file milik teman lain.</li>
-              <li>Menaruh file di luar subfolder gugus yang telah ditentukan.</li>
-              <li>Format penamaan file salah (menggunakan spasi, dash, atau tanpa ekstensi <code>.md</code>).</li>
-              <li>Link tugas (Google Drive, Figma, dsb.) bersifat private / terkunci.</li>
-              <li>Mengubah file root seperti <code>index.html</code>, <code>README.md</code>, atau konfigurasi sistem.</li>
-            </ul>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Kamu menjalankan perintah Git (seperti <code>git status</code>) di folder luar atau sebelum masuk ke dalam folder hasil clone.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                Jalankan <code>cd INFONIC_2026</code> untuk masuk ke folder repository terlebih dahulu, atau buka langsung folder tersebut di VS Code (<strong>File &rarr; Open Folder</strong>).
+              </div>
+            </div>
           </div>
         </div>
 
-        <h3>Standar Format Penamaan File</h3>
-        <pre><code class="language-bash">Tugas/&lt;NamaGugus&gt;/&lt;NIM&gt;_&lt;NamaLengkap&gt;.md
+        <div class="error-card">
+          <div class="error-header" id="vim">
+            <span>Terjebak di Editor Terminal (Vim / Nano)</span>
+          </div>
+          <div class="error-body">
+            <div class="error-row">
+              <div class="error-label cause">Penyebab</div>
+              <div class="error-content">
+                Saat melakukan <code>git commit</code> tanpa menyertakan pesan (<code>-m "pesan"</code>), terminal otomatis membuka editor Vim.
+              </div>
+            </div>
+            <div class="error-row">
+              <div class="error-label solution">Solusi</div>
+              <div class="error-content">
+                Tekan tombol <span class="kbd">Esc</span> di keyboard &rarr; ketik <code>:q!</code> &rarr; tekan <span class="kbd">Enter</span>. Kemudian ulangi commit dengan menyertakan pesan: <code>git commit -m "Submit tugas osjur - NIM"</code>.
+              </div>
+            </div>
+          </div>
+        </div>
 
-# Contoh BENAR:
-Tugas/JavaScript/26106050001_MuhammadAdzka.md
-Tugas/Python/26106050012_SitiFatimah.md
-
-# Contoh SALAH:
-Tugas/NIM-NAMA.md                     (Mengedit template)
-Tugas/Python/26106050012 Siti.md      (Ada spasi)
-Tugas/26106050012_SitiFatimah.md      (Di luar folder gugus)</code></pre>
-
-        <h3>Pengaturan Hak Akses Link Tugas</h3>
-        <p>
-          Semua link yang kamu cantumkan di dalam file markdown wajib disetel ke <strong>"Anyone with the link can view"</strong> (Siapa saja yang memiliki link dapat melihat). Panitia &amp; Kabim tidak dapat memberi nilai jika file terkunci (*access denied*).
-        </p>
-      </section>
-
-      <!-- 5. Checklist -->
-      <section id="checklist">
-        <h2>5. Checklist Sebelum Buat PR</h2>
-        <ul>
-          <li>File dinamai dengan format <code>NIM_NamaLengkap.md</code> (menggunakan underscore <code>_</code>).</li>
-          <li>File berada di dalam folder gugusmu sendiri (contoh: <code>Tugas/JavaScript/</code>).</li>
-          <li>File template <code>Tugas/NIM-NAMA.md</code> tidak tersentuh/diedit sama sekali.</li>
-          <li>Seluruh link tugas (Drive/Figma/GitHub) bisa dibuka di mode *Incognito/Private window* tanpa perlu login.</li>
-          <li>Sudah menjalankan <code>git push origin main</code> ke repository GitHub pribadimu.</li>
-          <li>Tujuan Pull Request diarahkan ke repository Kabim gugusmu.</li>
-          <li>Judul PR diisi sesuai format: <code>Submit tugas osjur - &lt;NIM&gt;</code>.</li>
-        </ul>
       </section>
     </main>
   </div>
 
   <!-- Universal Clean Footer -->
   <footer class="page-footer">
-    <a href="../../">&larr; Home</a>
+    <a href="../../">Home</a>
     <a href="../vscode/">VS Code</a>
     <a href="../git/">Git &amp; GitHub</a>
     <a href="../fork-pr/">Fork &amp; PR</a>
@@ -997,7 +1167,7 @@ Tugas/26106050012_SitiFatimah.md      (Di luar folder gugus)</code></pre>
               e.preventDefault();
               const navHeight = 52;
               const tocHeight = 50;
-              const totalOffset = window.innerWidth <= 768 ? 175 : 90;
+              const totalOffset = window.innerWidth <= 768 ? 65 : 75;
               const elementPosition = targetEl.getBoundingClientRect().top;
               const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
 

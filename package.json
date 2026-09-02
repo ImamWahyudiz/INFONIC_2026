@@ -1,0 +1,15 @@
+{
+  "name": "infonic-2026",
+  "version": "1.0.0",
+  "description": "Website Resmi INFONIC 2026",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^6.4.3",
+    "vite-plugin-html-inject": "^1.1.2"
+  }
+}
