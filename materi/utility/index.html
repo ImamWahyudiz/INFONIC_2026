@@ -359,10 +359,18 @@
       <span>INFONIC</span>
     </a>
     <div class="nav-sep"></div>
-    <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
-    <a href="../git/" class="nav-link"><span>Git &amp; GitHub</span></a>
-    <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
-    <a href="../utility/" class="nav-link active"><span>Troubleshooting</span></a>
+    <div class="nav-links-wrap" id="navLinksWrap">
+      <a href="../../" class="nav-link"><span>&larr; Home</span></a>
+      <a href="../vscode/" class="nav-link"><span>VS Code</span></a>
+      <a href="../git/" class="nav-link"><span>Git &amp; GitHub</span></a>
+      <a href="../fork-pr/" class="nav-link"><span>Fork &amp; PR</span></a>
+      <a href="../utility/" class="nav-link active"><span>Troubleshooting</span></a>
+    </div>
+    <button class="nav-toggle-btn" id="materiNavToggle" aria-label="Toggle navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <div class="page-hero">
@@ -633,8 +641,7 @@ git push origin main</code></pre>
         <span class="section-anchor"></span>
         <h2>5. Panduan Navigasi Terminal (Path)</h2>
         <p>Perintah dasar wajib di terminal untuk berpindah folder dan cek lokasi:</p>
-
-        <table class="styled-table">
+<div class="table-responsive"><table class="styled-table">
           <thead>
             <tr><th>Kebutuhan</th><th>Perintah Git Bash / Mac / Linux</th><th>Perintah Windows CMD</th></tr>
           </thead>
@@ -645,7 +652,7 @@ git push origin main</code></pre>
             <tr><td>Mundur satu folder</td><td><code>cd ..</code></td><td><code>cd ..</code></td></tr>
             <tr><td>Folder yang ada spasi</td><td><code>cd "Tugas Kelompok"</code></td><td><code>cd "Tugas Kelompok"</code></td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="info-box">
           <div class="info-box-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
