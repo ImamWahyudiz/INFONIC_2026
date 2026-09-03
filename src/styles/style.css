@@ -33,6 +33,18 @@ html {
   scroll-padding-top: calc(var(--navbar-h, 52px) + 1.5rem);
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) #080d1a;
+  overscroll-behavior-y: none;
+}
+
+body {
+  background-color: var(--bg-default);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  min-height: 100vh;
+  position: relative;
 }
 
 /* Custom Themed Dark Scrollbar */

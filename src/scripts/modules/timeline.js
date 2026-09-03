@@ -1,4 +1,15 @@
 export function initTimeline() {
+  // Global scroll tracking to prevent accidental card triggers while stopping inertial scroll
+  let isPageScrolling = false;
+  let scrollDebounce = null;
+  window.addEventListener('scroll', () => {
+    isPageScrolling = true;
+    if (scrollDebounce) clearTimeout(scrollDebounce);
+    scrollDebounce = setTimeout(() => {
+      isPageScrolling = false;
+    }, 120);
+  }, { passive: true });
+
   // =========================================================
   // TIMELINE CARD CAROUSEL (Desktop & Sync)
   // =========================================================
@@ -14,6 +25,7 @@ export function initTimeline() {
 
   let isPointerDown = false;
   let isDragging = false;
+  let pointerMoved = false;
   let startX = 0;
   let startY = 0;
   let currentTranslateX = 0;
@@ -81,16 +93,20 @@ export function initTimeline() {
 
   // Event Listeners: Timeline Steps Click
   tlSteps.forEach(step => {
-    step.addEventListener('click', () => {
+    step.addEventListener('click', (e) => {
+      if (isPageScrolling) {
+        e.preventDefault();
+        return;
+      }
       const idx = parseInt(step.getAttribute('data-index'), 10);
       if (!isNaN(idx)) updateCarousel(idx, true);
     });
   });
 
-  // Event Listeners: Card Click (click adjacent peek card to focus)
+  // Event Listeners: Card Click (click adjacent peek card to focus ONLY on intentional tap)
   cards.forEach(card => {
     card.addEventListener('click', (e) => {
-      if (hasDragged) {
+      if (hasDragged || pointerMoved || isPageScrolling) {
         e.preventDefault();
         e.stopPropagation();
         return;
@@ -139,6 +155,7 @@ export function initTimeline() {
     const onDragStart = (e) => {
       isPointerDown = true;
       isDragging = false;
+      pointerMoved = false;
       hasDragged = false;
       isHorizontalSwipe = null;
       dragDiffX = 0;
@@ -156,6 +173,10 @@ export function initTimeline() {
       const diffY = currentY - startY;
       const absX = Math.abs(diffX);
       const absY = Math.abs(diffY);
+
+      if (absX > 4 || absY > 4) {
+        pointerMoved = true;
+      }
 
       if (isHorizontalSwipe === null) {
         // Definite vertical gesture: let native page scroll pass with 0 interference
@@ -227,6 +248,7 @@ export function initTimeline() {
       setTimeout(() => {
         if (track) track.style.willChange = 'auto';
         hasDragged = false;
+        pointerMoved = false;
         dragDiffX = 0;
         isHorizontalSwipe = null;
       }, 480);
@@ -267,7 +289,7 @@ export function initTimeline() {
     const mtlSteps = mobileTimeline.querySelectorAll('.mtl-step');
     let activeMobileIndex = 0;
 
-    function setActiveMobileStep(index, smoothScroll = false) {
+    function setActiveMobileStep(index) {
       if (index < 0 || index >= mtlSteps.length) return;
       activeMobileIndex = index;
 
@@ -284,41 +306,24 @@ export function initTimeline() {
       if (currentIndex !== index) {
         updateCarousel(index, false);
       }
-
-      // Smooth scroll target card into view if opened by user tap
-      if (smoothScroll && mtlSteps[index]) {
-        const targetStep = mtlSteps[index];
-        requestAnimationFrame(() => {
-          const rect = targetStep.getBoundingClientRect();
-          const isOffScreen = rect.top < 70 || rect.bottom > window.innerHeight;
-          if (isOffScreen) {
-            targetStep.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest'
-            });
-          }
-        });
-      }
     }
 
-    // Tap/Click on compact pills and dots
+    // Tap/Click on compact pills and dots (gated against scroll interference)
     mtlSteps.forEach((step, i) => {
       const pill = step.querySelector('.mtl-pill');
       const dot = step.querySelector('.mtl-dot');
 
-      if (pill) {
-        pill.addEventListener('click', (e) => {
+      const handleStepClick = (e) => {
+        if (isPageScrolling) {
           e.preventDefault();
-          setActiveMobileStep(i, true);
-        });
-      }
+          return;
+        }
+        e.preventDefault();
+        setActiveMobileStep(i);
+      };
 
-      if (dot) {
-        dot.addEventListener('click', (e) => {
-          e.preventDefault();
-          setActiveMobileStep(i, true);
-        });
-      }
+      if (pill) pill.addEventListener('click', handleStepClick);
+      if (dot) dot.addEventListener('click', handleStepClick);
     });
 
     // Touch swipe left/right on active cards to step next/prev smoothly without vertical drag conflict
@@ -353,19 +358,19 @@ export function initTimeline() {
       }, { passive: true });
 
       cardWrapper.addEventListener('touchend', (e) => {
-        if (isSwiping === true) {
+        if (isSwiping === true && !isPageScrolling) {
           const touchEndX = e.changedTouches[0].clientX;
           const diffX = touchEndX - touchStartX;
           if (diffX < -45 && activeMobileIndex < mtlSteps.length - 1) {
-            setActiveMobileStep(activeMobileIndex + 1, true);
+            setActiveMobileStep(activeMobileIndex + 1);
           } else if (diffX > 45 && activeMobileIndex > 0) {
-            setActiveMobileStep(activeMobileIndex - 1, true);
+            setActiveMobileStep(activeMobileIndex - 1);
           }
         }
       }, { passive: true });
     });
 
     // Initialize mobile accordion (Default: TM - Index 0)
-    setActiveMobileStep(0, false);
+    setActiveMobileStep(0);
   }
 }
