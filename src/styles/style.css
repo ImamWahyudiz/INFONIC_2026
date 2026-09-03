@@ -1334,11 +1334,13 @@ body {
   transition-delay: 0.48s;
 }
 
-/* Hover on idle active cards */
-.gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--primary-500);
-  box-shadow: 0 18px 40px -8px rgba(56, 189, 248, 0.35);
+@media (hover: hover) and (pointer: fine) {
+  /* Hover on idle active cards */
+  .gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary-500);
+    box-shadow: 0 18px 40px -8px rgba(56, 189, 248, 0.35);
+  }
 }
 
 /* When scrolling/dragging: all cards are visible, whole and shrunk, never clipped by section */
@@ -1583,14 +1585,31 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.feature-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 16px 35px -8px rgba(56, 189, 248, 0.35);
-  background: #0f172a;
+@media (hover: hover) and (pointer: fine) {
+  .feature-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 35px -8px rgba(56, 189, 248, 0.35);
+    background: #0f172a;
+  }
+  .feature-card:hover .feature-icon {
+    transform: scale(1.2) rotate(-6deg);
+  }
+  .feature-card:hover .card-arrow {
+    opacity: 1;
+    color: var(--primary-500);
+    transform: translate(3px, -3px);
+  }
+  .btn-gist:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 24px rgba(34, 211, 238, 0.4);
+  }
+  .btn-gist:hover svg {
+    transform: translateX(3px);
+  }
 }
 
 .feature-icon {
@@ -1607,10 +1626,6 @@ body {
   width: 26px;
   height: 26px;
   object-fit: contain;
-}
-
-.feature-card:hover .feature-icon {
-  transform: scale(1.2) rotate(-6deg);
 }
 
 .fc-vscode .feature-icon { background: rgba(56, 189, 248, 0.15); }
@@ -1643,12 +1658,6 @@ body {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.feature-card:hover .card-arrow {
-  opacity: 1;
-  color: var(--primary-500);
-  transform: translate(3px, -3px);
-}
-
 .btn-gist {
   margin-top: 2rem;
   display: inline-flex;
@@ -1669,15 +1678,6 @@ body {
   width: 16px;
   height: 16px;
   transition: transform 0.25s ease;
-}
-
-.btn-gist:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 24px rgba(34, 211, 238, 0.4);
-}
-
-.btn-gist:hover svg {
-  transform: translateX(3px);
 }
 
 /* =========================================================
@@ -1860,6 +1860,8 @@ body {
     top: 10px;
     left: 12px;
     right: 12px;
+    transform: none !important;
+    width: auto !important;
     border-radius: 16px;
     padding: 0.6rem 1rem;
     background: rgba(8, 13, 26, 0.92);
