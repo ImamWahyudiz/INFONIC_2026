@@ -1,7 +1,7 @@
 /**
  * Ultra-Smooth Hardware-Accelerated Scroll Reveal
  * - Observes elements via IntersectionObserver (off main thread)
- * - Proactively reveals elements slightly before they enter the viewport (positive rootMargin)
+ * - Proactively reveals elements slightly before they enter the viewport
  * - Zero GPU layer bloat: avoids permanent will-change raster locks
  */
 export function initScrollReveal() {
@@ -12,16 +12,6 @@ export function initScrollReveal() {
   if (!('IntersectionObserver' in window)) {
     revealElements.forEach(el => el.classList.add('is-revealed'));
     return;
-  }
-
-  // Pre-reveal hero section immediately on page load with silky sequence
-  const heroItems = document.querySelectorAll('#hero .reveal-item');
-  if (heroItems.length) {
-    heroItems.forEach((el, idx) => {
-      setTimeout(() => {
-        el.classList.add('is-revealed');
-      }, 60 + idx * 100);
-    });
   }
 
   const observerOptions = {
@@ -37,22 +27,16 @@ export function initScrollReveal() {
     intersecting.forEach((entry, batchIdx) => {
       const el = entry.target;
 
-      // If element belongs to #hero, skip since handled by initial entrance
-      if (el.closest('#hero')) {
-        obs.unobserve(el);
-        return;
-      }
-
       // Check if element belongs to a staggered group/grid
       const staggerParent = el.closest('.why-grid, .features-grid, .faq-list, .timeline-circle-line, .stagger-group');
       if (staggerParent && !el.style.transitionDelay) {
         const siblings = Array.from(staggerParent.querySelectorAll('.reveal-item'));
         const sibIndex = siblings.indexOf(el);
         if (sibIndex >= 0) {
-          el.style.transitionDelay = `${Math.min(sibIndex * 120, 600)}ms`;
+          el.style.transitionDelay = `${Math.min(sibIndex * 80, 240)}ms`;
         }
       } else if (intersecting.length > 1 && !el.style.transitionDelay) {
-        el.style.transitionDelay = `${Math.min(batchIdx * 90, 450)}ms`;
+        el.style.transitionDelay = `${Math.min(batchIdx * 60, 180)}ms`;
       }
 
       requestAnimationFrame(() => {
@@ -65,8 +49,6 @@ export function initScrollReveal() {
   }, observerOptions);
 
   revealElements.forEach(el => {
-    if (!el.closest('#hero')) {
-      observer.observe(el);
-    }
+    observer.observe(el);
   });
 }

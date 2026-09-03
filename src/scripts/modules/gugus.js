@@ -219,7 +219,6 @@ export function initGugus() {
       }
 
       if (isHorizontalSwipe === true && isDragging) {
-        if (e.cancelable) e.preventDefault();
         if (absX > 6) hasDragged = true;
         dragDiffX = diffX;
 
@@ -278,9 +277,9 @@ export function initGugus() {
       }, 60);
     };
 
-    // Events attachment
+    // Events attachment (100% Passive, Zero Scroll Prevention)
     gugusViewport.addEventListener('touchstart', onDragStart, { passive: true });
-    window.addEventListener('touchmove', onDragMove, { passive: false });
+    window.addEventListener('touchmove', onDragMove, { passive: true });
     window.addEventListener('touchend', onDragEnd, { passive: true });
     window.addEventListener('touchcancel', onDragEnd, { passive: true });
 
@@ -288,26 +287,9 @@ export function initGugus() {
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
 
-    gugusViewport.addEventListener('dragstart', (e) => e.preventDefault());
-
-    // Global scroll tracking to prevent accidental dot triggers while stopping inertial scroll
-    let isPageScrolling = false;
-    let scrollDebounce = null;
-    window.addEventListener('scroll', () => {
-      isPageScrolling = true;
-      if (scrollDebounce) clearTimeout(scrollDebounce);
-      scrollDebounce = setTimeout(() => {
-        isPageScrolling = false;
-      }, 120);
-    }, { passive: true });
-
     // Indicator Dots Click
     gugusDots.forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        if (isPageScrolling) {
-          e.preventDefault();
-          return;
-        }
+      dot.addEventListener('click', () => {
         const dotIdx = parseInt(dot.getAttribute('data-index'), 10);
         if (!isNaN(dotIdx)) {
           const norm = normalizeIndex(trackIndex);

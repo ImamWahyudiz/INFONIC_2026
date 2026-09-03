@@ -1,15 +1,4 @@
 export function initTimeline() {
-  // Global scroll tracking to prevent accidental card triggers while stopping inertial scroll
-  let isPageScrolling = false;
-  let scrollDebounce = null;
-  window.addEventListener('scroll', () => {
-    isPageScrolling = true;
-    if (scrollDebounce) clearTimeout(scrollDebounce);
-    scrollDebounce = setTimeout(() => {
-      isPageScrolling = false;
-    }, 120);
-  }, { passive: true });
-
   // =========================================================
   // TIMELINE CARD CAROUSEL (Desktop & Sync)
   // =========================================================
@@ -25,7 +14,6 @@ export function initTimeline() {
 
   let isPointerDown = false;
   let isDragging = false;
-  let pointerMoved = false;
   let startX = 0;
   let startY = 0;
   let currentTranslateX = 0;
@@ -76,41 +64,20 @@ export function initTimeline() {
         step.classList.remove('active');
       }
     });
-
-    // Mobile horizontal timeline auto-scroll if visible
-    const tlNav = document.getElementById('timelineNav');
-    if (tlNav && window.innerWidth <= 768 && tlSteps[currentIndex]) {
-      const activeStep = tlSteps[currentIndex];
-      const stepLeft = activeStep.offsetLeft;
-      const stepWidth = activeStep.offsetWidth;
-      const navWidth = tlNav.clientWidth;
-      tlNav.scrollTo({
-        left: Math.round(stepLeft - (navWidth - stepWidth) / 2),
-        behavior: smooth ? 'smooth' : 'auto'
-      });
-    }
   }
 
   // Event Listeners: Timeline Steps Click
   tlSteps.forEach(step => {
-    step.addEventListener('click', (e) => {
-      if (isPageScrolling) {
-        e.preventDefault();
-        return;
-      }
+    step.addEventListener('click', () => {
       const idx = parseInt(step.getAttribute('data-index'), 10);
       if (!isNaN(idx)) updateCarousel(idx, true);
     });
   });
 
-  // Event Listeners: Card Click (click adjacent peek card to focus ONLY on intentional tap)
+  // Event Listeners: Card Click
   cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      if (hasDragged || pointerMoved || isPageScrolling) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
+    card.addEventListener('click', () => {
+      if (hasDragged) return;
       const idx = parseInt(card.getAttribute('data-index'), 10);
       if (!isNaN(idx) && idx !== currentIndex) {
         updateCarousel(idx, true);
@@ -150,12 +117,11 @@ export function initTimeline() {
     }
   });
 
-  // Smooth Touch Swipe & Mouse Drag with Zero-Friction Vertical Scroll Protection
+  // Passive Touch Swipe & Mouse Drag (Zero Scroll Prevention)
   if (container) {
     const onDragStart = (e) => {
       isPointerDown = true;
       isDragging = false;
-      pointerMoved = false;
       hasDragged = false;
       isHorizontalSwipe = null;
       dragDiffX = 0;
@@ -165,7 +131,7 @@ export function initTimeline() {
 
     const onDragMove = (e) => {
       if (!isPointerDown) return;
-      if (isHorizontalSwipe === false) return; // Yield completely to native vertical scroll
+      if (isHorizontalSwipe === false) return; // Completely yield to native vertical scroll
 
       const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
       const currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
@@ -174,20 +140,16 @@ export function initTimeline() {
       const absX = Math.abs(diffX);
       const absY = Math.abs(diffY);
 
-      if (absX > 4 || absY > 4) {
-        pointerMoved = true;
-      }
-
       if (isHorizontalSwipe === null) {
-        // Definite vertical gesture: let native page scroll pass with 0 interference
-        if (absY > 7 && absY >= absX) {
+        // Vertical move -> immediately abort carousel drag, 100% native scroll
+        if (absY > 6 && absY >= absX) {
           isHorizontalSwipe = false;
           isPointerDown = false;
           isDragging = false;
           return;
         }
 
-        // Definite horizontal gesture: user intentionally swipes the carousel
+        // Horizontal move -> activate carousel drag
         if (absX > 10 && absX > absY * 1.3) {
           isHorizontalSwipe = true;
           isDragging = true;
@@ -201,7 +163,6 @@ export function initTimeline() {
       }
 
       if (isHorizontalSwipe === true && isDragging) {
-        if (e.cancelable) e.preventDefault();
         if (absX > 6) hasDragged = true;
 
         let resistanceDiff = diffX;
@@ -248,15 +209,14 @@ export function initTimeline() {
       setTimeout(() => {
         if (track) track.style.willChange = 'auto';
         hasDragged = false;
-        pointerMoved = false;
         dragDiffX = 0;
         isHorizontalSwipe = null;
       }, 480);
     };
 
-    // Touch events
+    // 100% Passive Touch events (Never prevents default)
     container.addEventListener('touchstart', onDragStart, { passive: true });
-    window.addEventListener('touchmove', onDragMove, { passive: false });
+    window.addEventListener('touchmove', onDragMove, { passive: true });
     window.addEventListener('touchend', onDragEnd, { passive: true });
     window.addEventListener('touchcancel', onDragEnd, { passive: true });
 
@@ -264,9 +224,6 @@ export function initTimeline() {
     container.addEventListener('mousedown', onDragStart);
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
-
-    // Prevent image/link ghost dragging inside carousel
-    container.addEventListener('dragstart', (e) => e.preventDefault());
 
     // Window Resize recalculation (debounced)
     let resizeRaf = null;
@@ -308,66 +265,17 @@ export function initTimeline() {
       }
     }
 
-    // Tap/Click on compact pills and dots (gated against scroll interference)
+    // Tap/Click on compact pills and dots
     mtlSteps.forEach((step, i) => {
       const pill = step.querySelector('.mtl-pill');
       const dot = step.querySelector('.mtl-dot');
 
-      const handleStepClick = (e) => {
-        if (isPageScrolling) {
-          e.preventDefault();
-          return;
-        }
-        e.preventDefault();
+      const handleStepClick = () => {
         setActiveMobileStep(i);
       };
 
       if (pill) pill.addEventListener('click', handleStepClick);
       if (dot) dot.addEventListener('click', handleStepClick);
-    });
-
-    // Touch swipe left/right on active cards to step next/prev smoothly without vertical drag conflict
-    mtlSteps.forEach((step) => {
-      const cardWrapper = step.querySelector('.mtl-card-wrapper');
-      if (!cardWrapper) return;
-
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let isSwiping = null;
-
-      cardWrapper.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        isSwiping = null;
-      }, { passive: true });
-
-      cardWrapper.addEventListener('touchmove', (e) => {
-        const diffX = e.touches[0].clientX - touchStartX;
-        const diffY = e.touches[0].clientY - touchStartY;
-        const absX = Math.abs(diffX);
-        const absY = Math.abs(diffY);
-        if (isSwiping === null) {
-          if (absY > 7 && absY >= absX) {
-            isSwiping = false; // Vertical scroll, let browser handle natively
-            return;
-          }
-          if (absX > 10 && absX > absY * 1.3) {
-            isSwiping = true;
-          }
-        }
-      }, { passive: true });
-
-      cardWrapper.addEventListener('touchend', (e) => {
-        if (isSwiping === true && !isPageScrolling) {
-          const touchEndX = e.changedTouches[0].clientX;
-          const diffX = touchEndX - touchStartX;
-          if (diffX < -45 && activeMobileIndex < mtlSteps.length - 1) {
-            setActiveMobileStep(activeMobileIndex + 1);
-          } else if (diffX > 45 && activeMobileIndex > 0) {
-            setActiveMobileStep(activeMobileIndex - 1);
-          }
-        }
-      }, { passive: true });
     });
 
     // Initialize mobile accordion (Default: TM - Index 0)
