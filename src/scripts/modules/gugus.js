@@ -1,6 +1,6 @@
 export function initGugus() {
   // =========================================================
-  // GUGUS CIRCULAR LOOP CAROUSEL (Manual with Dynamic Shrink)
+  // GUGUS CIRCULAR LOOP CAROUSEL (GPU Accelerated)
   // =========================================================
   const gugusTrack = document.getElementById('gugusTrack');
   const gugusViewport = document.getElementById('gugusViewport');
@@ -12,26 +12,35 @@ export function initGugus() {
 
     const originalCards = Array.from(gugusTrack.querySelectorAll('.id-card'));
     const totalOriginal = originalCards.length; // 12 cards
-    const bufferSize = totalOriginal; // Full 12-card buffer on each side (Set 1: 0..11, Set 2: 12..23, Set 3: 24..35)
+    const bufferSize = totalOriginal; // Set 1: 0..11, Set 2: 12..23, Set 3: 24..35
 
-    // Prepend a full clone set of 12 cards
+    // Prepend clone set
     const prependFrag = document.createDocumentFragment();
     originalCards.forEach((card, idx) => {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       clone.classList.add('is-clone');
       clone.dataset.cloneIndex = idx;
+      // Ensure clone images are lazy and async decoded
+      clone.querySelectorAll('img').forEach(img => {
+        img.loading = 'lazy';
+        img.decoding = 'async';
+      });
       prependFrag.appendChild(clone);
     });
     gugusTrack.insertBefore(prependFrag, gugusTrack.firstChild);
 
-    // Append a full clone set of 12 cards
+    // Append clone set
     const appendFrag = document.createDocumentFragment();
     originalCards.forEach((card, idx) => {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       clone.classList.add('is-clone');
       clone.dataset.cloneIndex = idx;
+      clone.querySelectorAll('img').forEach(img => {
+        img.loading = 'lazy';
+        img.decoding = 'async';
+      });
       appendFrag.appendChild(clone);
     });
     gugusTrack.appendChild(appendFrag);
@@ -67,8 +76,10 @@ export function initGugus() {
     function updateActiveCards() {
       const visibleCount = getVisibleCount();
       allCards.forEach((card, i) => {
+        card.classList.remove('stagger-card-0', 'stagger-card-1', 'stagger-card-2');
         if (i >= trackIndex && i < trackIndex + visibleCount) {
-          card.classList.add('is-active-card');
+          const visibleIdx = i - trackIndex;
+          card.classList.add('is-active-card', `stagger-card-${visibleIdx}`);
         } else {
           card.classList.remove('is-active-card');
         }
@@ -104,7 +115,6 @@ export function initGugus() {
       });
     }
 
-    // Normalizes trackIndex into Set 2 (range 12..23)
     function normalizeIndex(idx) {
       return ((idx - bufferSize) % totalOriginal + totalOriginal) % totalOriginal + bufferSize;
     }
@@ -115,10 +125,11 @@ export function initGugus() {
 
       if (smooth) {
         gugusTrack.classList.add('is-scrolling');
+        gugusTrack.style.willChange = 'transform';
         if (settleTimeout) clearTimeout(settleTimeout);
         settleTimeout = setTimeout(() => {
           gugusTrack.classList.remove('is-scrolling');
-          // Settle safety normalization
+          gugusTrack.style.willChange = 'auto';
           const norm = normalizeIndex(trackIndex);
           if (norm !== trackIndex) {
             trackIndex = norm;
@@ -141,6 +152,7 @@ export function initGugus() {
     gugusTrack.addEventListener('transitionend', (e) => {
       if (e.target !== gugusTrack) return;
       gugusTrack.classList.remove('is-scrolling');
+      gugusTrack.style.willChange = 'auto';
 
       const norm = normalizeIndex(trackIndex);
       if (norm !== trackIndex) {
@@ -162,7 +174,6 @@ export function initGugus() {
       lastTime = Date.now();
       velocity = 0;
 
-      // Always normalize index into middle set (12..23) before dragging
       const norm = normalizeIndex(trackIndex);
       if (norm !== trackIndex) {
         trackIndex = norm;
@@ -173,6 +184,7 @@ export function initGugus() {
 
       gugusViewport.classList.add('is-dragging');
       gugusTrack.classList.add('is-scrolling');
+      gugusTrack.style.willChange = 'transform';
       gugusTrack.style.transition = 'none';
       if (settleTimeout) clearTimeout(settleTimeout);
     };
@@ -225,12 +237,11 @@ export function initGugus() {
 
       if (hasDragged) {
         const step = getStepWidth();
-        // Calculate step count with momentum support
         let stepCount = Math.round(Math.abs(dragDiffX) / step);
         if (stepCount < 1 && (Math.abs(dragDiffX) > 35 || Math.abs(velocity) > 0.3)) {
           stepCount = 1;
         }
-        stepCount = Math.min(stepCount, 3); // Max 3 cards per single flick
+        stepCount = Math.min(stepCount, 3); // Max 3 cards per flick
 
         const dir = (dragDiffX < 0 || velocity < -0.3) ? 1 : -1;
         if (stepCount > 0) {
@@ -269,7 +280,6 @@ export function initGugus() {
         if (wheelDebounce) return;
         wheelDebounce = setTimeout(() => { wheelDebounce = null; }, 280);
 
-        // Normalize before stepping
         const norm = normalizeIndex(trackIndex);
         if (norm !== trackIndex) {
           trackIndex = norm;
@@ -285,12 +295,11 @@ export function initGugus() {
       }
     }, { passive: false });
 
-    // Indicator Dots Click (Shortest circular path)
+    // Indicator Dots Click
     gugusDots.forEach(dot => {
       dot.addEventListener('click', () => {
         const dotIdx = parseInt(dot.getAttribute('data-index'), 10);
         if (!isNaN(dotIdx)) {
-          // Normalize first
           const norm = normalizeIndex(trackIndex);
           if (norm !== trackIndex) {
             trackIndex = norm;
@@ -317,7 +326,5 @@ export function initGugus() {
 
     // Initialize position
     goToIndex(bufferSize, false);
-    requestAnimationFrame(() => goToIndex(bufferSize, false));
-    window.addEventListener('load', () => goToIndex(bufferSize, false));
   }
 }

@@ -6,7 +6,6 @@ export function initTimeline() {
   const container = document.getElementById('carouselContainer');
   const cards = document.querySelectorAll('#carouselTrack .agenda-card');
   const tlSteps = document.querySelectorAll('#timelineNav .tl-step');
-  const indicatorDots = document.querySelectorAll('#carouselIndicators .indicator-dot');
   const prevBtn = document.getElementById('carouselPrev');
   const nextBtn = document.getElementById('carouselNext');
 
@@ -43,7 +42,7 @@ export function initTimeline() {
     if (index >= totalCards) index = totalCards - 1;
     currentIndex = index;
 
-    // 1. Calculate & apply position first to avoid layout thrashing
+    // 1. Calculate & apply position with GPU compositing
     const targetX = getTargetTranslateX(currentIndex);
     setTrackPosition(targetX, smooth);
 
@@ -65,7 +64,7 @@ export function initTimeline() {
       }
     });
 
-    // Mobile horizontal timeline auto-scroll without disturbing page vertical scroll
+    // Mobile horizontal timeline auto-scroll if visible
     const tlNav = document.getElementById('timelineNav');
     if (tlNav && window.innerWidth <= 768 && tlSteps[currentIndex]) {
       const activeStep = tlSteps[currentIndex];
@@ -77,15 +76,6 @@ export function initTimeline() {
         behavior: smooth ? 'smooth' : 'auto'
       });
     }
-
-    // 4. Update Indicator Dots
-    indicatorDots.forEach((dot, i) => {
-      if (i === currentIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
   }
 
   // Event Listeners: Timeline Steps Click
@@ -126,14 +116,6 @@ export function initTimeline() {
     });
   }
 
-  // Event Listeners: Indicator Dots
-  indicatorDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.getAttribute('data-index'), 10);
-      if (!isNaN(idx)) updateCarousel(idx, true);
-    });
-  });
-
   // Keyboard Arrow Navigation
   window.addEventListener('keydown', (e) => {
     const section = document.getElementById('acara');
@@ -151,7 +133,7 @@ export function initTimeline() {
     }
   });
 
-  // Smooth Touch Swipe & Mouse Drag with Realtime Tracking & Momentum
+  // Smooth Touch Swipe & Mouse Drag with Realtime Tracking
   if (container) {
     const onDragStart = (e) => {
       isDragging = true;
@@ -162,7 +144,10 @@ export function initTimeline() {
       startY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
       currentTranslateX = getTargetTranslateX(currentIndex);
       container.classList.add('is-dragging');
-      if (track) track.style.transition = 'none';
+      if (track) {
+        track.style.willChange = 'transform';
+        track.style.transition = 'none';
+      }
     };
 
     const onDragMove = (e) => {
@@ -172,29 +157,24 @@ export function initTimeline() {
       const diffX = currentX - startX;
       const diffY = currentY - startY;
 
-      // Determine intent on first significant movement
       if (isHorizontalSwipe === null) {
         if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
           isHorizontalSwipe = Math.abs(diffX) >= Math.abs(diffY);
         }
       }
 
-      // Vertical scroll on mobile: allow native scroll without hijacking
       if (isHorizontalSwipe === false) return;
 
-      // Horizontal swipe on carousel
       if (isHorizontalSwipe === true) {
         if (e.cancelable) e.preventDefault();
         if (Math.abs(diffX) > 6) hasDragged = true;
 
-        // Rubber-band resistance on boundary edges
         let resistanceDiff = diffX;
         if ((currentIndex === 0 && diffX > 0) || (currentIndex === totalCards - 1 && diffX < 0)) {
           resistanceDiff = diffX * 0.35;
         }
         dragDiffX = resistanceDiff;
 
-        // Realtime 60fps position update
         if (!animationFrameId) {
           animationFrameId = requestAnimationFrame(() => {
             setTrackPosition(Math.round(currentTranslateX + dragDiffX), false);
@@ -215,24 +195,22 @@ export function initTimeline() {
       }
 
       if (hasDragged) {
-        // Threshold of 45px or velocity to trigger slide
         if (dragDiffX < -45 && currentIndex < totalCards - 1) {
           updateCarousel(currentIndex + 1, true);
         } else if (dragDiffX > 45 && currentIndex > 0) {
           updateCarousel(currentIndex - 1, true);
         } else {
-          // Snap back to current
           updateCarousel(currentIndex, true);
         }
       } else {
         updateCarousel(currentIndex, false);
       }
 
-      // Briefly keep hasDragged flag to suppress inadvertent click handlers
       setTimeout(() => {
+        if (track) track.style.willChange = 'auto';
         hasDragged = false;
         dragDiffX = 0;
-      }, 50);
+      }, 480);
     };
 
     // Touch events
@@ -258,26 +236,20 @@ export function initTimeline() {
       });
     });
 
-    // Initialize on page load (Default: TM - Index 0)
+    // Initialize on page load
     updateCarousel(0, false);
-    requestAnimationFrame(() => updateCarousel(0, false));
-    window.addEventListener('load', () => updateCarousel(0, false));
   }
 
   // =========================================================
-  // MOBILE VERTICAL ACCORDION TIMELINE CONTROLLER (<=768px)
+  // MOBILE ZERO-REFLOW ACCORDION TIMELINE CONTROLLER (<=768px)
   // =========================================================
   const mobileAccordion = document.getElementById('mobileTimelineAccordion');
   if (mobileAccordion) {
     const mtlSteps = mobileAccordion.querySelectorAll('.mtl-step');
     let activeMobileIndex = 0;
 
-    let scrollTimeout = null;
-    let safetyTimeout = null;
-
     function setActiveMobileStep(index, smoothScroll = false) {
       if (index < 0 || index >= mtlSteps.length) return;
-      const previousIndex = activeMobileIndex;
       activeMobileIndex = index;
 
       mtlSteps.forEach((step, i) => {
@@ -291,47 +263,23 @@ export function initTimeline() {
         }
       });
 
-      // Smooth scroll so the active card is centered and NEVER covered by the sticky header
+      // Smooth zero-jump scrolling
       if (smoothScroll && window.innerWidth <= 768) {
-        if (scrollTimeout) clearTimeout(scrollTimeout);
-        if (safetyTimeout) clearTimeout(safetyTimeout);
-
-        // Opening card below: wait for previous card above to finish collapsing (310ms)
-        // Opening card above: card below causes zero shift, start earlier (160ms)
-        const delay = (index > previousIndex) ? 310 : 160;
-
-        scrollTimeout = setTimeout(() => {
+        requestAnimationFrame(() => {
           const targetStep = mtlSteps[activeMobileIndex];
           if (!targetStep) return;
 
-          const card = targetStep.querySelector('.agenda-card') || targetStep;
-          const rect = card.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          const cardHeight = rect.height;
+          const rect = targetStep.getBoundingClientRect();
+          const navOffset = 76;
 
-          // Header clearance: sticky nav bottom is at ~74px, minimum clearance is 88px
-          let idealTopOffset = Math.round((viewportHeight - cardHeight) / 2);
-          if (idealTopOffset < 88) {
-            idealTopOffset = 88;
+          if (rect.top < navOffset || rect.top > window.innerHeight - 120) {
+            const targetY = window.pageYOffset + rect.top - navOffset;
+            window.scrollTo({
+              top: Math.max(0, Math.round(targetY)),
+              behavior: 'smooth'
+            });
           }
-
-          const targetScrollY = Math.max(0, window.pageYOffset + rect.top - idealTopOffset);
-          window.scrollTo({
-            top: Math.round(targetScrollY),
-            behavior: 'smooth'
-          });
-
-          // Safety check: ensure card is NEVER covered by header
-          safetyTimeout = setTimeout(() => {
-            const currentRect = card.getBoundingClientRect();
-            if (currentRect.top < 84) {
-              window.scrollBy({
-                top: Math.round(currentRect.top - 88),
-                behavior: 'smooth'
-              });
-            }
-          }, 200);
-        }, delay);
+        });
       }
     }
 
@@ -355,7 +303,7 @@ export function initTimeline() {
       }
     });
 
-    // Touch swipe left/right on active cards to step next/prev
+    // Touch swipe left/right on active cards to step next/prev smoothly
     mtlSteps.forEach((step) => {
       const cardWrapper = step.querySelector('.mtl-card-wrapper');
       if (!cardWrapper) return;
@@ -375,7 +323,7 @@ export function initTimeline() {
         const diffY = e.touches[0].clientY - touchStartY;
         if (isSwiping === null) {
           if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
-            isSwiping = Math.abs(diffX) > Math.abs(diffY);
+            isSwiping = Math.abs(diffX) >= Math.abs(diffY);
           }
         }
       }, { passive: true });
@@ -384,17 +332,10 @@ export function initTimeline() {
         if (isSwiping === true) {
           const touchEndX = e.changedTouches[0].clientX;
           const diffX = touchEndX - touchStartX;
-          // Swipe threshold 45px
-          if (diffX < -45) {
-            // Swipe left -> Next step
-            if (activeMobileIndex < mtlSteps.length - 1) {
-              setActiveMobileStep(activeMobileIndex + 1, true);
-            }
-          } else if (diffX > 45) {
-            // Swipe right -> Prev step
-            if (activeMobileIndex > 0) {
-              setActiveMobileStep(activeMobileIndex - 1, true);
-            }
+          if (diffX < -45 && activeMobileIndex < mtlSteps.length - 1) {
+            setActiveMobileStep(activeMobileIndex + 1, true);
+          } else if (diffX > 45 && activeMobileIndex > 0) {
+            setActiveMobileStep(activeMobileIndex - 1, true);
           }
         }
       });

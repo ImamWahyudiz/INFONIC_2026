@@ -83,61 +83,38 @@ body {
   z-index: 0;
 }
 
-/* Ikon Melayang (Z-index 1 di belakang teks) */
-.crisp-icons-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
+
+
+/* Hardware Accelerated Scroll Reveal with Staggered Cascading Physics */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98) translateZ(0);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease,
+              background 0.3s ease;
+  will-change: opacity, transform;
 }
 
-.crisp-icon {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1.5px solid rgba(56, 189, 248, 0.25);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
-  pointer-events: auto;
-  cursor: default;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: floatCrisp 9s ease-in-out infinite alternate;
-  opacity: 0.85;
+.reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1) translateZ(0);
 }
 
-.crisp-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
-.ci-1 { top: 12%; left: 7%; animation-delay: 0s; }
-.ci-2 { top: 28%; right: 8%; animation-delay: -2s; color: var(--cyan-400); }
-.ci-3 { top: 48%; left: 5%; animation-delay: -4s; color: var(--purple-400); }
-.ci-4 { top: 68%; right: 6%; animation-delay: -6s; color: var(--emerald-400); }
-.ci-5 { top: 86%; left: 8%; animation-delay: -3s; color: var(--orange-400); }
-.ci-6 { top: 38%; right: 5%; animation-delay: -5s; color: var(--pink-400); }
-
-@keyframes floatCrisp {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(12px, -15px) rotate(4deg); }
-  100% { transform: translate(-8px, 12px) rotate(-3deg); }
-}
-
-/* Scroll Progress Bar */
+/* Scroll Progress Bar (scaleX on GPU Compositor layer) */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   height: 3px;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
   background: linear-gradient(90deg, var(--primary-500), var(--cyan-400), var(--purple-400));
   z-index: 200;
-  transition: width 0.1s linear;
+  will-change: transform;
 }
 
 /* Sticky Navbar */
@@ -250,11 +227,75 @@ body {
   margin: 0 auto;
 }
 
-/* Khusus Hero: Diturunkan agar memiliki jarak yang lega dengan header */
+/* Khusus Hero: Mengambil 1 layar penuh (100vh / 100dvh) */
 #hero.page-section {
-  padding-top: 8.5rem;
-  padding-bottom: 5rem;
-  min-height: 85vh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: max(4.75rem, 8vh) 1.25rem max(1.25rem, 2.5vh);
+  box-sizing: border-box;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto 0;
+  width: 100%;
+}
+
+.hero-bottom-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+  margin-top: auto;
+  gap: 1.4rem;
+  padding-bottom: 0.5rem;
+}
+
+.hero-bottom-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.hero-bottom-actions .btn-social {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.72rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.hero-bottom-actions .btn-social svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#filosofi.page-section {
+  padding-top: 5rem;
+  padding-bottom: 4.5rem;
 }
 
 /* Section Badges */
@@ -382,36 +423,39 @@ body {
 
 .hero-theme-tag {
   display: inline-block;
-  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-size: clamp(1rem, 3.5vw, 1.35rem);
   font-weight: 700;
   background: linear-gradient(135deg, #7dd3fc 0%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.01em;
+  max-width: 90%;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
 .scroll-down {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.25rem;
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  margin-top: 1.5rem;
+  margin-top: 0.15rem;
   transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .scroll-down:hover {
   color: var(--primary-500);
-  transform: translateY(3px);
+  transform: translateY(2px);
 }
 
 .scroll-down svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   animation: bounceArrow 2s infinite;
 }
 
@@ -440,6 +484,26 @@ body {
   text-align: left;
   position: relative;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.why-card.reveal-item {
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+}
+
+.why-grid .why-card:nth-child(1) {
+  transition-delay: 0.10s;
+}
+
+.why-grid .why-card:nth-child(2) {
+  transition-delay: 0.32s;
+}
+
+.why-grid .why-card:nth-child(3) {
+  transition-delay: 0.54s;
 }
 
 .why-card::before {
@@ -644,6 +708,18 @@ body {
   margin: 0 auto;
   padding: 0;
   overflow: visible;
+}
+
+.agenda-carousel-wrapper.reveal-item {
+  opacity: 0;
+  transform: translate3d(70px, 0, 0) scale(0.97);
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.agenda-carousel-wrapper.reveal-item.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .agenda-carousel-track-container {
@@ -1016,36 +1092,7 @@ body {
   height: 22px;
 }
 
-/* Carousel Indicators (Dots) */
-.carousel-indicators {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  margin-top: 1.25rem;
-}
 
-.indicator-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.18);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  padding: 0;
-}
-
-.indicator-dot:hover {
-  background: rgba(56, 189, 248, 0.5);
-  transform: scale(1.25);
-}
-
-.indicator-dot.active {
-  width: 28px;
-  background: var(--primary-500);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
-}
 
 @media (max-width: 768px) {
   .agenda-card {
@@ -1174,7 +1221,6 @@ body {
 
 .gugus-carousel-track {
   display: flex;
-  will-change: transform;
   transform: translate3d(0, 0, 0);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1206,11 +1252,38 @@ body {
   transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Carousel Entrance Animation (Slide In From Right Staggered) */
+.gugus-carousel-wrapper.reveal-item {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.gugus-carousel-wrapper:not(.is-revealed) .id-card.is-active-card {
+  opacity: 0;
+  transform: translate3d(95px, 0, 0) scale(0.94);
+}
+
 /* Idle active cards: 100% visible, fully expanded, crisp */
-.gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card {
+.gugus-carousel-wrapper.is-revealed .gugus-carousel-track:not(.is-scrolling) .id-card.is-active-card {
   opacity: 1;
   pointer-events: auto;
-  transform: scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.gugus-carousel-wrapper.is-revealed .is-active-card.stagger-card-0 {
+  transition-delay: 0.08s;
+}
+
+.gugus-carousel-wrapper.is-revealed .is-active-card.stagger-card-1 {
+  transition-delay: 0.28s;
+}
+
+.gugus-carousel-wrapper.is-revealed .is-active-card.stagger-card-2 {
+  transition-delay: 0.48s;
 }
 
 /* Hover on idle active cards */
@@ -1603,12 +1676,27 @@ body {
   height: 18px;
   flex-shrink: 0;
   color: var(--text-muted);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
 }
 
 .faq-item[open] .faq-chevron {
   transform: rotate(180deg);
   color: var(--primary-500);
+}
+
+.faq-answer-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-item[open] .faq-answer-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.faq-answer-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .faq-answer {
@@ -1700,10 +1788,7 @@ body {
     grid-template-columns: 1fr;
   }
   
-  /* Sembunyikan ikon melayang berlebih di tablet (hanya tampilkan 3 ikon) */
-  .ci-4, .ci-5, .ci-6 {
-    display: none !important;
-  }
+
 }
 
 @media (max-width: 768px) {
@@ -1772,28 +1857,7 @@ body {
     color: var(--primary-500);
   }
 
-  /* Floating background icons di mobile: Batasi hanya 2 ikon halus agar layar tidak sesak */
-  .ci-3, .ci-4, .ci-5, .ci-6 {
-    display: none !important;
-  }
-  .ci-1 {
-    top: 15%;
-    left: 4%;
-    width: 38px;
-    height: 38px;
-    opacity: 0.45;
-  }
-  .ci-2 {
-    top: 32%;
-    right: 4%;
-    width: 38px;
-    height: 38px;
-    opacity: 0.45;
-  }
-  .crisp-icon svg {
-    width: 18px;
-    height: 18px;
-  }
+
 
   /* Section 3: Hide desktop timeline navigation & horizontal carousel on mobile */
   #timelineNav {
@@ -1895,7 +1959,7 @@ body {
 
   .mtl-content {
     flex: 1;
-    padding-bottom: 1.15rem;
+    padding-bottom: 0.85rem;
     min-width: 0;
   }
 
@@ -1958,36 +2022,44 @@ body {
     width: 18px;
     height: 18px;
     color: #94a3b8;
-    transition: transform 0.25s ease, color 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
     flex-shrink: 0;
   }
 
   .mtl-pill:hover .mtl-pill-chevron {
     color: var(--primary-400);
-    transform: translateX(2px);
   }
 
-  /* When step is active: hide the compact pill and smoothly expand the card */
   .mtl-step.active .mtl-pill {
-    display: none;
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   }
 
+  .mtl-step.active .mtl-pill-chevron {
+    transform: rotate(90deg);
+    color: var(--primary-400);
+  }
+
+  /* Zero-Reflow CSS Grid Accordion */
   .mtl-card-wrapper {
-    max-height: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease;
     opacity: 0;
-    overflow: hidden;
-    pointer-events: none;
-    transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.22s ease,
-                margin 0.22s ease;
     margin-top: 0;
   }
 
   .mtl-step.active .mtl-card-wrapper {
-    max-height: 1400px;
+    grid-template-rows: 1fr;
     opacity: 1;
-    pointer-events: auto;
-    margin-top: 2px;
+    margin-top: 0.5rem;
+  }
+
+  .mtl-card-inner {
+    overflow: hidden;
+    min-height: 0;
   }
 
   .mtl-card-wrapper .agenda-card {
@@ -2015,19 +2087,54 @@ body {
 
 @media (max-width: 600px) {
   #hero.page-section {
-    padding-top: 7rem;
-    padding-bottom: 3.5rem;
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: 4.75rem;
+    padding-bottom: 1.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hero-avatar {
+    width: 110px;
+    height: 110px;
   }
   .hero-title {
-    font-size: 2.35rem;
+    font-size: 2.15rem;
   }
   .hero-subtitle {
-    font-size: 0.92rem;
-    padding: 0 0.5rem;
+    font-size: 0.88rem;
+    margin-bottom: 0.75rem;
   }
   .hero-theme-tag {
-    font-size: 1.05rem;
+    font-size: 0.92rem;
+    margin-bottom: 0.5rem;
+  }
+  .hero-bottom-group {
+    gap: 1.15rem;
+    max-width: 100%;
+    padding-bottom: 0.4rem;
+  }
+  .hero-bottom-actions {
+    gap: 0.5rem;
+  }
+  .hero-bottom-actions .btn-social {
+    padding: 0.65rem 0.5rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+  }
+  .hero-bottom-actions .btn-social svg {
+    width: 15px;
+    height: 15px;
+  }
+  .scroll-down {
+    font-size: 0.78rem;
+  }
+  .scroll-down svg {
+    width: 16px;
+    height: 16px;
   }
   .section-title,
   .sec3-title {
