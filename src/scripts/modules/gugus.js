@@ -60,59 +60,36 @@ export function initGugus() {
     let dragDiffX = 0;
     let isHorizontalSwipe = null;
     let animFrame = null;
-    let settleTimeout = null;
 
-    function getSideGap() {
-      if (window.innerWidth <= 768) return 20; // 1.25rem on mobile
-      if (window.innerWidth <= 950) return 32; // 2rem on tablet
-      return 40; // 2.5rem on desktop
-    }
+    let cachedStepWidth = 0;
+    let cachedSideGap = 0;
 
-    function getVisibleCount() {
-      if (window.innerWidth <= 768) return 1;
-      if (window.innerWidth <= 950) return 2;
-      return 3;
-    }
-
-    function updateActiveCards() {
-      const visibleCount = getVisibleCount();
-      allCards.forEach((card, i) => {
-        card.classList.remove('stagger-card-0', 'stagger-card-1', 'stagger-card-2');
-        if (i >= trackIndex && i < trackIndex + visibleCount) {
-          const visibleIdx = i - trackIndex;
-          card.classList.add('is-active-card', `stagger-card-${visibleIdx}`);
-        } else {
-          card.classList.remove('is-active-card');
-        }
-      });
-    }
-
-    function getStepWidth() {
-      if (!allCards[0]) return 0;
-      const card = allCards[0];
-      const style = window.getComputedStyle(card);
-      const marginRight = parseFloat(style.marginRight) || 0;
-      return card.offsetWidth + marginRight;
+    function measureLayout() {
+      cachedSideGap = window.innerWidth <= 768 ? 20 : (window.innerWidth <= 950 ? 32 : 40);
+      if (allCards[0]) {
+        const card = allCards[0];
+        const style = window.getComputedStyle(card);
+        const marginRight = parseFloat(style.marginRight) || 0;
+        cachedStepWidth = card.offsetWidth + marginRight;
+      }
     }
 
     function getTargetTranslateX(idx) {
-      const sideGap = getSideGap();
-      const step = getStepWidth();
-      return sideGap - idx * step;
+      return cachedSideGap - idx * cachedStepWidth;
     }
 
     function setGugusPosition(x, smooth = false) {
-      gugusTrack.style.transition = smooth ? 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)' : 'none';
+      if (smooth) {
+        gugusTrack.classList.add('is-animating');
+      } else {
+        gugusTrack.classList.remove('is-animating');
+      }
       gugusTrack.style.transform = `translate3d(${Math.round(x)}px, 0, 0)`;
     }
 
     function updateGugusDots(realIdx) {
       gugusDots.forEach((dot, i) => {
-        if (i === realIdx) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
+        dot.classList.toggle('active', i === realIdx);
       });
     }
 
@@ -122,25 +99,6 @@ export function initGugus() {
 
     function goToIndex(idx, smooth = true) {
       trackIndex = idx;
-      updateActiveCards();
-
-      if (smooth) {
-        gugusTrack.classList.add('is-scrolling');
-        gugusTrack.style.willChange = 'transform';
-        if (settleTimeout) clearTimeout(settleTimeout);
-        settleTimeout = setTimeout(() => {
-          gugusTrack.classList.remove('is-scrolling');
-          gugusTrack.style.willChange = 'auto';
-          const norm = normalizeIndex(trackIndex);
-          if (norm !== trackIndex) {
-            trackIndex = norm;
-            setGugusPosition(getTargetTranslateX(trackIndex), false);
-            updateActiveCards();
-          }
-        }, 480);
-      } else {
-        gugusTrack.classList.remove('is-scrolling');
-      }
 
       const targetX = getTargetTranslateX(trackIndex);
       setGugusPosition(targetX, smooth);
@@ -151,16 +109,25 @@ export function initGugus() {
 
     // Instant seamless normalization when transition finishes
     gugusTrack.addEventListener('transitionend', (e) => {
-      if (e.target !== gugusTrack) return;
-      gugusTrack.classList.remove('is-scrolling');
-      gugusTrack.style.willChange = 'auto';
-
+      if (e.target !== gugusTrack || e.propertyName !== 'transform') return;
+      gugusTrack.classList.remove('is-animating');
       const norm = normalizeIndex(trackIndex);
       if (norm !== trackIndex) {
-        trackIndex = norm;
-        setGugusPosition(getTargetTranslateX(trackIndex), false);
+        // Brief opacity veil hides the teleport jump from user eyes
+        gugusViewport.style.transition = 'opacity 0.05s linear';
+        gugusViewport.style.opacity = '0';
+        requestAnimationFrame(() => {
+          trackIndex = norm;
+          setGugusPosition(getTargetTranslateX(trackIndex), false);
+          requestAnimationFrame(() => {
+            gugusViewport.style.opacity = '';
+            // Clean up inline transition after it resolves
+            setTimeout(() => {
+              gugusViewport.style.transition = '';
+            }, 60);
+          });
+        });
       }
-      updateActiveCards();
     });
 
     // =========================================================
@@ -221,15 +188,15 @@ export function initGugus() {
           if (norm !== trackIndex) {
             trackIndex = norm;
             setGugusPosition(getTargetTranslateX(trackIndex), false);
-            updateActiveCards();
           }
           currentTranslateX = getTargetTranslateX(trackIndex);
 
           gugusViewport.classList.add('is-dragging');
-          gugusTrack.classList.add('is-scrolling');
-          gugusTrack.style.willChange = 'transform';
-          gugusTrack.style.transition = 'none';
-          if (settleTimeout) clearTimeout(settleTimeout);
+          gugusTrack.classList.remove('is-animating');
+          if (animFrame) {
+            cancelAnimationFrame(animFrame);
+            animFrame = null;
+          }
 
           if (activePointerId !== null && gugusViewport.setPointerCapture) {
             try { gugusViewport.setPointerCapture(activePointerId); } catch (_) {}
@@ -276,7 +243,7 @@ export function initGugus() {
         }
 
         if (hasDragged) {
-          const step = getStepWidth();
+          const step = cachedStepWidth || 300;
           let stepCount = Math.round(Math.abs(dragDiffX) / step);
           if (stepCount < 1 && (Math.abs(dragDiffX) > 35 || Math.abs(velocity) > 0.3)) {
             stepCount = 1;
@@ -298,8 +265,6 @@ export function initGugus() {
         hasDragged = false;
         dragDiffX = 0;
         isHorizontalSwipe = null;
-        gugusTrack.classList.remove('is-scrolling');
-        gugusTrack.style.willChange = 'auto';
       }, 60);
     };
 
@@ -316,7 +281,7 @@ export function initGugus() {
 
     // Modern Pointer Events API (supports Mouse, Touch, Pen cleanly)
     gugusViewport.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
     window.addEventListener('blur', onPointerUp);
@@ -331,7 +296,6 @@ export function initGugus() {
           if (norm !== trackIndex) {
             trackIndex = norm;
             setGugusPosition(getTargetTranslateX(trackIndex), false);
-            updateActiveCards();
           }
           const currentReal = (trackIndex - bufferSize) % totalOriginal;
           let diff = dotIdx - currentReal;
@@ -342,16 +306,29 @@ export function initGugus() {
       });
     });
 
-    // Window Resize Handling
+    // Desktop Prev/Next Arrow Buttons
+    const navPrev = document.getElementById('gugusNavPrev');
+    const navNext = document.getElementById('gugusNavNext');
+    if (navPrev) {
+      navPrev.addEventListener('click', () => goToIndex(trackIndex - 1, true));
+    }
+    if (navNext) {
+      navNext.addEventListener('click', () => goToIndex(trackIndex + 1, true));
+    }
+
+    // Window Resize Handling (with cached geometry update)
     let gugusResizeRaf = null;
     window.addEventListener('resize', () => {
       if (gugusResizeRaf) cancelAnimationFrame(gugusResizeRaf);
       gugusResizeRaf = requestAnimationFrame(() => {
+        measureLayout();
         goToIndex(trackIndex, false);
       });
     });
 
-    // Initialize position
+    // Initialize layout measurement & position
+    gugusTrack.style.transition = ''; // Clear any stale inline override
+    measureLayout();
     goToIndex(bufferSize, false);
   }
 }

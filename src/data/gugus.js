@@ -30,7 +30,7 @@ export const gugusList = [
     iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cplusplus.svg',
     iconFilter: 'invert(65%) sepia(80%) saturate(1500%) hue-rotate(190deg) brightness(100%) contrast(100%);',
     kabims: [
-      { name: 'Didat', photo: 'assets/kabim/gugus03_didat.webp', instagram: null },
+      { name: 'Didat', photo: 'assets/kabim/gugus03_didat.webp', instagram: 'https://www.instagram.com/m_ad.t?igsi=d2ZranEyNHQ1azQx' },
       { name: 'Adiba', photo: 'assets/kabim/gugus03_adiba.webp', instagram: 'https://www.instagram.com/adibamaulidya?igsi=MTJmcHBzZ3hpaHI1eg==' }
     ],
     barcode: '||| || | | ||||'
@@ -139,7 +139,7 @@ export const gugusList = [
     iconFilter: 'invert(50%) sepia(85%) saturate(2200%) hue-rotate(330deg) brightness(105%) contrast(105%);',
     kabims: [
       { name: 'Dhani', photo: 'assets/kabim/gugus12_dhani.webp', instagram: 'https://www.instagram.com/ahmad._rdhn?igsi=MW9nemcyOTR6YjJ6aw==' },
-      { name: 'Rafii', photo: 'assets/kabim/gugus12_rafii.webp', instagram: null }
+      { name: 'Rafi', photo: 'assets/kabim/gugus12_rafii.webp', instagram: null }
     ],
     barcode: '|||| | | ||| ||'
   }
