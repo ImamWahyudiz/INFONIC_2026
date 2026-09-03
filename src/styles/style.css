@@ -708,6 +708,7 @@ body {
   margin: 0 auto;
   padding: 0;
   overflow: visible;
+  touch-action: pan-y;
 }
 
 .agenda-carousel-wrapper.reveal-item {
@@ -741,6 +742,7 @@ body {
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   /* Use 3d acceleration without permanent will-change raster lock */
   transform: translate3d(0, 0, 0);
+  touch-action: pan-y;
 }
 
 .agenda-card {
@@ -1205,6 +1207,7 @@ body {
   overflow: visible; /* Never clips cards abruptly */
   user-select: none;
   -webkit-user-select: none;
+  touch-action: pan-y;
 }
 
 .gugus-carousel-viewport {
@@ -1223,6 +1226,7 @@ body {
   display: flex;
   transform: translate3d(0, 0, 0);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: pan-y;
 }
 
 .id-card {
@@ -1242,6 +1246,7 @@ body {
   flex-direction: column;
   -webkit-font-smoothing: subpixel-antialiased;
   backface-visibility: hidden;
+  touch-action: pan-y;
 }
 
 /* Idle mode: outer cards fade out smoothly so no extra cards peek into the side space */
@@ -1869,13 +1874,12 @@ body {
 
   /* Section 3: Mobile Vertical Accordion Timeline */
   .mobile-timeline-accordion {
-    display: flex !important;
-    flex-direction: column;
     width: 100%;
-    max-width: 520px;
-    margin: 1rem auto 0;
-    padding: 0 0.5rem;
-    box-sizing: border-box;
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    touch-action: pan-y;
   }
 
   .mtl-step {
@@ -1883,6 +1887,7 @@ body {
     align-items: stretch;
     width: 100%;
     position: relative;
+    touch-action: pan-y;
   }
 
   .mtl-rail {

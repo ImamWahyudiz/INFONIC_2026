@@ -12,6 +12,7 @@ export function initTimeline() {
   let currentIndex = 0;
   const totalCards = cards.length;
 
+  let isPointerDown = false;
   let isDragging = false;
   let startX = 0;
   let startY = 0;
@@ -133,41 +134,54 @@ export function initTimeline() {
     }
   });
 
-  // Smooth Touch Swipe & Mouse Drag with Realtime Tracking
+  // Smooth Touch Swipe & Mouse Drag with Zero-Friction Vertical Scroll Protection
   if (container) {
     const onDragStart = (e) => {
-      isDragging = true;
+      isPointerDown = true;
+      isDragging = false;
       hasDragged = false;
       isHorizontalSwipe = null;
       dragDiffX = 0;
       startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
       startY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
-      currentTranslateX = getTargetTranslateX(currentIndex);
-      container.classList.add('is-dragging');
-      if (track) {
-        track.style.willChange = 'transform';
-        track.style.transition = 'none';
-      }
     };
 
     const onDragMove = (e) => {
-      if (!isDragging) return;
+      if (!isPointerDown) return;
+      if (isHorizontalSwipe === false) return; // Yield completely to native vertical scroll
+
       const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
       const currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
 
       if (isHorizontalSwipe === null) {
-        if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
-          isHorizontalSwipe = Math.abs(diffX) >= Math.abs(diffY);
+        // Definite vertical gesture: let native page scroll pass with 0 interference
+        if (absY > 7 && absY >= absX) {
+          isHorizontalSwipe = false;
+          isPointerDown = false;
+          isDragging = false;
+          return;
+        }
+
+        // Definite horizontal gesture: user intentionally swipes the carousel
+        if (absX > 10 && absX > absY * 1.3) {
+          isHorizontalSwipe = true;
+          isDragging = true;
+          currentTranslateX = getTargetTranslateX(currentIndex);
+          container.classList.add('is-dragging');
+          if (track) {
+            track.style.willChange = 'transform';
+            track.style.transition = 'none';
+          }
         }
       }
 
-      if (isHorizontalSwipe === false) return;
-
-      if (isHorizontalSwipe === true) {
+      if (isHorizontalSwipe === true && isDragging) {
         if (e.cancelable) e.preventDefault();
-        if (Math.abs(diffX) > 6) hasDragged = true;
+        if (absX > 6) hasDragged = true;
 
         let resistanceDiff = diffX;
         if ((currentIndex === 0 && diffX > 0) || (currentIndex === totalCards - 1 && diffX < 0)) {
@@ -185,39 +199,44 @@ export function initTimeline() {
     };
 
     const onDragEnd = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      container.classList.remove('is-dragging');
+      if (!isPointerDown && !isDragging) return;
+      isPointerDown = false;
 
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
+      if (isDragging) {
+        isDragging = false;
+        container.classList.remove('is-dragging');
 
-      if (hasDragged) {
-        if (dragDiffX < -45 && currentIndex < totalCards - 1) {
-          updateCarousel(currentIndex + 1, true);
-        } else if (dragDiffX > 45 && currentIndex > 0) {
-          updateCarousel(currentIndex - 1, true);
-        } else {
-          updateCarousel(currentIndex, true);
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
         }
-      } else {
-        updateCarousel(currentIndex, false);
+
+        if (hasDragged) {
+          if (dragDiffX < -45 && currentIndex < totalCards - 1) {
+            updateCarousel(currentIndex + 1, true);
+          } else if (dragDiffX > 45 && currentIndex > 0) {
+            updateCarousel(currentIndex - 1, true);
+          } else {
+            updateCarousel(currentIndex, true);
+          }
+        } else {
+          updateCarousel(currentIndex, false);
+        }
       }
 
       setTimeout(() => {
         if (track) track.style.willChange = 'auto';
         hasDragged = false;
         dragDiffX = 0;
+        isHorizontalSwipe = null;
       }, 480);
     };
 
     // Touch events
     container.addEventListener('touchstart', onDragStart, { passive: true });
     window.addEventListener('touchmove', onDragMove, { passive: false });
-    window.addEventListener('touchend', onDragEnd);
-    window.addEventListener('touchcancel', onDragEnd);
+    window.addEventListener('touchend', onDragEnd, { passive: true });
+    window.addEventListener('touchcancel', onDragEnd, { passive: true });
 
     // Mouse events
     container.addEventListener('mousedown', onDragStart);
@@ -241,11 +260,11 @@ export function initTimeline() {
   }
 
   // =========================================================
-  // MOBILE ZERO-REFLOW ACCORDION TIMELINE CONTROLLER (<=768px)
+  // MOBILE TIMELINE (Modern Compact Grid Accordion - Zero Reflow)
   // =========================================================
-  const mobileAccordion = document.getElementById('mobileTimelineAccordion');
-  if (mobileAccordion) {
-    const mtlSteps = mobileAccordion.querySelectorAll('.mtl-step');
+  const mobileTimeline = document.getElementById('mobileTimeline');
+  if (mobileTimeline) {
+    const mtlSteps = mobileTimeline.querySelectorAll('.mtl-step');
     let activeMobileIndex = 0;
 
     function setActiveMobileStep(index, smoothScroll = false) {
@@ -253,30 +272,29 @@ export function initTimeline() {
       activeMobileIndex = index;
 
       mtlSteps.forEach((step, i) => {
-        const pill = step.querySelector('.mtl-pill');
-        if (i === activeMobileIndex) {
-          step.classList.add('active');
-          if (pill) pill.setAttribute('aria-expanded', 'true');
-        } else {
-          step.classList.remove('active');
-          if (pill) pill.setAttribute('aria-expanded', 'false');
+        const isTarget = i === index;
+        step.classList.toggle('active', isTarget);
+        const cardWrapper = step.querySelector('.mtl-card-wrapper');
+        if (cardWrapper) {
+          cardWrapper.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
         }
       });
 
-      // Smooth zero-jump scrolling
-      if (smoothScroll && window.innerWidth <= 768) {
+      // Synchronize with desktop index
+      if (currentIndex !== index) {
+        updateCarousel(index, false);
+      }
+
+      // Smooth scroll target card into view if opened by user tap
+      if (smoothScroll && mtlSteps[index]) {
+        const targetStep = mtlSteps[index];
         requestAnimationFrame(() => {
-          const targetStep = mtlSteps[activeMobileIndex];
-          if (!targetStep) return;
-
           const rect = targetStep.getBoundingClientRect();
-          const navOffset = 76;
-
-          if (rect.top < navOffset || rect.top > window.innerHeight - 120) {
-            const targetY = window.pageYOffset + rect.top - navOffset;
-            window.scrollTo({
-              top: Math.max(0, Math.round(targetY)),
-              behavior: 'smooth'
+          const isOffScreen = rect.top < 70 || rect.bottom > window.innerHeight;
+          if (isOffScreen) {
+            targetStep.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
             });
           }
         });
@@ -303,7 +321,7 @@ export function initTimeline() {
       }
     });
 
-    // Touch swipe left/right on active cards to step next/prev smoothly
+    // Touch swipe left/right on active cards to step next/prev smoothly without vertical drag conflict
     mtlSteps.forEach((step) => {
       const cardWrapper = step.querySelector('.mtl-card-wrapper');
       if (!cardWrapper) return;
@@ -321,9 +339,15 @@ export function initTimeline() {
       cardWrapper.addEventListener('touchmove', (e) => {
         const diffX = e.touches[0].clientX - touchStartX;
         const diffY = e.touches[0].clientY - touchStartY;
+        const absX = Math.abs(diffX);
+        const absY = Math.abs(diffY);
         if (isSwiping === null) {
-          if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
-            isSwiping = Math.abs(diffX) >= Math.abs(diffY);
+          if (absY > 7 && absY >= absX) {
+            isSwiping = false; // Vertical scroll, let browser handle natively
+            return;
+          }
+          if (absX > 10 && absX > absY * 1.3) {
+            isSwiping = true;
           }
         }
       }, { passive: true });
@@ -338,7 +362,7 @@ export function initTimeline() {
             setActiveMobileStep(activeMobileIndex - 1, true);
           }
         }
-      });
+      }, { passive: true });
     });
 
     // Initialize mobile accordion (Default: TM - Index 0)

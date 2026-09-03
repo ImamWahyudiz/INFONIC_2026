@@ -48,6 +48,7 @@ export function initGugus() {
     let allCards = Array.from(gugusTrack.querySelectorAll('.id-card'));
     let trackIndex = bufferSize; // Start at index 12 (Gugus 01 in Set 2)
 
+    let isPointerDown = false;
     let isDragging = false;
     let hasDragged = false;
     let startX = 0;
@@ -162,9 +163,10 @@ export function initGugus() {
       updateActiveCards();
     });
 
-    // Touch & Mouse Drag Handlers
+    // Touch & Mouse Drag Handlers with Zero-Friction Vertical Scroll Protection
     const onDragStart = (e) => {
-      isDragging = true;
+      isPointerDown = true;
+      isDragging = false;
       hasDragged = false;
       isHorizontalSwipe = null;
       dragDiffX = 0;
@@ -173,40 +175,52 @@ export function initGugus() {
       lastX = startX;
       lastTime = Date.now();
       velocity = 0;
-
-      const norm = normalizeIndex(trackIndex);
-      if (norm !== trackIndex) {
-        trackIndex = norm;
-        setGugusPosition(getTargetTranslateX(trackIndex), false);
-        updateActiveCards();
-      }
-      currentTranslateX = getTargetTranslateX(trackIndex);
-
-      gugusViewport.classList.add('is-dragging');
-      gugusTrack.classList.add('is-scrolling');
-      gugusTrack.style.willChange = 'transform';
-      gugusTrack.style.transition = 'none';
-      if (settleTimeout) clearTimeout(settleTimeout);
     };
 
     const onDragMove = (e) => {
-      if (!isDragging) return;
+      if (!isPointerDown) return;
+      if (isHorizontalSwipe === false) return; // Yield completely to native vertical scroll
+
       const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
       const currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
 
       if (isHorizontalSwipe === null) {
-        if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
-          isHorizontalSwipe = Math.abs(diffX) >= Math.abs(diffY);
+        // Definite vertical gesture: user is scrolling the page -> immediately release
+        if (absY > 7 && absY >= absX) {
+          isHorizontalSwipe = false;
+          isPointerDown = false;
+          isDragging = false;
+          return;
+        }
+
+        // Definite horizontal gesture: user intentionally swipes the carousel
+        if (absX > 10 && absX > absY * 1.3) {
+          isHorizontalSwipe = true;
+          isDragging = true;
+
+          const norm = normalizeIndex(trackIndex);
+          if (norm !== trackIndex) {
+            trackIndex = norm;
+            setGugusPosition(getTargetTranslateX(trackIndex), false);
+            updateActiveCards();
+          }
+          currentTranslateX = getTargetTranslateX(trackIndex);
+
+          gugusViewport.classList.add('is-dragging');
+          gugusTrack.classList.add('is-scrolling');
+          gugusTrack.style.willChange = 'transform';
+          gugusTrack.style.transition = 'none';
+          if (settleTimeout) clearTimeout(settleTimeout);
         }
       }
 
-      if (isHorizontalSwipe === false) return;
-
-      if (isHorizontalSwipe === true) {
+      if (isHorizontalSwipe === true && isDragging) {
         if (e.cancelable) e.preventDefault();
-        if (Math.abs(diffX) > 5) hasDragged = true;
+        if (absX > 6) hasDragged = true;
         dragDiffX = diffX;
 
         const now = Date.now();
@@ -227,73 +241,54 @@ export function initGugus() {
     };
 
     const onDragEnd = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      gugusViewport.classList.remove('is-dragging');
-      if (animFrame) {
-        cancelAnimationFrame(animFrame);
-        animFrame = null;
-      }
+      if (!isPointerDown && !isDragging) return;
+      isPointerDown = false;
 
-      if (hasDragged) {
-        const step = getStepWidth();
-        let stepCount = Math.round(Math.abs(dragDiffX) / step);
-        if (stepCount < 1 && (Math.abs(dragDiffX) > 35 || Math.abs(velocity) > 0.3)) {
-          stepCount = 1;
+      if (isDragging) {
+        isDragging = false;
+        gugusViewport.classList.remove('is-dragging');
+        if (animFrame) {
+          cancelAnimationFrame(animFrame);
+          animFrame = null;
         }
-        stepCount = Math.min(stepCount, 3); // Max 3 cards per flick
 
-        const dir = (dragDiffX < 0 || velocity < -0.3) ? 1 : -1;
-        if (stepCount > 0) {
-          goToIndex(trackIndex + dir * stepCount, true);
+        if (hasDragged) {
+          const step = getStepWidth();
+          let stepCount = Math.round(Math.abs(dragDiffX) / step);
+          if (stepCount < 1 && (Math.abs(dragDiffX) > 35 || Math.abs(velocity) > 0.3)) {
+            stepCount = 1;
+          }
+          stepCount = Math.min(stepCount, 3); // Max 3 cards per flick
+
+          const dir = (dragDiffX < 0 || velocity < -0.3) ? 1 : -1;
+          if (stepCount > 0) {
+            goToIndex(trackIndex + dir * stepCount, true);
+          } else {
+            goToIndex(trackIndex, true);
+          }
         } else {
-          goToIndex(trackIndex, true);
+          goToIndex(trackIndex, false);
         }
-      } else {
-        goToIndex(trackIndex, false);
       }
 
       setTimeout(() => {
         hasDragged = false;
         dragDiffX = 0;
+        isHorizontalSwipe = null;
       }, 60);
     };
 
     // Events attachment
     gugusViewport.addEventListener('touchstart', onDragStart, { passive: true });
     window.addEventListener('touchmove', onDragMove, { passive: false });
-    window.addEventListener('touchend', onDragEnd);
-    window.addEventListener('touchcancel', onDragEnd);
+    window.addEventListener('touchend', onDragEnd, { passive: true });
+    window.addEventListener('touchcancel', onDragEnd, { passive: true });
 
     gugusViewport.addEventListener('mousedown', onDragStart);
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
 
     gugusViewport.addEventListener('dragstart', (e) => e.preventDefault());
-
-    // Trackpad Horizontal Wheel Support
-    let wheelDebounce = null;
-    gugusViewport.addEventListener('wheel', (e) => {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
-      if (Math.abs(delta) > 18) {
-        e.preventDefault();
-        if (wheelDebounce) return;
-        wheelDebounce = setTimeout(() => { wheelDebounce = null; }, 280);
-
-        const norm = normalizeIndex(trackIndex);
-        if (norm !== trackIndex) {
-          trackIndex = norm;
-          setGugusPosition(getTargetTranslateX(trackIndex), false);
-          updateActiveCards();
-        }
-
-        if (delta > 0) {
-          goToIndex(trackIndex + 1, true);
-        } else {
-          goToIndex(trackIndex - 1, true);
-        }
-      }
-    }, { passive: false });
 
     // Indicator Dots Click
     gugusDots.forEach(dot => {
