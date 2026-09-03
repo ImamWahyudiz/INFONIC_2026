@@ -1539,6 +1539,56 @@ body {
   align-self: stretch;
 }
 
+.kabim-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.btn-kabim-ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.38rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  background: rgba(236, 72, 153, 0.12);
+  color: #f472b6;
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+  touch-action: pan-y;
+}
+
+.btn-kabim-ig svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-kabim-ig:not(.is-disabled):hover {
+    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-kabim-ig.is-disabled {
+  background: rgba(255, 255, 255, 0.04);
+  color: #64748b;
+  border-color: rgba(255, 255, 255, 0.08);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .id-card-footer {
   margin-top: auto;
   padding-top: 0.65rem;
