@@ -28,6 +28,12 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) #080d1a;
@@ -1268,10 +1274,23 @@ body {
   padding: 1.25rem 0 1.75rem 0;
   cursor: grab;
   touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .gugus-carousel-viewport.is-dragging {
   cursor: grabbing;
+}
+
+.id-card img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+.id-card a,
+.id-card button {
+  pointer-events: auto;
 }
 
 .gugus-carousel-track {

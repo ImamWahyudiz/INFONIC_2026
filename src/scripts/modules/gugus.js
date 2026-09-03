@@ -163,42 +163,57 @@ export function initGugus() {
       updateActiveCards();
     });
 
-    // Touch & Mouse Drag Handlers with Zero-Friction Vertical Scroll Protection
-    const onDragStart = (e) => {
+    // =========================================================
+    // POINTER & SWIPE HANDLER (Zero-Sticking, 100% Fluid Release)
+    // =========================================================
+    let activePointerId = null;
+
+    const onPointerDown = (e) => {
+      // Only primary button (left click) or touch/pen
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      // Do not initiate carousel drag when clicking buttons or links
+      if (e.target.closest('a, button, input, textarea')) return;
+
       isPointerDown = true;
       isDragging = false;
       hasDragged = false;
       isHorizontalSwipe = null;
       dragDiffX = 0;
-      startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-      startY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+      activePointerId = e.pointerId;
+
+      startX = e.clientX;
+      startY = e.clientY;
       lastX = startX;
       lastTime = Date.now();
       velocity = 0;
     };
 
-    const onDragMove = (e) => {
+    const onPointerMove = (e) => {
       if (!isPointerDown) return;
       if (isHorizontalSwipe === false) return; // Yield completely to native vertical scroll
 
-      const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-      const currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+      const currentX = e.clientX;
+      const currentY = e.clientY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
       const absX = Math.abs(diffX);
       const absY = Math.abs(diffY);
 
       if (isHorizontalSwipe === null) {
-        // Definite vertical gesture: user is scrolling the page -> immediately release
-        if (absY > 7 && absY >= absX) {
+        // Vertical scroll intent: release immediately so page scrolls freely
+        if (absY > 6 && absY >= absX) {
           isHorizontalSwipe = false;
           isPointerDown = false;
           isDragging = false;
+          if (activePointerId !== null && gugusViewport.releasePointerCapture) {
+            try { gugusViewport.releasePointerCapture(activePointerId); } catch (_) {}
+          }
+          activePointerId = null;
           return;
         }
 
-        // Definite horizontal gesture: user intentionally swipes the carousel
-        if (absX > 10 && absX > absY * 1.3) {
+        // Horizontal swipe intent: activate carousel drag
+        if (absX > 10 && absX > absY * 1.2) {
           isHorizontalSwipe = true;
           isDragging = true;
 
@@ -215,6 +230,10 @@ export function initGugus() {
           gugusTrack.style.willChange = 'transform';
           gugusTrack.style.transition = 'none';
           if (settleTimeout) clearTimeout(settleTimeout);
+
+          if (activePointerId !== null && gugusViewport.setPointerCapture) {
+            try { gugusViewport.setPointerCapture(activePointerId); } catch (_) {}
+          }
         }
       }
 
@@ -239,7 +258,12 @@ export function initGugus() {
       }
     };
 
-    const onDragEnd = () => {
+    const onPointerUp = (e) => {
+      if (activePointerId !== null && gugusViewport.releasePointerCapture) {
+        try { gugusViewport.releasePointerCapture(activePointerId); } catch (_) {}
+      }
+      activePointerId = null;
+
       if (!isPointerDown && !isDragging) return;
       isPointerDown = false;
 
@@ -274,18 +298,29 @@ export function initGugus() {
         hasDragged = false;
         dragDiffX = 0;
         isHorizontalSwipe = null;
+        gugusTrack.classList.remove('is-scrolling');
+        gugusTrack.style.willChange = 'auto';
       }, 60);
     };
 
-    // Events attachment (100% Passive, Zero Scroll Prevention)
-    gugusViewport.addEventListener('touchstart', onDragStart, { passive: true });
-    window.addEventListener('touchmove', onDragMove, { passive: true });
-    window.addEventListener('touchend', onDragEnd, { passive: true });
-    window.addEventListener('touchcancel', onDragEnd, { passive: true });
+    // Prevent HTML5 native image dragging from hijacking mouse events
+    gugusViewport.addEventListener('dragstart', (e) => e.preventDefault());
 
-    gugusViewport.addEventListener('mousedown', onDragStart);
-    window.addEventListener('mousemove', onDragMove);
-    window.addEventListener('mouseup', onDragEnd);
+    // Prevent click triggering when drag occurred
+    gugusViewport.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // Modern Pointer Events API (supports Mouse, Touch, Pen cleanly)
+    gugusViewport.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+    window.addEventListener('blur', onPointerUp);
+    document.addEventListener('mouseleave', onPointerUp);
 
     // Indicator Dots Click
     gugusDots.forEach(dot => {

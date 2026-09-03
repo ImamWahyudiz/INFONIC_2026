@@ -103,7 +103,7 @@ export const gugusList = [
     iconFilter: 'invert(50%) sepia(90%) saturate(2500%) hue-rotate(325deg) brightness(100%) contrast(100%);',
     kabims: [
       { name: 'Fajri', photo: 'assets/kabim/gugus09_fajri.webp', instagram: 'https://www.instagram.com/mhdfajriii___/' },
-      { name: 'Husna', photo: 'assets/kabim/gugus09_husna.webp', instagram: 'https://www.instagram.com/husnaaf27?igsi=MTl6ejY0bTJ1c21oeQ==' }
+      { name: 'Husna', photo: 'assets/kabim/gugus09_husna.webp', instagram: null }
     ],
     barcode: '|||| || | | |||'
   },

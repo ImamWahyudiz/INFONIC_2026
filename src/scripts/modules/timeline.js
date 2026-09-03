@@ -214,16 +214,24 @@ export function initTimeline() {
       }, 480);
     };
 
+    // Prevent HTML5 native image/text dragging
+    container.addEventListener('dragstart', (e) => e.preventDefault());
+
     // 100% Passive Touch events (Never prevents default)
     container.addEventListener('touchstart', onDragStart, { passive: true });
     window.addEventListener('touchmove', onDragMove, { passive: true });
     window.addEventListener('touchend', onDragEnd, { passive: true });
     window.addEventListener('touchcancel', onDragEnd, { passive: true });
 
-    // Mouse events
-    container.addEventListener('mousedown', onDragStart);
+    // Mouse events with blur/mouseleave safety
+    container.addEventListener('mousedown', (e) => {
+      if (e.button !== 0 || e.target.closest('a, button')) return;
+      onDragStart(e);
+    });
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
+    window.addEventListener('blur', onDragEnd);
+    document.addEventListener('mouseleave', onDragEnd);
 
     // Window Resize recalculation (debounced)
     let resizeRaf = null;
