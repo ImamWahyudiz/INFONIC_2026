@@ -189,6 +189,10 @@ body {
   width: 36px;
   height: 36px;
   padding: 0;
+  gap: 5px;
+  transition: all 0.25s ease;
+}
+
 .hamburger-bar {
   width: 18px;
   height: 2px;
