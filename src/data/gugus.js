@@ -63,8 +63,8 @@ export const gugusList = [
     number: '06',
     name: 'Java',
     color: '#fb923c',
-    iconUrl: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openjdk.svg',
-    iconFilter: 'invert(65%) sepia(80%) saturate(2000%) hue-rotate(350deg) brightness(105%) contrast(105%);',
+    iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+    iconFilter: '',
     kabims: [
       { name: 'Zidan', photo: 'assets/kabim/gugus06_zidan.jpg' },
       { name: 'Kia', photo: 'assets/kabim/gugus06_kia.jpg' }
