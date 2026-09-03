@@ -1,8 +1,8 @@
 /**
- * Ultra-Smooth Hardware-Accelerated Scroll Reveal with Staggered Cascading Delay
+ * Ultra-Smooth Hardware-Accelerated Scroll Reveal
  * - Observes elements via IntersectionObserver (off main thread)
- * - Automatically computes staggered delay for elements entering in the same frame
- * - Liberates GPU memory by cleaning up will-change after transition finishes
+ * - Proactively reveals elements slightly before they enter the viewport (positive rootMargin)
+ * - Zero GPU layer bloat: avoids permanent will-change raster locks
  */
 export function initScrollReveal() {
   const revealElements = document.querySelectorAll('.reveal-item');
@@ -20,14 +20,14 @@ export function initScrollReveal() {
     heroItems.forEach((el, idx) => {
       setTimeout(() => {
         el.classList.add('is-revealed');
-      }, 80 + idx * 120);
+      }, 60 + idx * 100);
     });
   }
 
   const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -6% 0px', // Trigger slightly before element enters center view
-    threshold: 0.08
+    rootMargin: '0px 0px 80px 0px', // Proactive trigger: starts smoothly before user scrolls into it
+    threshold: 0.02
   };
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -44,31 +44,22 @@ export function initScrollReveal() {
       }
 
       // Check if element belongs to a staggered group/grid
-      const staggerParent = el.closest('.why-grid, .features-grid, .faq-list, .timeline-circle-line, .mobile-timeline-accordion, .stagger-group');
+      const staggerParent = el.closest('.why-grid, .features-grid, .faq-list, .timeline-circle-line, .stagger-group');
       if (staggerParent && !el.style.transitionDelay) {
         const siblings = Array.from(staggerParent.querySelectorAll('.reveal-item'));
         const sibIndex = siblings.indexOf(el);
         if (sibIndex >= 0) {
-          el.style.transitionDelay = `${Math.min(sibIndex * 140, 750)}ms`;
+          el.style.transitionDelay = `${Math.min(sibIndex * 120, 600)}ms`;
         }
       } else if (intersecting.length > 1 && !el.style.transitionDelay) {
-        el.style.transitionDelay = `${Math.min(batchIdx * 110, 600)}ms`;
+        el.style.transitionDelay = `${Math.min(batchIdx * 90, 450)}ms`;
       }
 
       requestAnimationFrame(() => {
         el.classList.add('is-revealed');
       });
 
-      // Cleanup will-change after transition completes to preserve mobile GPU memory
-      const onTransitionEnd = (evt) => {
-        if (evt.target === el && (evt.propertyName === 'transform' || evt.propertyName === 'opacity')) {
-          el.style.willChange = 'auto';
-          el.removeEventListener('transitionend', onTransitionEnd);
-        }
-      };
-      el.addEventListener('transitionend', onTransitionEnd, { passive: true });
-
-      // Unobserve immediately
+      // Unobserve immediately to free memory
       obs.unobserve(el);
     });
   }, observerOptions);

@@ -29,11 +29,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: calc(var(--navbar-h, 52px) + 1.5rem);
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) #080d1a;
-  overscroll-behavior-y: none;
 }
 
 body {
@@ -42,7 +40,6 @@ body {
   font-family: 'Outfit', sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
   min-height: 100vh;
   position: relative;
 }
@@ -100,18 +97,17 @@ body {
 /* Hardware Accelerated Scroll Reveal with Staggered Cascading Physics */
 .reveal-item {
   opacity: 0;
-  transform: translateY(28px) scale(0.98) translateZ(0);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s ease,
               border-color 0.3s ease,
               background 0.3s ease;
-  will-change: opacity, transform;
 }
 
 .reveal-item.is-revealed {
   opacity: 1;
-  transform: translateY(0) scale(1) translateZ(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Scroll Progress Bar (scaleX on GPU Compositor layer) */
@@ -1192,6 +1188,11 @@ body {
   box-shadow: 0 12px 30px -8px rgba(236, 72, 153, 0.45); 
 }
 
+/* Mobile timeline accordion hidden by default on desktop */
+.mobile-timeline-accordion {
+  display: none;
+}
+
 /* =========================================================
    SECTION 4: 12 GUGUS & KABIM (ID CARD / CO-CARD STYLE)
    ========================================================= */
@@ -1886,10 +1887,10 @@ body {
 
   /* Section 3: Mobile Vertical Accordion Timeline */
   .mobile-timeline-accordion {
+    display: flex !important;
+    flex-direction: column;
     width: 100%;
     margin-top: 1.25rem;
-    display: flex;
-    flex-direction: column;
     gap: 0;
     touch-action: pan-y;
   }

@@ -284,7 +284,7 @@ export function initTimeline() {
   // =========================================================
   // MOBILE TIMELINE (Modern Compact Grid Accordion - Zero Reflow)
   // =========================================================
-  const mobileTimeline = document.getElementById('mobileTimeline');
+  const mobileTimeline = document.getElementById('mobileTimelineAccordion') || document.getElementById('mobileTimeline');
   if (mobileTimeline) {
     const mtlSteps = mobileTimeline.querySelectorAll('.mtl-step');
     let activeMobileIndex = 0;
