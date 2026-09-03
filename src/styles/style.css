@@ -366,12 +366,16 @@ body {
 
 .char {
   display: inline-block;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
 }
 
-.char:hover {
-  transform: translateY(-3px) scale(1.08);
-  color: #7dd3fc;
+@media (hover: hover) and (pointer: fine) {
+  .char {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+  }
+  .char:hover {
+    transform: translateY(-3px) scale(1.08);
+    color: #7dd3fc;
+  }
 }
 
 /* =========================================================
@@ -491,27 +495,27 @@ body {
   padding: 2rem 1.6rem;
   text-align: left;
   position: relative;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
 .why-card.reveal-item {
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease,
-              box-shadow 0.3s ease,
-              background 0.3s ease;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              background 0.25s ease;
 }
 
 .why-grid .why-card:nth-child(1) {
-  transition-delay: 0.10s;
+  transition-delay: 0.04s;
 }
 
 .why-grid .why-card:nth-child(2) {
-  transition-delay: 0.32s;
+  transition-delay: 0.12s;
 }
 
 .why-grid .why-card:nth-child(3) {
-  transition-delay: 0.54s;
+  transition-delay: 0.20s;
 }
 
 .why-card::before {
@@ -524,18 +528,20 @@ body {
   border-radius: 18px 18px 0 0;
   background: linear-gradient(90deg, transparent, var(--primary-500), transparent);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
-.why-card:hover {
-  border-color: rgba(56, 189, 248, 0.45);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -12px rgba(56, 189, 248, 0.25);
-  background: #0f172a;
-}
+@media (hover: hover) and (pointer: fine) {
+  .why-card:hover {
+    border-color: rgba(56, 189, 248, 0.45);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(56, 189, 248, 0.25);
+    background: #0f172a;
+  }
 
-.why-card:hover::before {
-  opacity: 1;
+  .why-card:hover::before {
+    opacity: 1;
+  }
 }
 
 .why-icon-box {
