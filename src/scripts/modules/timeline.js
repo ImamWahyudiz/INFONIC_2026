@@ -247,6 +247,19 @@ export function initTimeline() {
     let activeMobileIndex = 0;
 
     function setActiveMobileStep(index) {
+      // Toggle closed if tapping the already open step
+      if (activeMobileIndex === index) {
+        activeMobileIndex = -1;
+        mtlSteps.forEach((step) => {
+          step.classList.remove('active');
+          const cardWrapper = step.querySelector('.mtl-card-wrapper');
+          if (cardWrapper) {
+            cardWrapper.setAttribute('aria-hidden', 'true');
+          }
+        });
+        return;
+      }
+
       if (index < 0 || index >= mtlSteps.length) return;
       activeMobileIndex = index;
 
