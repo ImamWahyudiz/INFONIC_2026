@@ -490,14 +490,24 @@ body {
   touch-action: pan-y;
 }
 
+.scroll-down:hover {
+  color: var(--primary-500);
+}
+
 .scroll-down svg {
   width: 18px;
   height: 18px;
-  transition: transform 0.25s ease;
+  animation: smoothBounce 1.8s ease-in-out infinite;
+  will-change: transform;
 }
 
-.scroll-down:hover svg {
-  transform: translateY(3px);
+@keyframes smoothBounce {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 5px, 0);
+  }
 }
 
 /* =========================================================
