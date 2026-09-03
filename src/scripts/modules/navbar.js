@@ -84,32 +84,18 @@ export function initNavbar() {
       }, observerOptions);
 
       sections.forEach(section => sectionObserver.observe(section));
-    } else {
-      // Fallback throttled scroll for older browsers
-      let scrollTicking = false;
-      window.addEventListener('scroll', () => {
-        if (!scrollTicking) {
-          window.requestAnimationFrame(() => {
-            let current = '';
-            const scrollY = window.pageYOffset;
-            sections.forEach(section => {
-              if (scrollY >= (section.offsetTop - 220)) {
-                current = section.getAttribute('id');
-              }
-            });
-
-            navLinks.forEach(link => {
-              if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-              } else {
-                link.classList.remove('active');
-              }
-            });
-            scrollTicking = false;
-          });
-          scrollTicking = true;
-        }
-      }, { passive: true });
     }
+  }
+
+  // 4. Smooth Scroll for Scroll Down Button (Prevents accidental native anchor snap)
+  const scrollDownBtn = document.querySelector('.scroll-down');
+  if (scrollDownBtn) {
+    scrollDownBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('filosofi');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
   }
 }
