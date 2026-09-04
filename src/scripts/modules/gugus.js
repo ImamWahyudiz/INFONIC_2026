@@ -19,8 +19,13 @@ export function initGugus() {
     originalCards.forEach((card, idx) => {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
       clone.classList.add('is-clone');
       clone.dataset.cloneIndex = idx;
+      // Ensure all focusable elements inside clones cannot receive keyboard focus
+      clone.querySelectorAll('a, button, [tabindex]').forEach(el => {
+        el.setAttribute('tabindex', '-1');
+      });
       // Ensure clone images are lazy and async decoded
       clone.querySelectorAll('img').forEach(img => {
         img.loading = 'lazy';
@@ -35,8 +40,12 @@ export function initGugus() {
     originalCards.forEach((card, idx) => {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
       clone.classList.add('is-clone');
       clone.dataset.cloneIndex = idx;
+      clone.querySelectorAll('a, button, [tabindex]').forEach(el => {
+        el.setAttribute('tabindex', '-1');
+      });
       clone.querySelectorAll('img').forEach(img => {
         img.loading = 'lazy';
         img.decoding = 'async';

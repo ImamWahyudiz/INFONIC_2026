@@ -11,7 +11,7 @@
   <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
 
   <!-- Preload Critical Above-The-Fold LCP Image -->
-  <link rel="preload" as="image" href="assets/logo.jpg" type="image/jpeg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/logo.webp" type="image/webp" fetchpriority="high">
 
   <!-- Google Fonts: Space Grotesk & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,26 +26,29 @@
   <!-- Sticky Navbar & Scroll Progress -->
   <load src="src/components/navbar.html" />
 
-  <!-- Hero Section -->
-  <load src="src/components/hero.html" />
+  <!-- Main Content Landmark -->
+  <main id="main-content" role="main">
+    <!-- Hero Section -->
+    <load src="src/components/hero.html" />
 
-  <!-- Filosofi & Nilai Section -->
-  <load src="src/components/filosofi.html" />
+    <!-- Filosofi & Nilai Section -->
+    <load src="src/components/filosofi.html" />
 
-  <!-- Video Profil Section -->
-  <load src="src/components/video.html" />
+    <!-- Video Profil Section -->
+    <load src="src/components/video.html" />
 
-  <!-- Rangkaian Acara & Timeline Section -->
-  <load src="src/components/timeline.html" />
+    <!-- Rangkaian Acara & Timeline Section -->
+    <load src="src/components/timeline.html" />
 
-  <!-- Gugus & Kabim Section -->
-  <load src="src/components/gugus.html" />
+    <!-- Gugus & Kabim Section -->
+    <load src="src/components/gugus.html" />
 
-  <!-- Materi & Modul Pembekalan Section -->
-  <load src="src/components/materi.html" />
+    <!-- Materi & Modul Pembekalan Section -->
+    <load src="src/components/materi.html" />
 
-  <!-- FAQ Section -->
-  <load src="src/components/faq.html" />
+    <!-- FAQ Section -->
+    <load src="src/components/faq.html" />
+  </main>
 
   <!-- Footer -->
   <load src="src/components/footer.html" />

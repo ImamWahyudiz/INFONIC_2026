@@ -2,7 +2,9 @@ export function initInteractiveChar() {
   const elements = document.querySelectorAll(".interactive-char");
   elements.forEach((el) => {
     const text = el.textContent.trim();
-    el.innerHTML = "";
+    if (!text) return;
+
+    const fragment = document.createDocumentFragment();
     const words = text.split(/\s+/);
     words.forEach((wordText, wordIdx) => {
       const wordSpan = document.createElement("span");
@@ -15,14 +17,17 @@ export function initInteractiveChar() {
         wordSpan.appendChild(charSpan);
       }
 
-      el.appendChild(wordSpan);
+      fragment.appendChild(wordSpan);
 
       if (wordIdx < words.length - 1) {
         const spaceSpan = document.createElement("span");
         spaceSpan.className = "char-space";
         spaceSpan.innerHTML = "&nbsp;";
-        el.appendChild(spaceSpan);
+        fragment.appendChild(spaceSpan);
       }
     });
+
+    el.textContent = "";
+    el.appendChild(fragment);
   });
 }

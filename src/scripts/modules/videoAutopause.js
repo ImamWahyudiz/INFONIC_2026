@@ -1,23 +1,50 @@
 /**
- * Video Autopause via YouTube IFrame API (postMessage)
- * Automatically pauses YouTube video playback when user scrolls away,
- * preserving the exact timestamp without restarting the video.
+ * Lite YouTube Facade Activation & Autopause via YouTube IFrame API (postMessage)
+ * - Zero heavy scripts on initial load (~580 KiB JS & CSS saved)
+ * - Dynamically loads iframe only when requested
+ * - Automatically pauses playback when user scrolls away from the section
  */
 export function initVideoAutopause() {
   const section = document.getElementById('video-profil');
   if (!section) return;
 
-  const iframe = section.querySelector('iframe');
-  if (!iframe) return;
+  const frameContainer = document.getElementById('videoAspectFrame');
+  const facade = document.getElementById('videoFacade');
+  let activeIframe = null;
 
-  // IntersectionObserver to detect when user scrolls away from the video
+  function loadYouTubeVideo() {
+    if (!facade || !frameContainer || activeIframe) return;
+
+    const videoId = facade.getAttribute('data-video-id') || 'duVUo2qjiAk';
+    const iframe = document.createElement('iframe');
+    iframe.id = 'profileVideoIframe';
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+    iframe.title = 'Video Profil HMIT UIN Sunan Kalijaga';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+
+    frameContainer.innerHTML = '';
+    frameContainer.appendChild(iframe);
+    activeIframe = iframe;
+  }
+
+  if (facade) {
+    facade.addEventListener('click', loadYouTubeVideo);
+    facade.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        loadYouTubeVideo();
+      }
+    });
+  }
+
+  // IntersectionObserver to pause video when user scrolls away
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        // When section leaves viewport (less than 15% visible)
-        if (!entry.isIntersecting) {
+        if (!entry.isIntersecting && activeIframe) {
           try {
-            iframe.contentWindow?.postMessage(
+            activeIframe.contentWindow?.postMessage(
               JSON.stringify({
                 event: 'command',
                 func: 'pauseVideo',
@@ -29,9 +56,7 @@ export function initVideoAutopause() {
         }
       });
     },
-    {
-      threshold: 0.15,
-    }
+    { threshold: 0.15 }
   );
 
   observer.observe(section);

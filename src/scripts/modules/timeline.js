@@ -263,6 +263,7 @@ export function initTimeline() {
           const cardWrapper = step.querySelector('.mtl-card-wrapper');
           if (cardWrapper) {
             cardWrapper.setAttribute('aria-hidden', 'true');
+            cardWrapper.setAttribute('inert', '');
           }
         });
         return;
@@ -277,6 +278,11 @@ export function initTimeline() {
         const cardWrapper = step.querySelector('.mtl-card-wrapper');
         if (cardWrapper) {
           cardWrapper.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
+          if (isTarget) {
+            cardWrapper.removeAttribute('inert');
+          } else {
+            cardWrapper.setAttribute('inert', '');
+          }
         }
       });
 

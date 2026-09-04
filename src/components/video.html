@@ -44,16 +44,25 @@
         </div>
       </div>
 
-      <!-- Responsive 16:9 Video Frame -->
-      <div class="video-aspect-frame">
-        <iframe 
-          id="profileVideoIframe"
-          src="https://www.youtube-nocookie.com/embed/duVUo2qjiAk?enablejsapi=1&rel=0&modestbranding=1" 
-          title="Video Profil HMIT UIN Sunan Kalijaga"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          allowfullscreen>
-        </iframe>
+      <!-- Responsive 16:9 Video Frame with Lite YouTube Facade -->
+      <div class="video-aspect-frame" id="videoAspectFrame">
+        <div class="video-facade" id="videoFacade" role="button" tabindex="0" aria-label="Putar Video Profil HMIT UIN Sunan Kalijaga" data-video-id="duVUo2qjiAk">
+          <picture>
+            <source srcset="https://i.ytimg.com/vi_webp/duVUo2qjiAk/maxresdefault.webp" type="image/webp">
+            <img src="https://i.ytimg.com/vi/duVUo2qjiAk/maxresdefault.jpg" alt="Thumbnail Profil HMIT" class="video-facade-thumb" loading="lazy" decoding="async" width="1280" height="720">
+          </picture>
+          <div class="video-facade-overlay">
+            <button class="video-play-btn" aria-label="Putar Video" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="30" height="30">
+                <polygon points="6 3 20 12 6 21 6 3"></polygon>
+              </svg>
+            </button>
+            <div class="video-facade-meta">
+              <span class="video-facade-title">Profil Himpunan Mahasiswa Informatika</span>
+              <span class="video-facade-hint">Klik untuk memutar video</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

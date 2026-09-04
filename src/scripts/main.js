@@ -5,6 +5,7 @@ import { initGugus } from './modules/gugus.js';
 import { initScrollReveal } from './modules/scrollReveal.js';
 import { initVideoAutopause } from './modules/videoAutopause.js';
 import { initFilosofi } from './modules/filosofi.js';
+import { initMateri } from './modules/materi.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initInteractiveChar();
@@ -14,4 +15,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initVideoAutopause();
   initFilosofi();
+  initMateri();
 });
