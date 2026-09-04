@@ -534,6 +534,8 @@ body {
   padding: 2rem 1.6rem;
   text-align: left;
   position: relative;
+  cursor: pointer; /* Interaction affordance */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Slightly raised look by default */
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
@@ -1495,61 +1497,70 @@ body {
   touch-action: pan-y;
 }
 
-/* Desktop Nav Arrows — hidden on touch devices */
+/* Desktop & Mobile Nav Arrows */
 .gugus-nav-btn {
-  display: none; /* hidden by default, shown via pointer:fine query below */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(8, 13, 26, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 0.6; /* Slightly transparent when inactive */
+  cursor: pointer;
+  padding: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gugus-nav-prev {
+  left: 8px;
+}
+
+.gugus-nav-next {
+  right: 8px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .gugus-nav-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: rgba(8, 13, 26, 0.75);
-    border: 1.5px solid rgba(255, 255, 255, 0.14);
-    color: rgba(255, 255, 255, 0.75);
-    cursor: pointer;
-    padding: 0;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    transition: background 0.2s ease, border-color 0.2s ease,
-                color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-  }
-
   .gugus-nav-btn:hover {
-    background: rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.5);
+    background: rgba(56, 189, 248, 0.2);
+    border-color: rgba(56, 189, 248, 0.6);
     color: #38bdf8;
+    opacity: 1;
     box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
     transform: translateY(-50%) scale(1.08);
   }
 
   .gugus-nav-btn:active {
+    opacity: 1;
     transform: translateY(-50%) scale(0.95);
-  }
-
-  .gugus-nav-prev {
-    left: 8px;
-  }
-
-  .gugus-nav-next {
-    right: 8px;
   }
 }
 
-/* Safety guard: force-hide nav arrows on mobile screens regardless of hover capability */
 @media (max-width: 768px) {
   .gugus-nav-btn {
-    display: none !important;
+    width: 24px;
+    height: 52px;
+    border-radius: 8px;
+    background: rgba(8, 13, 26, 0.5);
+    opacity: 0.5;
   }
+  .gugus-nav-btn:active {
+    opacity: 1;
+    background: rgba(56, 189, 248, 0.25);
+    border-color: rgba(56, 189, 248, 0.6);
+  }
+  .gugus-nav-prev { left: 2px; }
+  .gugus-nav-next { right: 2px; }
 }
 
 .gugus-carousel-viewport {
@@ -1911,7 +1922,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  /* Add subtle inner shadow or indicator to look clickable */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.feature-card:active {
+  transform: scale(0.98);
+  border-color: rgba(56, 189, 248, 0.4);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1975,12 +1993,13 @@ body {
 
 .feature-card .card-arrow {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  width: 18px;
-  height: 18px;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 20px;
+  height: 20px;
   color: var(--text-muted);
-  opacity: 0;
+  opacity: 0.6; /* Visible by default for better affordance */
+  transform: translate(0, 0); /* Default position */
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -2796,7 +2815,11 @@ body {
     display: none !important;
   }
   .feature-card .card-arrow {
-    display: none !important;
+    width: 14px;
+    height: 14px;
+    top: 8px;
+    right: 8px;
+    opacity: 0.5;
   }
   .id-card {
     padding: 1.4rem 1.1rem 1.1rem;
