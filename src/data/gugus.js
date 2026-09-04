@@ -103,7 +103,7 @@ export const gugusList = [
     iconFilter: 'invert(50%) sepia(90%) saturate(2500%) hue-rotate(325deg) brightness(100%) contrast(100%);',
     kabims: [
       { name: 'Fajri', photo: 'assets/kabim/gugus09_fajri.webp', instagram: 'https://www.instagram.com/mhdfajriii___/' },
-      { name: 'Husna', photo: 'assets/kabim/gugus09_husna.webp', instagram: null }
+      { name: 'Husna', photo: 'assets/kabim/gugus09_husna.webp', instagram: 'https://www.instagram.com/khtmtl_husna?igsi=MWFtdG93eG0ybmE4ZQ==' }
     ],
     barcode: '|||| || | | |||'
   },
@@ -139,7 +139,7 @@ export const gugusList = [
     iconFilter: 'invert(50%) sepia(85%) saturate(2200%) hue-rotate(330deg) brightness(105%) contrast(105%);',
     kabims: [
       { name: 'Dhani', photo: 'assets/kabim/gugus12_dhani.webp', instagram: 'https://www.instagram.com/ahmad._rdhn?igsi=MW9nemcyOTR6YjJ6aw==' },
-      { name: 'Rafi', photo: 'assets/kabim/gugus12_rafii.webp', instagram: null }
+      { name: 'Rafi', photo: 'assets/kabim/gugus12_rafii.webp', instagram: 'https://www.instagram.com/rashxzzzz?igsi=MXJvcWZ3czg3ZWYxcg==' }
     ],
     barcode: '|||| | | ||| ||'
   }
