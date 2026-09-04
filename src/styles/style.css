@@ -1854,15 +1854,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.72rem;
+  gap: 0.4rem;
+  font-size: clamp(0.58rem, 2vw, 0.68rem);
+  white-space: nowrap;
   color: var(--text-muted);
+}
+
+.id-card-footer > span:first-child {
+  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 .id-card-barcode {
   font-family: 'Courier New', monospace;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   font-weight: 700;
   color: #64748b;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* =========================================================
@@ -2177,17 +2186,24 @@ body {
      ========================================================= */
   .why-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.85rem !important;
+    gap: 0.55rem !important;
     width: 100%;
     margin-top: 1rem;
+    align-items: stretch !important;
   }
 
-  /* Compact / Inactive Card on Mobile (Logo + Nama Berdampingan) */
+  .why-card {
+    height: 100% !important;
+    min-height: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Compact / Inactive Card on Mobile (Logo + Nama) */
   .why-card:not(.is-active) {
-    order: 2 !important;
-    grid-column: span 1 !important;
-    padding: 1.15rem 0.75rem !important;
+    order: initial !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    padding: 0.55rem 0.45rem !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -2196,7 +2212,7 @@ body {
     cursor: pointer !important;
     background: rgba(14, 22, 40, 0.65) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 16px !important;
+    border-radius: 12px !important;
     -webkit-tap-highlight-color: transparent;
     transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease !important;
   }
@@ -2209,22 +2225,23 @@ body {
   }
 
   .why-card:not(.is-active) .why-icon-box {
-    width: 40px !important;
-    height: 40px !important;
-    margin-bottom: 0.45rem !important;
-    border-radius: 10px !important;
+    width: 28px !important;
+    height: 28px !important;
+    margin-bottom: 0.25rem !important;
+    border-radius: 7px !important;
+    flex-shrink: 0 !important;
   }
 
   .why-card:not(.is-active) .why-icon-box svg {
-    width: 20px !important;
-    height: 20px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .why-card:not(.is-active) .why-title {
-    font-size: 0.82rem !important;
+    font-size: 0.72rem !important;
     font-weight: 600 !important;
     margin-bottom: 0 !important;
-    line-height: 1.25 !important;
+    line-height: 1.2 !important;
     color: #cbd5e1 !important;
     text-align: center !important;
   }
@@ -2237,17 +2254,20 @@ body {
     display: none !important;
   }
 
-  /* Expanded / Active Card on Mobile (Membesar & Full Deskripsi di Atas) */
+  /* Expanded / Active Card on Mobile (Membesar & Full Deskripsi) */
   .why-card.is-active {
-    order: 1 !important;
-    grid-column: 1 / -1 !important;
-    padding: 1.75rem 1.4rem !important;
+    order: initial !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    padding: 1.15rem 0.95rem !important;
     text-align: left !important;
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
     background: #0f172a !important;
     border-color: rgba(56, 189, 248, 0.5) !important;
-    border-radius: 18px !important;
-    box-shadow: 0 15px 35px -10px rgba(56, 189, 248, 0.2) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 12px 28px -8px rgba(56, 189, 248, 0.2) !important;
     cursor: default !important;
     transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
   }
@@ -2258,29 +2278,35 @@ body {
   }
 
   .why-card.is-active .why-icon-box {
-    width: 48px !important;
-    height: 48px !important;
-    margin-bottom: 1.25rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 0.6rem !important;
+    border-radius: 9px !important;
+  }
+
+  .why-card.is-active .why-icon-box svg {
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .why-card.is-active .why-title {
-    font-size: 1.2rem !important;
+    font-size: 0.96rem !important;
     font-weight: 700 !important;
     color: #ffffff !important;
-    margin-bottom: 0.6rem !important;
+    margin-bottom: 0.35rem !important;
   }
 
   .why-card.is-active .why-desc {
     display: block !important;
-    font-size: 0.88rem !important;
+    font-size: 0.77rem !important;
     color: var(--text-muted) !important;
-    line-height: 1.65 !important;
+    line-height: 1.45 !important;
   }
 
   /* Specific color accents on mobile when Card 2 or Card 3 is active */
   .why-card:nth-child(2).is-active {
     border-color: rgba(168, 85, 247, 0.5) !important;
-    box-shadow: 0 15px 35px -10px rgba(168, 85, 247, 0.2) !important;
+    box-shadow: 0 12px 28px -8px rgba(168, 85, 247, 0.2) !important;
   }
   .why-card:nth-child(2).is-active::before {
     background: linear-gradient(90deg, transparent, var(--purple-400), transparent) !important;
@@ -2288,10 +2314,93 @@ body {
 
   .why-card:nth-child(3).is-active {
     border-color: rgba(52, 211, 153, 0.5) !important;
-    box-shadow: 0 15px 35px -10px rgba(52, 211, 153, 0.2) !important;
+    box-shadow: 0 12px 28px -8px rgba(52, 211, 153, 0.2) !important;
   }
   .why-card:nth-child(3).is-active::before {
     background: linear-gradient(90deg, transparent, var(--emerald-400), transparent) !important;
+  }
+
+  /* ---------------------------------------------------------
+     LAYOUT POSISI DINAMIS (MOBILE)
+     --------------------------------------------------------- */
+
+  /* 1. PLACE TO BELONG (Card 1) AKTIF:
+     - Card 1: Membesar di Atas (Span 2 Kolom, Row 1)
+     - Card 2 (Become) & Card 3 (Kolaborasi): Di Bawah berdampingan (Row 2, Kolom 1 & 2) */
+  .why-grid[data-active="0"],
+  .why-grid:has(.why-card:nth-child(1).is-active) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: auto auto !important;
+  }
+  .why-grid[data-active="0"] .why-card:not(.is-active) {
+    padding: 0.75rem 0.6rem !important;
+  }
+  .why-grid[data-active="0"] .why-card:not(.is-active) .why-icon-box {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .why-grid[data-active="0"] .why-card:nth-child(1),
+  .why-grid:has(.why-card:nth-child(1).is-active) .why-card:nth-child(1) {
+    grid-column: 1 / 3 !important;
+    grid-row: 1 !important;
+  }
+  .why-grid[data-active="0"] .why-card:nth-child(2),
+  .why-grid:has(.why-card:nth-child(1).is-active) .why-card:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+  .why-grid[data-active="0"] .why-card:nth-child(3),
+  .why-grid:has(.why-card:nth-child(1).is-active) .why-card:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  /* 2. PLACE TO BECOME (Card 2) AKTIF:
+     - Card 2: Membesar di Kiri (Kolom 1, Span Row 1 s/d 2)
+     - Kanan: 2 bertumpuk (Belong di Kanan Atas, Kolaborasi di Kanan Bawah) */
+  .why-grid[data-active="1"],
+  .why-grid:has(.why-card:nth-child(2).is-active) {
+    grid-template-columns: 1.6fr 0.95fr !important;
+    grid-template-rows: 1fr 1fr !important;
+  }
+  .why-grid[data-active="1"] .why-card:nth-child(2),
+  .why-grid:has(.why-card:nth-child(2).is-active) .why-card:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+  }
+  .why-grid[data-active="1"] .why-card:nth-child(1),
+  .why-grid:has(.why-card:nth-child(2).is-active) .why-card:nth-child(1) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+  .why-grid[data-active="1"] .why-card:nth-child(3),
+  .why-grid:has(.why-card:nth-child(2).is-active) .why-card:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  /* 3. KOLABORASI (Card 3) AKTIF:
+     - Card 3: Membesar di Kanan (Kolom 2, Span Row 1 s/d 2)
+     - Kiri: 2 bertumpuk (Belong di Kiri Atas, Become di Kiri Bawah) */
+  .why-grid[data-active="2"],
+  .why-grid:has(.why-card:nth-child(3).is-active) {
+    grid-template-columns: 0.95fr 1.6fr !important;
+    grid-template-rows: 1fr 1fr !important;
+  }
+  .why-grid[data-active="2"] .why-card:nth-child(3),
+  .why-grid:has(.why-card:nth-child(3).is-active) .why-card:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 1 / 3 !important;
+  }
+  .why-grid[data-active="2"] .why-card:nth-child(1),
+  .why-grid:has(.why-card:nth-child(3).is-active) .why-card:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  .why-grid[data-active="2"] .why-card:nth-child(2),
+  .why-grid:has(.why-card:nth-child(3).is-active) .why-card:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
   }
 
   /* Sticky Navbar Mobile: Modern Floating Capsule with Logo and Hamburger Button */

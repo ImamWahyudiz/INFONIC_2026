@@ -66,7 +66,7 @@ export const gugusList = [
     iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
     iconFilter: '',
     kabims: [
-      { name: 'Zidan', photo: 'assets/kabim/gugus06_zidan.webp', instagram: null },
+      { name: 'Zidan', photo: 'assets/kabim/gugus06_zidan.webp', instagram: 'https://www.instagram.com/zzidddd___?igsi=eHFwcnBmNWM4OTZx' },
       { name: 'Kia', photo: 'assets/kabim/gugus06_kia.webp', instagram: 'https://www.instagram.com/n.tqzakiyaa?igsi=MzBkMDB1MnQ2ZTI2' }
     ],
     barcode: '|| ||| ||| | ||'
@@ -127,7 +127,7 @@ export const gugusList = [
     iconFilter: 'invert(85%) sepia(30%) saturate(800%) hue-rotate(340deg) brightness(105%) contrast(105%);',
     kabims: [
       { name: 'Vandi', photo: 'assets/kabim/gugus11_vandi.webp', instagram: 'https://www.instagram.com/ahma.daf26?igsi=MXAyYXN2d3VpNjhjeA==' },
-      { name: 'Varel', photo: 'assets/kabim/gugus11_varel.webp', instagram: null }
+      { name: 'Varel', photo: 'assets/kabim/gugus11_varel.webp', instagram: 'https://www.instagram.com/shyzardvl?igsi=MWJpaG5pMWE4ejE2Yg==' }
     ],
     barcode: '||| || ||| | ||'
   },

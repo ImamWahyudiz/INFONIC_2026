@@ -4,21 +4,31 @@
  * seamlessly toggling between cards when clicked.
  */
 export function initFilosofi() {
+  const grid = document.getElementById('filosofiGrid');
   const cards = document.querySelectorAll('#filosofi .why-card');
   if (!cards.length) return;
 
-  cards.forEach((card) => {
+  const setActive = (card, index) => {
+    cards.forEach((c) => {
+      c.classList.remove('is-active');
+      c.setAttribute('aria-expanded', 'false');
+    });
+
+    card.classList.add('is-active');
+    card.setAttribute('aria-expanded', 'true');
+    if (grid) {
+      grid.setAttribute('data-active', String(index));
+    }
+  };
+
+  cards.forEach((card, index) => {
+    if (card.classList.contains('is-active') && grid) {
+      grid.setAttribute('data-active', String(index));
+    }
+
     const handleToggle = () => {
-      // If already active, do nothing
       if (card.classList.contains('is-active')) return;
-
-      cards.forEach((c) => {
-        c.classList.remove('is-active');
-        c.setAttribute('aria-expanded', 'false');
-      });
-
-      card.classList.add('is-active');
-      card.setAttribute('aria-expanded', 'true');
+      setActive(card, index);
     };
 
     card.addEventListener('click', handleToggle);
