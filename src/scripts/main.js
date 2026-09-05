@@ -6,6 +6,8 @@ import { initScrollReveal } from './modules/scrollReveal.js';
 import { initVideoAutopause } from './modules/videoAutopause.js';
 import { initFilosofi } from './modules/filosofi.js';
 import { initMateri } from './modules/materi.js';
+import { initParallax } from './modules/parallax.js';
+import { initFaq } from './modules/faq.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initInteractiveChar();
@@ -16,4 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initVideoAutopause();
   initFilosofi();
   initMateri();
+  initParallax();
+  initFaq();
 });

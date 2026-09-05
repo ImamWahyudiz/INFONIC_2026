@@ -13,15 +13,45 @@
   <!-- Preload Critical Above-The-Fold LCP Image -->
   <link rel="preload" as="image" href="assets/logo.webp" type="image/webp" fetchpriority="high">
 
-  <!-- Google Fonts: Space Grotesk & Inter -->
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <!-- Main Modular Stylesheet -->
   <link rel="stylesheet" href="/src/styles/main.css">
 </head>
 <body>
+
+  <!-- Stardust Top Background Layer -->
+  <div class="stardust-top-layer" aria-hidden="true"></div>
+
+  <!-- Parallax Background Assets -->
+  <div class="parallax-container" aria-hidden="true">
+    <!-- 1. Lapisan Atas (Header & Filosofi) - Komet Penuntun Arah -->
+    <img src="assets/background/komet.webp" class="parallax-asset space size-sm komet-hero-top" alt="" />
+    <img src="assets/background/komet.webp" class="parallax-asset space size-lg komet-hero-bottom" alt="" />
+    
+    <!-- 1.5. Awan Transisi Filosofi (Pembatas yang merapat saat scroll ke bawah) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos awan-filosofi-kiri size-xl awan-dark" alt="" />
+    <img src="assets/background/awan.webp" class="parallax-asset atmos awan-filosofi-kanan size-xl awan-dark" data-flip="true" style="transform: scaleX(-1);" alt="" />
+
+    <!-- 2. Lapisan Tengah (Timeline, Gugus & Materi) -->
+    <!-- Awan Timeline Kanan Atas -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-lg awan-dark awan-timeline-top" data-flip="true" style="transform: scaleX(-1);" alt="" />
+    <!-- Awan Bawah Makrab / Atas Gugus (Foto 1) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-lg awan-makrab-left" alt="" />
+    <!-- Awan Atas Materi (Foto 2) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-xl awan-materi-right" data-flip="true" style="transform: scaleX(-1);" alt="" />
+    
+    <!-- 3. Lapisan Bawah (FAQ) - 3 Awan Berbeda Ukuran Berseliweran -->
+    <!-- Awan 1: Ukuran Besar (Kiri FAQ) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-xl" style="top: 73%; left: -3%; opacity: 0.9;" alt="" />
+    <!-- Awan 2: Ukuran Sedang (Kanan FAQ - Mirrored) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-md" data-flip="true" style="top: 76.5%; right: -2%; opacity: 0.92; transform: scaleX(-1);" alt="" />
+    <!-- Awan 3: Ukuran Kecil/Ringan (Tengah-Kiri Menuju Skyline Kota) -->
+    <img src="assets/background/awan.webp" class="parallax-asset atmos size-sm" style="top: 80%; left: 15%; opacity: 0.85;" alt="" />
+  </div>
 
   <!-- Sticky Navbar & Scroll Progress -->
   <load src="src/components/navbar.html" />
@@ -49,6 +79,11 @@
     <!-- FAQ Section -->
     <load src="src/components/faq.html" />
   </main>
+
+  <!-- City Skyline (Di atas Footer / sekitar bagian FAQ) -->
+  <div class="city-skyline-wrapper" aria-hidden="true">
+    <div class="city-skyline-bg"></div>
+  </div>
 
   <!-- Footer -->
   <load src="src/components/footer.html" />

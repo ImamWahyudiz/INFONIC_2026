@@ -56,5 +56,11 @@ Berikut adalah daftar referensi lengkap dan panduan teknis yang telah disediakan
 
 ---
 
+## 📄 Lisensi
+
+Karya dan materi dalam repository ini dilisensikan di bawah [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](./LICENSE).
+
+---
+
 *Semangat menyelesaikan tugas dan mari tumbuh bersama di Keluarga Besar Mahasiswa Informatika!*  
 **#INFONIC2026 #UnggulBerkarakter**
