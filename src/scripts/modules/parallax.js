@@ -14,26 +14,49 @@ export function initParallax() {
 
   const filosofiSec = document.getElementById('filosofi');
 
+  let cachedFilosofiTop = 0;
+  let cachedFilosofiHeight = 0;
+  let cachedMaxShift = 0;
+  let cachedWindowH = 0;
+
+  function measureParallaxLayout() {
+    cachedWindowH = window.innerHeight;
+    if (filosofiSec) {
+      const rect = filosofiSec.getBoundingClientRect();
+      cachedFilosofiTop = rect.top + window.scrollY;
+      cachedFilosofiHeight = rect.height;
+    }
+    const isMobile = window.innerWidth <= 768;
+    cachedMaxShift = isMobile ? window.innerWidth * 0.60 : 450;
+  }
+
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(measureParallaxLayout);
+    ro.observe(document.body);
+  } else {
+    window.addEventListener('resize', measureParallaxLayout, { passive: true });
+  }
+  // Initial measure
+  measureParallaxLayout();
+
   function updateParallax() {
     const scrollY = window.scrollY;
-    const windowH = window.innerHeight;
 
     // Hitung progress saat pengguna berada di section filosofi (dibuat rentang panjang dan smooth)
     let convergeProgress = 0;
     if (filosofiSec) {
-      const rect = filosofiSec.getBoundingClientRect();
+      const currentTop = cachedFilosofiTop - scrollY;
       // Rentang scroll diperlebar dari filosofi hingga video profil agar gerakannya gradual & santai
-      const startTrigger = windowH * 0.25; 
-      const endTrigger = -rect.height * 0.95;
+      const startTrigger = cachedWindowH * 0.25; 
+      const endTrigger = -cachedFilosofiHeight * 0.95;
       const totalRange = startTrigger - endTrigger;
       
-      const currentPos = startTrigger - rect.top;
+      const currentPos = startTrigger - currentTop;
       convergeProgress = Math.max(0, Math.min(1, currentPos / totalRange));
     }
 
-    const isMobile = window.innerWidth <= 768;
     // Jarak pergeseran dari luar layar sampai merapat pas di tengah
-    const maxShift = isMobile ? window.innerWidth * 0.60 : 450;
+    const maxShift = cachedMaxShift;
 
     parallaxAssets.forEach(asset => {
       // Subtle background depth speed so objects stay in their sky/space zones

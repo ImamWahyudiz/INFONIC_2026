@@ -57,11 +57,10 @@ export function initFaq() {
         details.setAttribute('open', '');
         wrapper.style.gridTemplateRows = '0fr';
 
-        // Force reflow
-        wrapper.offsetHeight; // eslint-disable-line
-
-        details.classList.add('is-open');
-        wrapper.style.gridTemplateRows = '1fr';
+        requestAnimationFrame(() => {
+          details.classList.add('is-open');
+          wrapper.style.gridTemplateRows = '1fr';
+        });
 
         const onEnd = (evt) => {
           if (evt.propertyName === 'grid-template-rows') {

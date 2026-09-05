@@ -296,25 +296,25 @@ body.materi-page {
 /* Stardust Atmosphere (Top Space Header & Hero) */
 .stardust-top-layer {
   position: absolute;
-  top: -80px;
+  top: 10px;
   left: 0;
   width: 100%;
-  height: 750px;
-  max-height: 85vh;
+  height: 520px;
+  max-height: 45vh;
   background-image: url('/assets/background/stardust.webp');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: 100% auto;
-  opacity: 0.85;
+  opacity: 0.8;
   pointer-events: none;
   z-index: var(--z-assets-back);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 85%);
 }
 
 @media (max-width: 768px) {
   .stardust-top-layer {
-    top: 0;
+    top: -250px;
     background-size: cover;
     height: 100vh;
     max-height: 100vh;
@@ -3472,5 +3472,33 @@ body.materi-page {
   }
   .feature-name {
     font-size: 0.85rem;
+  }
+}
+
+/* =========================================================
+   PERFORMANCE OPTIMIZATION FOR MOBILE (JANK FIX)
+   Disable expensive blur effects to save GPU rasterization
+   ========================================================= */
+@media (max-width: 768px) {
+  .sticky-nav,
+  .nav-menu,
+  .video-window-header,
+  .glass-card,
+  .floating-pill {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(8, 13, 26, 0.96) !important;
+  }
+
+  .agenda-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: linear-gradient(135deg, rgba(20, 48, 105, 0.98) 0%, rgba(14, 34, 78, 1) 100%) !important;
+  }
+
+  .id-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(15, 23, 42, 0.98) !important;
   }
 }

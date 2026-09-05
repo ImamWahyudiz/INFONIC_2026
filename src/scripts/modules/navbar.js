@@ -3,9 +3,21 @@ export function initNavbar() {
   const progressBar = document.querySelector('.scroll-progress');
   if (progressBar) {
     let ticking = false;
+    let docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(() => {
+        docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      });
+      resizeObserver.observe(document.body);
+    } else {
+      window.addEventListener('resize', () => {
+        docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      }, { passive: true });
+    }
+
     const updateProgress = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (docHeight > 0) {
         const scrollFraction = Math.min(Math.max(scrollTop / docHeight, 0), 1);
         progressBar.style.transform = `scaleX(${scrollFraction})`;
