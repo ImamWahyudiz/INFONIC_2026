@@ -314,7 +314,7 @@ body.materi-page {
 
 @media (max-width: 768px) {
   .stardust-top-layer {
-    top: -290px;
+    top: -350px;
     background-size: cover;
     height: 100vh;
     max-height: 100vh;
@@ -2849,12 +2849,14 @@ body.materi-page {
     width: 100%;
     margin-top: 1rem;
     align-items: stretch !important;
+    position: relative;
   }
 
   .why-card {
     height: 100% !important;
     min-height: 100% !important;
     box-sizing: border-box !important;
+    will-change: transform;
   }
 
   /* Compact / Inactive Card on Mobile (Logo + Nama) */
