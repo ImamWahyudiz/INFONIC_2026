@@ -216,52 +216,6 @@ body.materi-page {
   z-index: var(--z-assets-back);
 }
 
-/* Specific Positions for Hero Diagonal Komet Trajectory */
-.komet-hero-top {
-  top: 1.8%;
-  right: 6%;
-  opacity: 0.85;
-}
-
-.komet-hero-bottom {
-  top: 7.2%;
-  left: 2%;
-  opacity: 0.8;
-}
-
-@media (max-width: 1024px) {
-  .komet-hero-top {
-    top: 1.6%;
-    right: 4%;
-  }
-  .komet-hero-bottom {
-    top: 6.2%;
-    left: 2%;
-  }
-}
-
-@media (max-width: 768px) {
-  .komet-hero-top {
-    top: 1.5%;
-    right: 4%;
-  }
-  .komet-hero-bottom {
-    top: 5.2%;
-    left: 2%;
-  }
-}
-
-@media (max-width: 480px) {
-  .komet-hero-top {
-    top: 1.5%;
-    right: 4%;
-  }
-  .komet-hero-bottom {
-    top: 4.8%;
-    left: 2%;
-  }
-}
-
 .asset-atmos {
   z-index: var(--z-assets-back);
 }
