@@ -13,7 +13,7 @@ export const agendaEvents = [
       male: 'Kemeja navy, celana kain hitam rapi, topi PBAK, bersepatu.',
       female: 'Kemeja navy, bawahan rok kain hitam, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Individu: Upload Twibbon (IG/WA 7 Sep-11 Okt), Cetak Co-Card A6 tali biru. Gugus: Buat atribut kreatif & Jargon.',
+    notes: 'Individu: Upload Twibbon (IG/WA 7 Sep-10 Okt), Cetak Co-Card A6 tali biru. Gugus: Buat atribut kreatif & Jargon.',
     submissionLink: 'https://forms.gle/AAzgai9WLrp8h2Ra7',
   },
   {
