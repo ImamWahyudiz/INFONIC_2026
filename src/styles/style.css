@@ -2150,7 +2150,7 @@ body.materi-page {
   width: calc((100% - 2 * 2.5rem - 2 * 1.5rem) / 3);
   margin-right: 1.5rem;
   box-sizing: border-box;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(22, 34, 63, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -2170,6 +2170,12 @@ body.materi-page {
 }
 
 @media (hover: hover) and (pointer: fine) {
+
+  .id-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(22, 34, 63, 0.85)!important;
+  }
   .id-card:hover {
     opacity: 1;
     transform: translateY(-5px);
@@ -3498,9 +3504,5 @@ body.materi-page {
     background: linear-gradient(135deg, rgba(20, 48, 105, 0.98) 0%, rgba(14, 34, 78, 1) 100%) !important;
   }
 
-  .id-card {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(15, 23, 42, 0.98) !important;
-  }
+  
 }
