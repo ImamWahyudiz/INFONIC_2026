@@ -13,8 +13,8 @@ export const agendaEvents = [
       male: 'Kemeja navy, celana kain hitam rapi, topi PBAK, bersepatu.',
       female: 'Kemeja navy, bawahan rok kain hitam, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Individu: Upload Twibbon (IG/WA 7 Sep-10 Okt), Cetak Co-Card A6 tali biru. Gugus: Buat atribut kreatif & Jargon.',
-    submissionLink: 'https://forms.gle/AAzgai9WLrp8h2Ra7',
+    notes: 'Individu: Upload Twibbon (IG/WA 7 Sep-10 Okt 20.00 WIB), Cetak Co-Card A6 tali biru. Gugus: Buat atribut kreatif & Jargon.',
+    submissionLink: 'https://forms.gle/4KknHjXnoo25XKFWA',
   },
   {
     index: 1,
@@ -30,7 +30,8 @@ export const agendaEvents = [
       male: 'Batik bebas, jas Almamater UIN (terpasang), celana hitam, bersepatu.',
       female: 'Batik bebas, jas Almamater UIN, rok kain hitam, jilbab hitam rapi, bersepatu.',
     },
-    notes: 'Alat tulis, atribut gugus, Co-Card. Tugas: Instalasi VS Code, Figma, & GitHub (dl 17 Sep).',
+    notes: 'Alat tulis, atribut gugus, Co-Card. Tugas: Instalasi VS Code, Figma, & GitHub (dl 17 Sep 20.00 WIB).',
+    submissionLink: 'https://forms.gle/LqYM61geUqhZ94mG7',
   },
   {
     index: 2,
