@@ -47,7 +47,7 @@ export const agendaEvents = [
       male: 'Kemeja putih, bawahan bebas rapi, topi PBAK, bersepatu.',
       female: 'Kemeja putih, bawahan bebas rapi sopan, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Laptop full baterai, terminal listrik per gugus, Co-Card. Tugas: Flowchart Draw.io.',
+    notes: 'Nice try maba 😉 Nantikan detailnya dari Kabim ya biar ga salah ngerjain!',
   },
   {
     index: 3,
@@ -63,7 +63,7 @@ export const agendaEvents = [
       male: 'Kaos putih polos, bawahan bebas rapi, topi PBAK, bersepatu.',
       female: 'Kaos putih polos, bawahan bebas rapi sopan, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Spidol & gunting, Co-Card. Tugas: Akun LinkedIn (min. 20 koneksi) & daftar pengalaman.',
+    notes: 'Nice try maba 😉 Nantikan detailnya dari Kabim ya biar ga salah ngerjain!',
   },
   {
     index: 4,
@@ -79,7 +79,7 @@ export const agendaEvents = [
       male: 'Batik (warna bebas), bawahan bebas rapi, bersepatu.',
       female: 'Batik (warna bebas), bawahan bebas rapi, kerudung/jilbab warna menyesuaikan batik, bersepatu.',
     },
-    notes: 'Laptop (wajib), alat tulis, terminal listrik per gugus. Tugas: CV ATS Harvard Style (dl H+1).',
+    notes: 'Nice try maba 😉 Nantikan detailnya dari Kabim ya biar ga salah ngerjain!',
   },
   {
     index: 5,
