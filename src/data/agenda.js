@@ -35,7 +35,7 @@ export const agendaEvents = [
   },
   {
     index: 2,
-    title: 'Week 2',
+    title: 'Informatics War',
     shortTitle: 'Week 2',
     dateLabel: '19 Sep 2026',
     timelineLabel: 'Week 2',
@@ -47,7 +47,8 @@ export const agendaEvents = [
       male: 'Kemeja putih, bawahan bebas rapi, topi PBAK, bersepatu.',
       female: 'Kemeja putih, bawahan bebas rapi sopan, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Nice try maba 😉 Nantikan detailnya dari Kabim ya biar ga salah ngerjain!',
+    notes: 'Kemeja putih, topi PBAK, co-card, atribut gugus. Tugas: Membuat flowchart sistem di Draw.io 1 dari 4 pilihan (dl 25 Sep 20.00 WIB).',
+    submissionLink: 'https://forms.gle/7A8G6jyKHwbUYKsRA',
   },
   {
     index: 3,
