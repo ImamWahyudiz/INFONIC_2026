@@ -52,7 +52,7 @@ export const agendaEvents = [
   },
   {
     index: 3,
-    title: 'Week 3',
+    title: 'Ideathon',
     shortTitle: 'Week 3',
     dateLabel: '26 Sep 2026',
     timelineLabel: 'Week 3',
