@@ -59,12 +59,13 @@ export const agendaEvents = [
     timelineDate: '26 Sep 2026',
     date: 'Sabtu, 26 September 2026',
     time: '07.30 – 15.00 WIB',
-    location: 'FST & Sekitar Kampus UIN Sunan Kalijaga',
+    location: 'Parkiran CH dan FST Lantai 3',
     dresscode: {
       male: 'Kaos putih polos, bawahan bebas rapi, topi PBAK, bersepatu.',
       female: 'Kaos putih polos, bawahan bebas rapi sopan, jilbab hitam rapi, topi PBAK, bersepatu.',
     },
-    notes: 'Nice try maba 😉 Nantikan detailnya dari Kabim ya biar ga salah ngerjain!',
+    notes: 'Tugas: 1. Membuat akun LinkedIn (min. 20 koneksi), 2. Daftar pengalaman organisasi lengkap rentang waktu di MS Word min. 3 (dl 2 Okt 20.00 WIB).',
+    submissionLink: 'https://forms.gle/XQij1PWGJdbZjyrw8',
   },
   {
     index: 4,
