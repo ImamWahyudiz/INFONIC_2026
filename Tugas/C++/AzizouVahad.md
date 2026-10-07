@@ -8,14 +8,19 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Azizou Vahad** | 
-| **C++** | 
+| **Nama Lengkap** | **Azizou Vahad** | 
+| **Gugus** | **C++** | 
+| **Akun GitHub** | https://github.com/username-kamu |
+| **Akun Instagram** | @username_kamu |
+| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
 
 ---
 
 ## Pengalaman
 
-> Saya tiba di kampus UIN pagi tepatnya di depan gedung FST.
+> Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
+
+ Saya tiba di kampus UIN pagi tepatnya di depan gedung FST.
  Di situ masih belum terlihat teman-temanku, saya mengeluarkan hp lalu chat di gurp yang isinya "temenin aku".
  setelah itu saya menunggu selama beberapa waktu hingga saya di hampiri teman saya.  
 
@@ -23,5 +28,7 @@
 
 ## Pesan dan Kesan
 
-> Kesan saya adalah kegiatan INFONIC ini sangat seruuuu sekali.
+> Tuliskan pesan dan kesanmu selama mengikuti kegiatan INFONIC 2026 serta harapan untuk masa depan.
+
+Kesan saya adalah kegiatan INFONIC ini sangat seruuuu sekali.
  Harapan saya semoga INFONIC go internasional
