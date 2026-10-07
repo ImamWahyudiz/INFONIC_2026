@@ -20,7 +20,7 @@
 
 > Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
 
-Selama INFONIC jujur seru sih, tapi ada beberapa hukuman yang dilalui dengan gedebag gedebug karena kesalahan anggota gugus euy. Tapi gapapa deh, sekali ini aja, di gapapa in aja wkwk.
+Selama INFONIC jujur seru sih, tapi ada beberapa hukuman yang dilalui dengan gedebag gedebug karena kesalahan anggota gugus euy. Tapi gapapa deh, sekali ini saja, di gapapa in aja wkwk.
 
 ---
 
