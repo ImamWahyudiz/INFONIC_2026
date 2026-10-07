@@ -8,11 +8,11 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Nama Lengkap** | (Isi nama lengkapmu) |
-| **Gugus** | (Contoh: JavaScript / Python / Dart) |
-| **Akun GitHub** | https://github.com/username-kamu |
-| **Akun Instagram** | @username_kamu |
-| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
+| **Nama Lengkap** | (Rizkia Nahrin Azzahra) |
+| **Gugus** | (Java) |
+| **Akun GitHub** | https://github.com/rizkiaazzahra936 |
+| **Akun Instagram** | @nahryn4 |
+| **Profil LinkedIn** | https://www.linkedin.com/in/rizkia-nahrin-azzahra-aa6626399?utm_source=share_via&utm_content=profile&utm_medium=member_android |
 
 ---
 
@@ -20,7 +20,7 @@
 
 > Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
 
-Tuliskan cerita pengalamanmu di sini...
+banyak belajar hal-hal baru, bertemu dengan orang-orang hebat, menambah pengalaman dan wawasan, semua yang dipelajari sangat bermanfaat untuk menunjang pembelajaran dan bekal untuk masa depan  
 
 ---
 
@@ -28,4 +28,5 @@ Tuliskan cerita pengalamanmu di sini...
 
 > Tuliskan pesan dan kesanmu selama mengikuti kegiatan INFONIC 2026 serta harapan untuk masa depan.
 
-Tuliskan pesan dan kesanmu di sini...
+kesan: awalnya osjur terasa cukup menakutkan karena banyak hal yang masih belum kami pahami, tapi ternyata di kegiatan osjur ini kita dibimbing dari awal sampai akhir, semuanya terasa lebih mudah dan sangat menyenangkann
+pesan : terimakasih atas semua pengalaman yang sangat berkesan dan bermanfaat ini, semoga kedepannya kegiatan osjur ini lebih baik dan seruuu
