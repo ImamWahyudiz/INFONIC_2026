@@ -24,4 +24,4 @@ Selama mengikuti INFONIC 2026 selama lima minggu, saya memperoleh berbagai penga
 
 ## Pesan dan Kesan
 
-menyenangkan dan juga seru, banyak ilmu baru yang disampaikan. Harapannya semoga kegiatan INFONIC selanjutnya dapat dipersingkat timeline nya, supaya kami sebagai maba tidak keteteran terhadap tugas yang ada di perkuliahan 
+menyenangkan dan juga seru, banyak ilmu baru yang disampaikan. Harapannya semoga kegiatan INFONIC selanjutnya dapat dipersingkat timeline nya, supaya kami sebagai maba tidak keteteran terhadap tugas yang ada di perkuliahan ini
