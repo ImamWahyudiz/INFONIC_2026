@@ -8,7 +8,11 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Nama Lengkap** | kia |
+| **Nama Lengkap** | kia sayang mingyu |
+| **Gugus** |java|
+| **Akun GitHub** | https://github.com/username-kamu |
+| **Akun Instagram** | @username_kamu |
+| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
 
 ---
 
