@@ -8,11 +8,11 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Dani Pratama** | (Isi nama lengkapmu) |
-| **Rust** | (Contoh: JavaScript / Python / Dart) |
-| **https://github.com/rvfdl** | https://github.com/username-kamu |
-| **@dannprtma_** | @username_kamu |
-| **https://linkedin.com/in/dani-pratama-ui** | https://linkedin.com/in/username-kamu |
+| **Nama Lengkap** | Dani Pratama |
+| **Gugus** | Rust |
+| **Akun GitHub** | https://github.com/rvfdl |
+| **Akun Instagram** | @dannprtma_ |
+| **Profil LinkedIn** | https://linkedin.com/in/dani-pratama-ui |
 
 ---
 
