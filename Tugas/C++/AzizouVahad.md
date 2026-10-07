@@ -10,9 +10,9 @@
 | :--- | :--- |
 | **Nama Lengkap** | **Azizou Vahad** | 
 | **Gugus** | **C++** | 
-| **Akun GitHub** | https://github.com/username-kamu |
-| **Akun Instagram** | @username_kamu |
-| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
+| **Akun GitHub** | https://github.com/Vahad888 |
+| **Akun Instagram** | @loc2all |
+| **Profil LinkedIn** | https://linkedin.com/in/azizou-vahad |
 
 ---
 
