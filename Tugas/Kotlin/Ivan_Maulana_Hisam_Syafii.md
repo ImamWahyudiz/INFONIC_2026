@@ -19,6 +19,8 @@
 ## Pengalaman
 
 > Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.  
+
+
 Hari pertama TM saya merasa sangat senang karena bisa mengikuti acara dengan khidmat, bahkan saya sempat dijawab ketika bertanya, dan ditegur hanya karena ingin mendapat pahala, yakni murah senyum (a.k.a ketawa).Pada week 1 saya mendapatkan informasi banyak tentang apa aja organisasi di Informatika yang ternyata banyak sekali jalan untuk kita berkembang. Untuk di week 2 saya tidak bisa mengikutinya karena saya izin mengikuti acara lain. Pada week 3 saya mengikuti acara INFONIC dengan sangat senang karena di week ini kita mendapat 9 warna merah untuk presentasi terkait flowchart. untuk di week 4 sangat bersyukur karena Ballan Pasha bisa berangkat yang membuat seluruh anak angkatan lega dan tidak jadi di hukum, YEAYYY.
 
 ---
