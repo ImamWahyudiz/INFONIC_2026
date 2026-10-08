@@ -8,11 +8,11 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Nama Lengkap** | (Isi nama lengkapmu) |
-| **Gugus** | (Contoh: JavaScript / Python / Dart) |
-| **Akun GitHub** | https://github.com/username-kamu |
-| **Akun Instagram** | @username_kamu |
-| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
+| **Nama Lengkap** | Isa Hafizh Gamala Mukti |
+| **Gugus** | Kotlin |
+| **Akun GitHub** | https://github.com/hafizh-jwr/KOTLIN.git |
+| **Akun Instagram** | @is4fha |
+| **Profil LinkedIn** | https://www.linkedin.com/in/hafizh-g-m-32432143b?utm_source=share_via&utm_content=profile&utm_medium=member_android |
 
 ---
 
@@ -20,7 +20,8 @@
 
 > Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
 
-Tuliskan cerita pengalamanmu di sini...
+sangat seru  dan menyenangkan semoga infonic kedepannya juah lebih baik  
+banyak pelajar yang bisa kita petik dari kegiatan infonic tersebut dari day 1 day 2 day 3 day 4 dan terakhir semoga lebih seru lagi terus berkembang kedepannya. 
 
 ---
 
@@ -28,4 +29,4 @@ Tuliskan cerita pengalamanmu di sini...
 
 > Tuliskan pesan dan kesanmu selama mengikuti kegiatan INFONIC 2026 serta harapan untuk masa depan.
 
-Tuliskan pesan dan kesanmu di sini...
+semoga kedepannya juah lebih baik lagi kalo acara sampe siang kasi nasi kotak.
