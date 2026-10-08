@@ -23,4 +23,4 @@ Pengalaman saya selama INFONIC 26 ini cukup bagus. Saya belajar banyak hal, pada
 
 ## Pesan dan Kesan
 
-Pesan saya untuk INFONIC 2026 maaf kalau gugus kotlin dan saya banyak salah kepada para panitia dan juga terimakasih kepada kabim saya kak raka dan kak syauqi semoga panitia INFONIC 26 sehat selalu sukses dunia akhirat. Harapan saya untuk INFONIC masa depan semoga lebih seru lagi lebih bermanfaat lagi..
+Pesan saya untuk INFONIC 2026 maaf kalau gugus kotlin dan saya banyak salah kepada para panitia dan juga terimakasih kepada kabim saya kak raka dan kak syauqi semoga panitia INFONIC 26 sehat selalu sukses dunia akhirat. Harapan saya untuk INFONIC masa depan semoga lebih seru lagi lebih bermanfaat lagi.
