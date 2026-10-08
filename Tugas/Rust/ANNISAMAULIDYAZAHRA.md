@@ -11,7 +11,7 @@
 | **Nama Lengkap** |  Annisa Maulidya Zahra |
 | **Gugus** | Rust |
 | **Akun GitHub** |https://github.com/annisamaulidyazahra  |
-| **Akun Instagram** | https://www.instagram.com/nisaaaa_zhraa?stkn=MXNzc2VhdW5mbjBscA== |
+| **Akun Instagram** | @nisaaaa_zhraa |
 | **Profil LinkedIn** | https://www.linkedin.com/in/annisa-maulidya-2902bb440?utm_source=share_via&utm_content=profile&utm_medium=member_android |
 
 ---
