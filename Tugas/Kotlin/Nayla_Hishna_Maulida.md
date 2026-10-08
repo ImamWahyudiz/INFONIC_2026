@@ -8,11 +8,11 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Nama Lengkap** | (Isi nama lengkapmu) |
-| **Gugus** | (Contoh: JavaScript / Python / Dart) |
-| **Akun GitHub** | https://github.com/username-kamu |
-| **Akun Instagram** | @username_kamu |
-| **Profil LinkedIn** | https://linkedin.com/in/username-kamu |
+| **Nama Lengkap** | Nayla Hishna Maulida |
+| **Gugus** | Kotlin |
+| **Akun GitHub** | https://github.com/naylazz-v |
+| **Akun Instagram** | @nayla.hishna |
+| **Profil LinkedIn** | https://www.linkedin.com/in/nayla-hishna-46279a43b?utm_source=share_via&utm_content=profile&utm_medium=member_android |
 
 ---
 
@@ -20,7 +20,7 @@
 
 > Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
 
-Tuliskan cerita pengalamanmu di sini...
+mengikuti ospek jurusan menjadi salah satu pengalaman yang berkesan bagi saya sebagai mahasiswa baru.kami mengikuti berbagai kegiatan seperti perkenalan, permainan, serta diskusi. Dari ospek ini, saya belajar untuk lebih percaya diri, bertanggung jawab, berkomunikasi, dan menghargai kerja sama dengan orang lain. menurut saya, ospek jurusan bukan hanya kegiatan untuk menyambut mahasiswa baru, tetapi juga menjadi langkah awal untuk beradaptasi dengan lingkungan kampus dan mengenal teman-teman baru 
 
 ---
 
@@ -28,4 +28,4 @@ Tuliskan cerita pengalamanmu di sini...
 
 > Tuliskan pesan dan kesanmu selama mengikuti kegiatan INFONIC 2026 serta harapan untuk masa depan.
 
-Tuliskan pesan dan kesanmu di sini...
+Kesan saya selama mengikuti ospek jurusan sangat menyenangkan karena saya bisa mendapatkan pengalaman baru dan mengenal banyak teman. Meskipun ada beberapa kegiatan yang melelahkandan menegangkan, tapi tetap seru. Pesan saya, semoga kegiatan ospek jurusan ke depannya semakin menyenangkan, bermanfaat, dan dapat membuat mahasiswa baru lebih dekat satu sama lain 
