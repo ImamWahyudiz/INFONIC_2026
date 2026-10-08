@@ -12,7 +12,7 @@
 | **Gugus** | Swift |
 | **Akun GitHub** | https://github.com/azrakhay |
 | **Akun Instagram** | @soo_minkhy |
-| **Profil LinkedIn** |azra-khayla-azyura-nurfajri-b43b7743a/ |
+| **Profil LinkedIn** |https://www.linkedin.com/in/azra-khayla-azyura-nurfajri-b43b7743a/|
 
 ---
 
