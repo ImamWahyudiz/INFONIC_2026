@@ -10,7 +10,7 @@
 | :--- | :--- |
 | **Nama Lengkap** | (DIMAS HASTAMA PUTRA) |
 | **Gugus** | (PHYTON) |
-| **Akun GitHub** | https://github.com/username-kamu |
+| **Akun GitHub** | https://github.com/dimashastamap-cloud |
 | **Akun Instagram** | @dimashastamap1 |
 | **Profil LinkedIn** | https://www.linkedin.com/in/dimashastama-putra-12b367419?utm_source=share_via&utm_content=profile&utm_medium=member_android
  |
