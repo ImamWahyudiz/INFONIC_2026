@@ -81,7 +81,7 @@ export const agendaEvents = [
       male: 'Batik (warna bebas), bawahan bebas rapi, bersepatu.',
       female: 'Batik (warna bebas), bawahan bebas rapi, kerudung/jilbab warna menyesuaikan batik, bersepatu.',
     },
-    notes: 'Tugas: 1. CV ATS Harvard Style (GForm), 2. Extend Profil & min 10 koneksi LinkedIn (GForm), 3. Fork repo Kabim masing-masing & PR (dipandu langsung oleh Kabim). Deadline keseluruhan: 8 Oktober 2026 pukul 20.00 WIB.',
+    notes: 'Tugas: 1. CV ATS Harvard Style (GForm, dl 8 Okt), 2. Extend Profil & min 10 koneksi LinkedIn (GForm, dl 8 Okt), 3. Fork repo Kabim masing-masing & PR (Deadline: Jumat, 9 Oktober 2026 pukul 20.00 WIB).',
     submissionLink: 'https://forms.gle/et9etq2nkZXk3zGw9',
     extendLink: 'https://forms.gle/rcjGVB7u4L1zhkDD8',
   },
