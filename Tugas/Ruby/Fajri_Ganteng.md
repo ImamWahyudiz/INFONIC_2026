@@ -8,8 +8,8 @@
 
 | Data | Keterangan |
 | :--- | :--- |
-| **Nama Lengkap** | (Fajri Mau Platinum) |
-| **Gugus** | (Ruby) |
+| **Nama Lengkap** | Fajri Mau Platinum |
+| **Gugus** | Ruby |
 | **Akun GitHub** | https://github.com/darkblue14 |
 | **Akun Instagram** | @mhdfajriii___ |
 | **Profil LinkedIn** | https://linkedin.com/in/muhammad-fajri-mufare |
@@ -18,14 +18,11 @@
 
 ## Pengalaman
 
-> Tuliskan cerita pengalamanmu selama mengikuti rangkaian kegiatan INFONIC 2026 secara naratif dalam bentuk paragraf di bawah ini.
-
-Tuliskan cerita pengalamanmu di sini...
+membimbing anak anak ruby
 
 ---
 
 ## Pesan dan Kesan
 
-> Tuliskan pesan dan kesanmu selama mengikuti kegiatan INFONIC 2026 serta harapan untuk masa depan.
-
-Tuliskan pesan dan kesanmu di sini...
+Pesan : kata ruby osjur seru
+Kesan : Seru dan asik
